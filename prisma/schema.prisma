@@ -42,6 +42,27 @@ model Company {
   createdAt	  DateTime  @db.Timestamp(6)
   updatedAt	  DateTime? @db.Timestamp(6)
   deletedAt	  DateTime? @db.Timestamp(6)
+
+  companyUsers CompanyUser[]
   @@map("companies")
 }
 
+model CompanyUser {
+  id			    Int       @id @default(autoincrement())
+  name 		    String    @db.VarChar(100)
+  email		    String    @db.VarChar(100) @unique
+  password	  String    @db.VarChar(255)
+  phoneNumber String    @db.VarChar(20)
+  companyId   Int
+  status      Boolean   @default(true)
+  level       LevelStatus
+  createdAt	  DateTime  @db.Timestamp(6)
+  updatedAt	  DateTime? @db.Timestamp(6)
+  deletedAt	  DateTime? @db.Timestamp(6)
+  otp         String?   @db.VarChar(6)    
+  otpExpired  DateTime? @db.Timestamp(6)
+
+  // relation
+  company     Company   @relation(fields: [companyId], references: [id])
+  @@map("companyUsers")
+}

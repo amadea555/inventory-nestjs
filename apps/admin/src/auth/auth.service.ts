@@ -169,7 +169,7 @@ export class AuthService {
 
   async deleteAdmin(currentAdmin: Admin, adminId: number) {
     if (currentAdmin.level !== 'SUPER') {
-      throw new ForbiddenException('Only SUPER Admin can update admin');
+      throw new ForbiddenException('Only SUPER Admin can delete admin');
     }
 
     const existing = await this.prisma.admin.findFirst({
