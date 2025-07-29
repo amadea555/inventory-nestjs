@@ -15,7 +15,7 @@ import { ForgotPasswordService } from './forgotpassword.service';
 
 @Controller('forget')
 export class ForgotPasswordController {
-  constructor(private forget :ForgotPasswordService ) {}
+  constructor(private forget: ForgotPasswordService) {}
 
   @Post('forgot-password')
   forgotPassword(@Body() dto: ForgotPasswordDto) {

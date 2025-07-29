@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 export class UserAdminService {
   constructor(private prisma: PrismaClient) {}
 
-  async findByEmail(email: string){
+  async findByEmail(email: string) {
     const admin = await this.prisma.admin.findUnique({
       where: { email },
     });

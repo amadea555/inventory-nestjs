@@ -11,9 +11,7 @@ import { ResetPasswordDto } from './dto/resetpassword.dto';
 
 @Injectable()
 export class ForgotPasswordService {
-  constructor(
-    private userAdmin: UserAdminService,
-  ) {}
+  constructor(private userAdmin: UserAdminService) {}
 
   // Kirim OTP ke email
   async sendOtpEmail(email: string, otp: string) {
@@ -26,12 +24,19 @@ export class ForgotPasswordService {
       },
     });
 
-      // Baca template HTML
-const templatePath = path.join(process.cwd(),'apps', 'admin', 'src', 'templates', 'otp-email.html');
-  let html = fs.readFileSync(templatePath, 'utf8');
+    // Baca template HTML
+    const templatePath = path.join(
+      process.cwd(),
+      'apps',
+      'admin',
+      'src',
+      'templates',
+      'otp-email.html',
+    );
+    let html = fs.readFileSync(templatePath, 'utf8');
 
-  // Ganti placeholder {{OTP_CODE}} dengan kode otp
-  html = html.replace('{{OTP_CODE}}', otp);
+    // Ganti placeholder {{OTP_CODE}} dengan kode otp
+    html = html.replace('{{OTP_CODE}}', otp);
 
     await transporter.sendMail({
       from: '"Reset Password" <no-reply@example.com>',
@@ -63,7 +68,7 @@ const templatePath = path.join(process.cwd(),'apps', 'admin', 'src', 'templates'
       throw new UnauthorizedException('OTP salah');
     }
 
-    if (!user.otpExpired|| new Date() > user.otpExpired) {
+    if (!user.otpExpired || new Date() > user.otpExpired) {
       throw new UnauthorizedException('OTP kadaluarsa');
     }
 

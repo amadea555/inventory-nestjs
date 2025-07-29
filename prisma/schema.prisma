@@ -26,11 +26,22 @@ model Admin {
   deletedAt	  DateTime? @db.Timestamp(6)
   otp         String?   @db.VarChar(6)    
   otpExpired  DateTime? @db.Timestamp(6)
-@@map("admins")
+  @@map("admins")
 }
 
 enum LevelStatus {
   SUPER
   NORMAL
+}
+
+model Company {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(100)
+  email       String    @db.VarChar(100) @unique
+  status      Boolean   @default(true)  
+  createdAt	  DateTime  @db.Timestamp(6)
+  updatedAt	  DateTime? @db.Timestamp(6)
+  deletedAt	  DateTime? @db.Timestamp(6)
+  @@map("companies")
 }
 
