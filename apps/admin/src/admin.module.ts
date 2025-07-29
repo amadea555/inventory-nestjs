@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
     AuthModule,
+    
   ],
   controllers: [AdminController],
   providers: [AdminService],
