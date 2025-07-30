@@ -7,10 +7,13 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { CrudCompanyService } from './crudcompany.service';
 import { CreateCompanyDto, UpdateCompanyDto } from './dto/company.dto';
+import { AuthGuard } from '../../auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('company')
 export class CrudCompanyController {
   constructor(private readonly crudCategoryService: CrudCompanyService) {}

@@ -24,7 +24,9 @@ export class AuthServiceCompanyUser {
     }
 
     if (dto.companyId !== currentUser.companyId) {
-      throw new BadRequestException('You can only assign users to your own company')
+      throw new BadRequestException(
+        'You can only assign users to your own company',
+      );
     }
 
     const existing = await this.prisma.companyUser.findUnique({

@@ -13,7 +13,7 @@ import { AddressModule } from './core/customer-address/address.module';
     }),
     AuthModuleCompanyUser,
     CustomerModule,
-    AddressModule
+    AddressModule,
   ],
   controllers: [CompanyController],
   providers: [CompanyService],

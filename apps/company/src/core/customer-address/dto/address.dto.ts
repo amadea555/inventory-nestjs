@@ -15,7 +15,7 @@ import {
 export class CreateAddressDto {
   @IsNotEmpty()
   @IsInt()
-  customerId: number
+  customerId: number;
 
   @IsNotEmpty()
   @MaxLength(20)
@@ -35,7 +35,6 @@ export class CreateAddressDto {
   @IsNotEmpty()
   @MaxLength(100)
   note: string;
-
 }
 
 export class UpdateAddressDto {

@@ -7,12 +7,17 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ListUserCompanyService } from './listCompanyUser.service';
+import { AuthGuardCompanyUser } from 'apps/company/src/auth/auth.guard';
 
+@UseGuards(AuthGuardCompanyUser)
 @Controller('listCompanyUser')
 export class ListCompanyUserController {
-  constructor(private readonly listCompanyUserService: ListUserCompanyService) {}
+  constructor(
+    private readonly listCompanyUserService: ListUserCompanyService,
+  ) {}
 
   @Get()
   findAll() {

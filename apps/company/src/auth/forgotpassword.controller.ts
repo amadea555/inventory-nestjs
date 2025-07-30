@@ -1,8 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-} from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { ForgotPasswordCompanyUserDto } from './dto/forgotpasswordUser.dto';
 import { ResetPasswordCompanyUserDto } from './dto/resetpasswordUser.dto';
 import { ForgotPasswordServiceUser } from './forgotpassword.service';

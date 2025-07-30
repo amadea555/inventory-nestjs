@@ -13,7 +13,7 @@ import { ListCompanyUserModule } from './core/user-company/listCompanyUser.Modul
     }),
     AuthModule,
     CrudcompanyModule,
-    ListCompanyUserModule
+    ListCompanyUserModule,
   ],
   controllers: [AdminController],
   providers: [AdminService],

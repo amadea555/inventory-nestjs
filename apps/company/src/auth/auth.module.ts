@@ -11,7 +11,7 @@ import { ForgotPasswordModuleUser } from './forgotpassword.module';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '10m' },
     }),
-    ForgotPasswordModuleUser
+    ForgotPasswordModuleUser,
   ],
 
   controllers: [AuthControllerCompanyUser],

@@ -21,5 +21,4 @@ export class UpdateCompanyUserDto {
 
   @IsEnum(LevelStatus)
   level?: LevelStatus;
-  
 }

@@ -26,15 +26,15 @@ export class CustomerService {
         companyId: true,
         status: true,
         address: {
-            select:{
-                id: true,
-                address: true,
-                label: true,
-                note: true,
-                phoneNumber: true,
-            }
+          select: {
+            id: true,
+            address: true,
+            label: true,
+            note: true,
+            phoneNumber: true,
+          },
         },
-      }
+      },
     });
 
     if (!customer) {

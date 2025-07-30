@@ -28,7 +28,7 @@ export class CreateCustomerDto {
 
   @IsNotEmpty()
   @IsInt()
-  companyId: number
+  companyId: number;
 }
 
 export class UpdateCustomerDto {
@@ -43,8 +43,8 @@ export class UpdateCustomerDto {
   numberPhone?: string;
 
   @IsInt()
-  companyId?: number
+  companyId?: number;
 
   @IsBoolean()
-  status?: boolean
+  status?: boolean;
 }
