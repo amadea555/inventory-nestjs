@@ -6,10 +6,10 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { CompanyUser, PrismaClient } from 'generated/prisma';
 import { CreateCompanyUser } from './dto/createUser.dto';
 import { UpdateCompanyUserDto } from './dto/updateUser.dto';
 import { LoginCompanyUserDto } from './dto/loginUser.dto';
+import { CompanyUser, PrismaClient } from 'apps/generated/prisma/company';
 
 @Injectable()
 export class AuthServiceCompanyUser {
@@ -18,7 +18,15 @@ export class AuthServiceCompanyUser {
     private jwtService: JwtService,
   ) {}
 
-  async createCompanyUser(dto: CreateCompanyUser) {
+  async createCompanyUser(dto: CreateCompanyUser, currentUser: CompanyUser) {
+    if (currentUser.level !== 'SUPER') {
+      throw new ForbiddenException('Only SUPER user can create new users');
+    }
+
+    if (dto.companyId !== currentUser.companyId) {
+      throw new BadRequestException('You can only assign users to your own company')
+    }
+
     const existing = await this.prisma.companyUser.findUnique({
       where: { email: dto.email },
     });
@@ -35,10 +43,6 @@ export class AuthServiceCompanyUser {
     });
     if (!company) {
       throw new BadRequestException('Company not found');
-    }
-
-    if (existing) {
-      throw new BadRequestException('Email Already Used');
     }
 
     const hashedPassword = await bcrypt.hash(dto.password, 10);

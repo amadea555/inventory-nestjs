@@ -14,9 +14,11 @@ export class CreateCompanyUser {
   name: string;
 
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   phoneNumber: string;
 
   @IsNotEmpty()
@@ -24,8 +26,10 @@ export class CreateCompanyUser {
   companyId: number;
 
   @MinLength(8)
+  @IsNotEmpty()
   password: string;
 
   @IsEnum(LevelStatus)
+  @IsNotEmpty()
   level: LevelStatus;
 }

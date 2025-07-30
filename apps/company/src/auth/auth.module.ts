@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AuthControllerCompanyUser } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { PrismaClient } from 'generated/prisma';
 import { AuthServiceCompanyUser } from './auth.service';
+import { PrismaClient } from 'apps/generated/prisma/company';
+import { ForgotPasswordModuleUser } from './forgotpassword.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { AuthServiceCompanyUser } from './auth.service';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '10m' },
     }),
+    ForgotPasswordModuleUser
   ],
 
   controllers: [AuthControllerCompanyUser],

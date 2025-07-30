@@ -8,7 +8,6 @@ import {
   Param,
   ParseIntPipe,
   Delete,
-  Get,
 } from '@nestjs/common';
 import { AuthServiceCompanyUser } from './auth.service';
 import { CreateCompanyUser } from './dto/createUser.dto';
@@ -22,8 +21,8 @@ export class AuthControllerCompanyUser {
 
   @UseGuards(AuthGuardCompanyUser)
   @Post('create')
-  async createCompanyUser(@Body() dto: CreateCompanyUser) {
-    return this.authService.createCompanyUser(dto);
+  async createCompanyUser(@Body() dto: CreateCompanyUser, @Req() req) {
+    return this.authService.createCompanyUser(dto, req.user);
   }
 
   @Post('login')

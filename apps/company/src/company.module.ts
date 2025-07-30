@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModuleCompanyUser } from './auth/auth.module';
 import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';
+import { CustomerModule } from './core/customer/customer.module';
+import { AddressModule } from './core/customer-address/address.module';
 
 @Module({
   imports: [
@@ -10,6 +12,8 @@ import { CompanyService } from './company.service';
       isGlobal: true,
     }),
     AuthModuleCompanyUser,
+    CustomerModule,
+    AddressModule
   ],
   controllers: [CompanyController],
   providers: [CompanyService],

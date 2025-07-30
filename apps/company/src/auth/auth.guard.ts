@@ -32,6 +32,7 @@ export class AuthGuardCompanyUser implements CanActivate {
         id: payload.sub, // ID dari token
         email: payload.email,
         level: payload.level,
+        companyId: payload.companyId
       };
     } catch (err) {
       throw new UnauthorizedException('Invalid Token');
