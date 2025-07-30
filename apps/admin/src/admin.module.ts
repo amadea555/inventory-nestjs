@@ -3,7 +3,8 @@ import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { crudcompanyModule } from './core/crud-company/crudcompany.module';
+import { CrudcompanyModule } from './core/crud-company/crudcompany.module';
+import { ListCompanyUserModule } from './core/user-company/listCompanyUser.Module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { crudcompanyModule } from './core/crud-company/crudcompany.module';
       isGlobal: true,
     }),
     AuthModule,
-    crudcompanyModule,
+    CrudcompanyModule,
+    ListCompanyUserModule
   ],
   controllers: [AdminController],
   providers: [AdminService],

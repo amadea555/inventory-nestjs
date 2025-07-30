@@ -1,12 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { PrismaClient } from '@prisma/client';
 import { UserAdminModule } from './useradmin.module';
 import { ForgotPasswordController } from './forgotpassword.controller';
 import { ForgotPasswordService } from './forgotpassword.service';
+import { PrismaClient } from 'apps/generated/prisma/admin';
 
 @Module({
   imports: [

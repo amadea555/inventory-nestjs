@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from 'apps/generated/prisma/admin';
 
 @Injectable()
 export class UserAdminService {

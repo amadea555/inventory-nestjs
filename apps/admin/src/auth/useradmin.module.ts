@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { UserAdminService } from './useradmin.service';
+import { PrismaClient } from 'apps/generated/prisma/admin';
 
 @Module({
   providers: [UserAdminService, PrismaClient],

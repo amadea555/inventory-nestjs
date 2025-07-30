@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { CrudCompanyController } from './crudcompany.controller';
-import { CrudCompanyService } from './crudcompany.service';
 import { PrismaClient } from 'apps/generated/prisma/admin';
+import { ListCompanyUserController } from './listCompanyUser.Controller';
+import { ListUserCompanyService } from './listCompanyUser.service';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { PrismaClient } from 'apps/generated/prisma/admin';
     }),
   ],
 
-  controllers: [CrudCompanyController],
-  providers: [CrudCompanyService, PrismaClient],
+  controllers: [ListCompanyUserController],
+  providers: [ListUserCompanyService, PrismaClient],
 })
-export class CrudcompanyModule {}
+export class ListCompanyUserModule {}

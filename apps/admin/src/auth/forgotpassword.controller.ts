@@ -2,13 +2,7 @@ import {
   Controller,
   Post,
   Body,
-  BadRequestException,
-  UseGuards,
-  Get,
-  Request,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
 import { ForgotPasswordDto } from './dto/forgotpassword.dto';
 import { ResetPasswordDto } from './dto/resetpassword.dto';
 import { ForgotPasswordService } from './forgotpassword.service';

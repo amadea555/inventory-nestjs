@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClient } from 'generated/prisma';
 import { CreateCompanyDto, UpdateCompanyDto } from './dto/company.dto';
+import { PrismaClient } from 'apps/generated/prisma/admin';
 
 @Injectable()
 export class CrudCompanyService {
