@@ -5,6 +5,8 @@ import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';
 import { CustomerModule } from './core/customer/customer.module';
 import { AddressModule } from './core/customer-address/address.module';
+import { CategoryModule } from './core/category/category.module';
+import { ProductModule } from './core/product/product.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { AddressModule } from './core/customer-address/address.module';
     AuthModuleCompanyUser,
     CustomerModule,
     AddressModule,
+    CategoryModule,
+    ProductModule,
   ],
   controllers: [CompanyController],
   providers: [CompanyService],

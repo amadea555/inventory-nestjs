@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEmail,
@@ -5,6 +6,7 @@ import {
   IsInt,
   IsNotEmpty,
   isNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   isString,
@@ -12,36 +14,19 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class CreateCustomerDto {
+export class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
   name: string;
 
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @IsNotEmpty()
-  @MaxLength(20)
-  phoneNumber: string;
-
-  @IsNotEmpty()
   @IsInt()
   companyId: number;
 }
 
-export class UpdateCustomerDto {
+export class UpdateCategoryDto {
   @IsString()
   @MaxLength(100)
-  name?: string;
-
-  @IsEmail()
-  email?: string;
-
-  @MaxLength(20)
-  numberPhone?: string;
-
-  @IsBoolean()
-  status?: boolean;
+  name: string;
 }

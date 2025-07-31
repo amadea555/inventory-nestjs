@@ -38,6 +38,9 @@ export class CreateAddressDto {
 }
 
 export class UpdateAddressDto {
+  @IsInt()
+  customerId: number;
+
   @MaxLength(20)
   phoneNumber?: string;
 

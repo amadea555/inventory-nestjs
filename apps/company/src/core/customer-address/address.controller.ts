@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuardCompanyUser } from '../../auth/auth.guard';
@@ -19,8 +20,8 @@ export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
   @Get()
-  findAll() {
-    return this.addressService.findAll();
+  findAll(@Req() req) {
+    return this.addressService.findAll(req.user);
   }
 
   @Get(':id')
@@ -29,20 +30,21 @@ export class AddressController {
   }
 
   @Post()
-  async create(@Body() createAddressDto: CreateAddressDto) {
-    return await this.addressService.create(createAddressDto);
+  async create(@Body() createAddressDto: CreateAddressDto, @Req() req) {
+    return await this.addressService.create(createAddressDto, req.user);
   }
 
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAddressDto: UpdateAddressDto,
+    @Req() req,
   ) {
-    return await this.addressService.update(id, updateAddressDto);
+    return await this.addressService.update(id, updateAddressDto, req.user);
   }
 
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number) {
-    return await this.addressService.delete(id);
+  async delete(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    return await this.addressService.delete(id, req.user);
   }
 }

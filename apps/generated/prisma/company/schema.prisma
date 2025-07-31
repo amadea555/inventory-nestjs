@@ -18,6 +18,8 @@ model Company {
   deletedAt    DateTime?     @db.Timestamp(6)
   companyUsers CompanyUser[]
   customer     Customer[]
+  category     Category[]
+  product      Product[]
 
   @@map("companies")
 }
@@ -93,4 +95,39 @@ model AddressCustomer {
   customer Customer @relation(fields: [customerId], references: [id])
 
   @@map("addressCustomers")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100)
+  companyId Int
+  createdAt DateTime  @db.Timestamp(6)
+  updatedAt DateTime? @db.Timestamp(6)
+  deletedAt DateTime? @db.Timestamp(6)
+
+  // relation
+  company Company   @relation(fields: [companyId], references: [id])
+  product Product[]
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(100)
+  description String    @db.Text()
+  price       Float
+  qty         Int
+  qtyBooked   Int?
+  qtySold     Int?
+  image       String?
+  categoryId  Int
+  companyId   Int
+  createdAt   DateTime  @db.Timestamp(6)
+  updatedAt   DateTime? @db.Timestamp(6)
+  deletedAt   DateTime? @db.Timestamp(6)
+
+  // relation  
+  category Category @relation(fields: [categoryId], references: [id])
+  company  Company  @relation(fields: [companyId], references: [id])
+
+  @@map("products")
 }

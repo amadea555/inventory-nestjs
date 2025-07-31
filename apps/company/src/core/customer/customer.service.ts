@@ -1,22 +1,32 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaClient } from 'apps/generated/prisma/company';
 import { CreateCustomerDto, UpdateCustomerDto } from './dto/customer.dto';
+import { CompanyUser } from 'generated/prisma';
 
 @Injectable()
 export class CustomerService {
   constructor(private prisma: PrismaClient) {}
 
-  async findAll() {
+  async findAll(currentUser: CompanyUser) {
     return this.prisma.customer.findMany({
-      where: { deletedAt: null },
+      where: {
+        deletedAt: null,
+        companyId: currentUser.companyId,
+      },
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, currentUser: CompanyUser) {
     const customer = await this.prisma.customer.findUnique({
       where: {
         id,
         deletedAt: null,
+        companyId: currentUser.companyId,
       },
       select: {
         id: true,
@@ -44,13 +54,24 @@ export class CustomerService {
     return customer;
   }
 
-  async create(createCustomerDto: CreateCustomerDto) {
+  async create(createCustomerDto: CreateCustomerDto, currentUser: CompanyUser) {
+    if (createCustomerDto.companyId !== currentUser.companyId) {
+      throw new ForbiddenException('Failed to create Customer');
+    }
+    const existing = await this.prisma.customer.findUnique({
+      where: { email: createCustomerDto.email },
+    });
+
+    if (existing) {
+      throw new BadRequestException('Email Already Used');
+    }
+
     const customer = await this.prisma.customer.create({
       data: {
         name: createCustomerDto.name,
         email: createCustomerDto.email,
         phoneNumber: createCustomerDto.phoneNumber,
-        companyId: createCustomerDto.companyId,
+        companyId: currentUser.companyId,
         createdAt: new Date(),
       },
     });
@@ -58,7 +79,11 @@ export class CustomerService {
     return customer;
   }
 
-  async update(customerId: number, updateCustomerDto: UpdateCustomerDto) {
+  async update(
+    customerId: number,
+    updateCustomerDto: UpdateCustomerDto,
+    currentUser: CompanyUser,
+  ) {
     const customer = await this.prisma.customer.findFirst({
       where: {
         id: customerId,
@@ -68,6 +93,10 @@ export class CustomerService {
 
     if (!customer) {
       throw new NotFoundException('Data not found');
+    }
+
+    if (customer.companyId !== currentUser.companyId) {
+      throw new ForbiddenException('Customer not found in this company');
     }
 
     return this.prisma.customer.update({
@@ -83,7 +112,7 @@ export class CustomerService {
     });
   }
 
-  async delete(id: number) {
+  async delete(id: number, currentUser: CompanyUser) {
     const customer = await this.prisma.customer.findUnique({
       where: {
         id,
@@ -93,6 +122,10 @@ export class CustomerService {
 
     if (!customer) {
       throw new NotFoundException('Data not found');
+    }
+
+    if (customer.companyId !== currentUser.companyId) {
+      throw new ForbiddenException('Customer not found in this company');
     }
 
     return this.prisma.customer.update({
