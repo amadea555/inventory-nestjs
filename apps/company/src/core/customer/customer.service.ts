@@ -106,6 +106,7 @@ export class CustomerService {
       data: {
         name: updateCustomerDto.name,
         email: updateCustomerDto.email,
+        phoneNumber: updateCustomerDto.phoneNumber,
         status: updateCustomerDto.status,
         updatedAt: new Date(),
       },

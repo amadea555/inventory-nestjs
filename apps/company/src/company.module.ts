@@ -7,6 +7,8 @@ import { CustomerModule } from './core/customer/customer.module';
 import { AddressModule } from './core/customer-address/address.module';
 import { CategoryModule } from './core/category/category.module';
 import { ProductModule } from './core/product/product.module';
+import { OrderModule } from './core/order/order.module';
+import { TransactionModule } from './core/transaction-log/transaction.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { ProductModule } from './core/product/product.module';
     AddressModule,
     CategoryModule,
     ProductModule,
+    OrderModule,
+    TransactionModule,
   ],
   controllers: [CompanyController],
   providers: [CompanyService],

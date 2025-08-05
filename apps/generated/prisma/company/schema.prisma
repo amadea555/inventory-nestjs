@@ -9,17 +9,20 @@ datasource db {
 }
 
 model Company {
-  id           Int           @id @default(autoincrement())
-  name         String        @db.VarChar(100)
-  email        String        @unique @db.VarChar(100)
-  status       Boolean       @default(true)
-  createdAt    DateTime      @db.Timestamp(6)
-  updatedAt    DateTime?     @db.Timestamp(6)
-  deletedAt    DateTime?     @db.Timestamp(6)
-  companyUsers CompanyUser[]
-  customer     Customer[]
-  category     Category[]
-  product      Product[]
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(100)
+  email          String           @unique @db.VarChar(100)
+  status         Boolean          @default(true)
+  createdAt      DateTime         @db.Timestamp(6)
+  updatedAt      DateTime?        @db.Timestamp(6)
+  deletedAt      DateTime?        @db.Timestamp(6)
+  companyUsers   CompanyUser[]
+  customer       Customer[]
+  category       Category[]
+  product        Product[]
+  order          Order[]
+  orderDetail    OrderDetail[]
+  transactionLog TransactionLog[]
 
   @@map("companies")
 }
@@ -39,6 +42,8 @@ model CompanyUser {
   otp         String?     @db.VarChar(6)
   otpExpired  DateTime?   @db.Timestamp(6)
   company     Company     @relation(fields: [companyId], references: [id])
+
+  transactionLog TransactionLog[]
 
   @@map("companyUsers")
 }
@@ -76,6 +81,7 @@ model Customer {
   // relations
   address AddressCustomer[]
   company Company           @relation(fields: [companyId], references: [id])
+  order   Order[]
 
   @@map("customers")
 }
@@ -108,6 +114,8 @@ model Category {
   // relation
   company Company   @relation(fields: [companyId], references: [id])
   product Product[]
+
+  @@map("categories")
 }
 
 model Product {
@@ -116,8 +124,8 @@ model Product {
   description String    @db.Text()
   price       Float
   qty         Int
-  qtyBooked   Int?
-  qtySold     Int?
+  qtyBooked   Int       @default(0)
+  qtySold     Int       @default(0)
   image       String?
   categoryId  Int
   companyId   Int
@@ -126,8 +134,89 @@ model Product {
   deletedAt   DateTime? @db.Timestamp(6)
 
   // relation  
-  category Category @relation(fields: [categoryId], references: [id])
-  company  Company  @relation(fields: [companyId], references: [id])
+  category       Category         @relation(fields: [categoryId], references: [id])
+  company        Company          @relation(fields: [companyId], references: [id])
+  orderDetail    OrderDetail[]
+  transactionLog TransactionLog[]
 
   @@map("products")
+}
+
+model Order {
+  id             Int             @id @default(autoincrement())
+  customerId     Int
+  companyId      Int
+  grandTotal     Float
+  paymentStatus  PaymentStatus
+  shippingStatus ShippingStatus?
+  createdAt      DateTime        @db.Timestamp(6)
+  updatedAt      DateTime?       @db.Timestamp(6)
+  deletedAt      DateTime?       @db.Timestamp(6)
+
+  // relation
+  company     Company       @relation(fields: [companyId], references: [id])
+  customer    Customer      @relation(fields: [customerId], references: [id])
+  orderDetail OrderDetail[]
+
+  @@map("Orders")
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  CANCELED
+}
+
+enum ShippingStatus {
+  ONGOING
+  DELIVERED
+  CANCELED
+}
+
+model OrderDetail {
+  id        Int       @id @default(autoincrement())
+  orderId   Int
+  companyId Int
+  productId Int
+  qty       Int
+  price     Float
+  subTotal  Float
+  createdAt DateTime  @db.Timestamp(6)
+  updatedAt DateTime? @db.Timestamp(6)
+  deletedAt DateTime? @db.Timestamp(6)
+
+  // relation
+  company        Company          @relation(fields: [companyId], references: [id])
+  order          Order            @relation(fields: [orderId], references: [id])
+  product        Product          @relation(fields: [productId], references: [id])
+  transactionLog TransactionLog[]
+
+  @@map("OrderDetails")
+}
+
+model TransactionLog {
+  id              Int             @id @default(autoincrement())
+  companyId       Int
+  companyUserId   Int?
+  productId       Int
+  type            TransactionType
+  quantity        Int
+  orderDetailId   Int?
+  createdAt       DateTime        @default(now()) @db.Timestamp(6)
+  transactionDate DateTime        @db.Timestamp(6)
+  deletedAt       DateTime?       @db.Timestamp(6)
+  remarks         String
+
+  // relation
+  company     Company      @relation(fields: [companyId], references: [id])
+  companyUser CompanyUser? @relation(fields: [companyUserId], references: [id])
+  product     Product      @relation(fields: [productId], references: [id])
+  orderDetail OrderDetail? @relation(fields: [orderDetailId], references: [id])
+
+  @@map("TransactionLogs")
+}
+
+enum TransactionType {
+  IN
+  OUT
 }

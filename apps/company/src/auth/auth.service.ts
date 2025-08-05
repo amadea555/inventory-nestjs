@@ -104,7 +104,7 @@ export class AuthServiceCompanyUser {
     };
 
     const token = await this.jwtService.signAsync(payload, {
-      expiresIn: '10m',
+      expiresIn: '100m',
     });
 
     return {

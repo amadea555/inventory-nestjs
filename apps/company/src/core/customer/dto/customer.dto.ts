@@ -32,16 +32,20 @@ export class CreateCustomerDto {
 }
 
 export class UpdateCustomerDto {
+  @IsOptional()
   @IsString()
   @MaxLength(100)
   name?: string;
 
+  @IsOptional()
   @IsEmail()
   email?: string;
 
+  @IsOptional()
   @MaxLength(20)
-  numberPhone?: string;
+  phoneNumber?: string;
 
+  @IsOptional()
   @IsBoolean()
   status?: boolean;
 }

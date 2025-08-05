@@ -8,7 +8,7 @@ import { PrismaClient } from 'apps/generated/prisma/admin';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '10m' },
+      signOptions: { expiresIn: '100m' },
     }),
   ],
 

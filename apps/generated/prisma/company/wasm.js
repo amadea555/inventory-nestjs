@@ -209,6 +209,45 @@ exports.Prisma.ProductScalarFieldEnum = {
   deletedAt: 'deletedAt'
 };
 
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  companyId: 'companyId',
+  grandTotal: 'grandTotal',
+  paymentStatus: 'paymentStatus',
+  shippingStatus: 'shippingStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.OrderDetailScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  companyId: 'companyId',
+  productId: 'productId',
+  qty: 'qty',
+  price: 'price',
+  subTotal: 'subTotal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.TransactionLogScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  companyUserId: 'companyUserId',
+  productId: 'productId',
+  type: 'type',
+  quantity: 'quantity',
+  orderDetailId: 'orderDetailId',
+  createdAt: 'createdAt',
+  transactionDate: 'transactionDate',
+  deletedAt: 'deletedAt',
+  remarks: 'remarks'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -228,6 +267,23 @@ exports.LevelStatus = exports.$Enums.LevelStatus = {
   NORMAL: 'NORMAL'
 };
 
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  CANCELED: 'CANCELED'
+};
+
+exports.ShippingStatus = exports.$Enums.ShippingStatus = {
+  ONGOING: 'ONGOING',
+  DELIVERED: 'DELIVERED',
+  CANCELED: 'CANCELED'
+};
+
+exports.TransactionType = exports.$Enums.TransactionType = {
+  IN: 'IN',
+  OUT: 'OUT'
+};
+
 exports.Prisma.ModelName = {
   Company: 'Company',
   CompanyUser: 'CompanyUser',
@@ -235,7 +291,10 @@ exports.Prisma.ModelName = {
   Customer: 'Customer',
   AddressCustomer: 'AddressCustomer',
   Category: 'Category',
-  Product: 'Product'
+  Product: 'Product',
+  Order: 'Order',
+  OrderDetail: 'OrderDetail',
+  TransactionLog: 'TransactionLog'
 };
 
 /**

@@ -47,6 +47,22 @@ export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>;
  *
  */
 export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>;
+/**
+ * Model Order
+ *
+ */
+export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>;
+/**
+ * Model OrderDetail
+ *
+ */
+export type OrderDetail = $Result.DefaultSelection<Prisma.$OrderDetailPayload>;
+/**
+ * Model TransactionLog
+ *
+ */
+export type TransactionLog =
+  $Result.DefaultSelection<Prisma.$TransactionLogPayload>;
 
 /**
  * Enums
@@ -58,11 +74,49 @@ export namespace $Enums {
   };
 
   export type LevelStatus = (typeof LevelStatus)[keyof typeof LevelStatus];
+
+  export const PaymentStatus: {
+    PENDING: 'PENDING';
+    PAID: 'PAID';
+    CANCELED: 'CANCELED';
+  };
+
+  export type PaymentStatus =
+    (typeof PaymentStatus)[keyof typeof PaymentStatus];
+
+  export const ShippingStatus: {
+    ONGOING: 'ONGOING';
+    DELIVERED: 'DELIVERED';
+    CANCELED: 'CANCELED';
+  };
+
+  export type ShippingStatus =
+    (typeof ShippingStatus)[keyof typeof ShippingStatus];
+
+  export const TransactionType: {
+    IN: 'IN';
+    OUT: 'OUT';
+  };
+
+  export type TransactionType =
+    (typeof TransactionType)[keyof typeof TransactionType];
 }
 
 export type LevelStatus = $Enums.LevelStatus;
 
 export const LevelStatus: typeof $Enums.LevelStatus;
+
+export type PaymentStatus = $Enums.PaymentStatus;
+
+export const PaymentStatus: typeof $Enums.PaymentStatus;
+
+export type ShippingStatus = $Enums.ShippingStatus;
+
+export const ShippingStatus: typeof $Enums.ShippingStatus;
+
+export type TransactionType = $Enums.TransactionType;
+
+export const TransactionType: typeof $Enums.TransactionType;
 
 /**
  * ##  Prisma Client ʲˢ
@@ -299,6 +353,36 @@ export class PrismaClient<
    * ```
    */
   get product(): Prisma.ProductDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.order`: Exposes CRUD operations for the **Order** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more Orders
+   * const orders = await prisma.order.findMany()
+   * ```
+   */
+  get order(): Prisma.OrderDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.orderDetail`: Exposes CRUD operations for the **OrderDetail** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more OrderDetails
+   * const orderDetails = await prisma.orderDetail.findMany()
+   * ```
+   */
+  get orderDetail(): Prisma.OrderDetailDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.transactionLog`: Exposes CRUD operations for the **TransactionLog** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more TransactionLogs
+   * const transactionLogs = await prisma.transactionLog.findMany()
+   * ```
+   */
+  get transactionLog(): Prisma.TransactionLogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -764,6 +848,9 @@ export namespace Prisma {
     AddressCustomer: 'AddressCustomer';
     Category: 'Category';
     Product: 'Product';
+    Order: 'Order';
+    OrderDetail: 'OrderDetail';
+    TransactionLog: 'TransactionLog';
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -798,7 +885,10 @@ export namespace Prisma {
         | 'customer'
         | 'addressCustomer'
         | 'category'
-        | 'product';
+        | 'product'
+        | 'order'
+        | 'orderDetail'
+        | 'transactionLog';
       txIsolationLevel: Prisma.TransactionIsolationLevel;
     };
     model: {
@@ -1324,6 +1414,232 @@ export namespace Prisma {
           };
         };
       };
+      Order: {
+        payload: Prisma.$OrderPayload<ExtArgs>;
+        fields: Prisma.OrderFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.OrderFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.OrderFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>;
+          };
+          findFirst: {
+            args: Prisma.OrderFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.OrderFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>;
+          };
+          findMany: {
+            args: Prisma.OrderFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>[];
+          };
+          create: {
+            args: Prisma.OrderCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>;
+          };
+          createMany: {
+            args: Prisma.OrderCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.OrderCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>[];
+          };
+          delete: {
+            args: Prisma.OrderDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>;
+          };
+          update: {
+            args: Prisma.OrderUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>;
+          };
+          deleteMany: {
+            args: Prisma.OrderDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.OrderUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.OrderUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>[];
+          };
+          upsert: {
+            args: Prisma.OrderUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>;
+          };
+          aggregate: {
+            args: Prisma.OrderAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateOrder>;
+          };
+          groupBy: {
+            args: Prisma.OrderGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<OrderGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.OrderCountArgs<ExtArgs>;
+            result: $Utils.Optional<OrderCountAggregateOutputType> | number;
+          };
+        };
+      };
+      OrderDetail: {
+        payload: Prisma.$OrderDetailPayload<ExtArgs>;
+        fields: Prisma.OrderDetailFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.OrderDetailFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.OrderDetailFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>;
+          };
+          findFirst: {
+            args: Prisma.OrderDetailFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.OrderDetailFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>;
+          };
+          findMany: {
+            args: Prisma.OrderDetailFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>[];
+          };
+          create: {
+            args: Prisma.OrderDetailCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>;
+          };
+          createMany: {
+            args: Prisma.OrderDetailCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.OrderDetailCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>[];
+          };
+          delete: {
+            args: Prisma.OrderDetailDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>;
+          };
+          update: {
+            args: Prisma.OrderDetailUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>;
+          };
+          deleteMany: {
+            args: Prisma.OrderDetailDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.OrderDetailUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.OrderDetailUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>[];
+          };
+          upsert: {
+            args: Prisma.OrderDetailUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OrderDetailPayload>;
+          };
+          aggregate: {
+            args: Prisma.OrderDetailAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateOrderDetail>;
+          };
+          groupBy: {
+            args: Prisma.OrderDetailGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<OrderDetailGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.OrderDetailCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<OrderDetailCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
+      TransactionLog: {
+        payload: Prisma.$TransactionLogPayload<ExtArgs>;
+        fields: Prisma.TransactionLogFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.TransactionLogFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.TransactionLogFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>;
+          };
+          findFirst: {
+            args: Prisma.TransactionLogFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.TransactionLogFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>;
+          };
+          findMany: {
+            args: Prisma.TransactionLogFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>[];
+          };
+          create: {
+            args: Prisma.TransactionLogCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>;
+          };
+          createMany: {
+            args: Prisma.TransactionLogCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.TransactionLogCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>[];
+          };
+          delete: {
+            args: Prisma.TransactionLogDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>;
+          };
+          update: {
+            args: Prisma.TransactionLogUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>;
+          };
+          deleteMany: {
+            args: Prisma.TransactionLogDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.TransactionLogUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.TransactionLogUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>[];
+          };
+          upsert: {
+            args: Prisma.TransactionLogUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TransactionLogPayload>;
+          };
+          aggregate: {
+            args: Prisma.TransactionLogAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateTransactionLog>;
+          };
+          groupBy: {
+            args: Prisma.TransactionLogGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<TransactionLogGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.TransactionLogCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<TransactionLogCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
     };
   } & {
     other: {
@@ -1419,6 +1735,9 @@ export namespace Prisma {
     addressCustomer?: AddressCustomerOmit;
     category?: CategoryOmit;
     product?: ProductOmit;
+    order?: OrderOmit;
+    orderDetail?: OrderDetailOmit;
+    transactionLog?: TransactionLogOmit;
   };
 
   /* Types for Logging */
@@ -1530,6 +1849,9 @@ export namespace Prisma {
     customer: number;
     category: number;
     product: number;
+    order: number;
+    orderDetail: number;
+    transactionLog: number;
   };
 
   export type CompanyCountOutputTypeSelect<
@@ -1539,6 +1861,9 @@ export namespace Prisma {
     customer?: boolean | CompanyCountOutputTypeCountCustomerArgs;
     category?: boolean | CompanyCountOutputTypeCountCategoryArgs;
     product?: boolean | CompanyCountOutputTypeCountProductArgs;
+    order?: boolean | CompanyCountOutputTypeCountOrderArgs;
+    orderDetail?: boolean | CompanyCountOutputTypeCountOrderDetailArgs;
+    transactionLog?: boolean | CompanyCountOutputTypeCountTransactionLogArgs;
   };
 
   // Custom InputTypes
@@ -1591,17 +1916,84 @@ export namespace Prisma {
   };
 
   /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountOrderArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OrderWhereInput;
+  };
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountOrderDetailArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OrderDetailWhereInput;
+  };
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountTransactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TransactionLogWhereInput;
+  };
+
+  /**
+   * Count Type CompanyUserCountOutputType
+   */
+
+  export type CompanyUserCountOutputType = {
+    transactionLog: number;
+  };
+
+  export type CompanyUserCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    transactionLog?:
+      | boolean
+      | CompanyUserCountOutputTypeCountTransactionLogArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * CompanyUserCountOutputType without action
+   */
+  export type CompanyUserCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the CompanyUserCountOutputType
+     */
+    select?: CompanyUserCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * CompanyUserCountOutputType without action
+   */
+  export type CompanyUserCountOutputTypeCountTransactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TransactionLogWhereInput;
+  };
+
+  /**
    * Count Type CustomerCountOutputType
    */
 
   export type CustomerCountOutputType = {
     address: number;
+    order: number;
   };
 
   export type CustomerCountOutputTypeSelect<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     address?: boolean | CustomerCountOutputTypeCountAddressArgs;
+    order?: boolean | CustomerCountOutputTypeCountOrderArgs;
   };
 
   // Custom InputTypes
@@ -1624,6 +2016,15 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: AddressCustomerWhereInput;
+  };
+
+  /**
+   * CustomerCountOutputType without action
+   */
+  export type CustomerCountOutputTypeCountOrderArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OrderWhereInput;
   };
 
   /**
@@ -1660,6 +2061,127 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: ProductWhereInput;
+  };
+
+  /**
+   * Count Type ProductCountOutputType
+   */
+
+  export type ProductCountOutputType = {
+    orderDetail: number;
+    transactionLog: number;
+  };
+
+  export type ProductCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    orderDetail?: boolean | ProductCountOutputTypeCountOrderDetailArgs;
+    transactionLog?: boolean | ProductCountOutputTypeCountTransactionLogArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * ProductCountOutputType without action
+   */
+  export type ProductCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductCountOutputType
+     */
+    select?: ProductCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * ProductCountOutputType without action
+   */
+  export type ProductCountOutputTypeCountOrderDetailArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OrderDetailWhereInput;
+  };
+
+  /**
+   * ProductCountOutputType without action
+   */
+  export type ProductCountOutputTypeCountTransactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TransactionLogWhereInput;
+  };
+
+  /**
+   * Count Type OrderCountOutputType
+   */
+
+  export type OrderCountOutputType = {
+    orderDetail: number;
+  };
+
+  export type OrderCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    orderDetail?: boolean | OrderCountOutputTypeCountOrderDetailArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * OrderCountOutputType without action
+   */
+  export type OrderCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderCountOutputType
+     */
+    select?: OrderCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * OrderCountOutputType without action
+   */
+  export type OrderCountOutputTypeCountOrderDetailArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OrderDetailWhereInput;
+  };
+
+  /**
+   * Count Type OrderDetailCountOutputType
+   */
+
+  export type OrderDetailCountOutputType = {
+    transactionLog: number;
+  };
+
+  export type OrderDetailCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    transactionLog?:
+      | boolean
+      | OrderDetailCountOutputTypeCountTransactionLogArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * OrderDetailCountOutputType without action
+   */
+  export type OrderDetailCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetailCountOutputType
+     */
+    select?: OrderDetailCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * OrderDetailCountOutputType without action
+   */
+  export type OrderDetailCountOutputTypeCountTransactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TransactionLogWhereInput;
   };
 
   /**
@@ -1890,6 +2412,9 @@ export namespace Prisma {
       customer?: boolean | Company$customerArgs<ExtArgs>;
       category?: boolean | Company$categoryArgs<ExtArgs>;
       product?: boolean | Company$productArgs<ExtArgs>;
+      order?: boolean | Company$orderArgs<ExtArgs>;
+      orderDetail?: boolean | Company$orderDetailArgs<ExtArgs>;
+      transactionLog?: boolean | Company$transactionLogArgs<ExtArgs>;
       _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['company']
@@ -1954,6 +2479,9 @@ export namespace Prisma {
     customer?: boolean | Company$customerArgs<ExtArgs>;
     category?: boolean | Company$categoryArgs<ExtArgs>;
     product?: boolean | Company$productArgs<ExtArgs>;
+    order?: boolean | Company$orderArgs<ExtArgs>;
+    orderDetail?: boolean | Company$orderDetailArgs<ExtArgs>;
+    transactionLog?: boolean | Company$transactionLogArgs<ExtArgs>;
     _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type CompanyIncludeCreateManyAndReturn<
@@ -1972,6 +2500,9 @@ export namespace Prisma {
       customer: Prisma.$CustomerPayload<ExtArgs>[];
       category: Prisma.$CategoryPayload<ExtArgs>[];
       product: Prisma.$ProductPayload<ExtArgs>[];
+      order: Prisma.$OrderPayload<ExtArgs>[];
+      orderDetail: Prisma.$OrderDetailPayload<ExtArgs>[];
+      transactionLog: Prisma.$TransactionLogPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -2572,6 +3103,39 @@ export namespace Prisma {
         >
       | Null
     >;
+    order<T extends Company$orderArgs<ExtArgs> = {}>(
+      args?: Subset<T, Company$orderArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$OrderPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    orderDetail<T extends Company$orderDetailArgs<ExtArgs> = {}>(
+      args?: Subset<T, Company$orderDetailArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$OrderDetailPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    transactionLog<T extends Company$transactionLogArgs<ExtArgs> = {}>(
+      args?: Subset<T, Company$transactionLogArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TransactionLogPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3152,6 +3716,88 @@ export namespace Prisma {
   };
 
   /**
+   * Company.order
+   */
+  export type Company$orderArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[];
+    cursor?: OrderWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[];
+  };
+
+  /**
+   * Company.orderDetail
+   */
+  export type Company$orderDetailArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    where?: OrderDetailWhereInput;
+    orderBy?:
+      | OrderDetailOrderByWithRelationInput
+      | OrderDetailOrderByWithRelationInput[];
+    cursor?: OrderDetailWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: OrderDetailScalarFieldEnum | OrderDetailScalarFieldEnum[];
+  };
+
+  /**
+   * Company.transactionLog
+   */
+  export type Company$transactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    where?: TransactionLogWhereInput;
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    cursor?: TransactionLogWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TransactionLogScalarFieldEnum | TransactionLogScalarFieldEnum[];
+  };
+
+  /**
    * Company without action
    */
   export type CompanyDefaultArgs<
@@ -3446,6 +4092,8 @@ export namespace Prisma {
       otp?: boolean;
       otpExpired?: boolean;
       company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      transactionLog?: boolean | CompanyUser$transactionLogArgs<ExtArgs>;
+      _count?: boolean | CompanyUserCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['companyUser']
   >;
@@ -3532,6 +4180,8 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    transactionLog?: boolean | CompanyUser$transactionLogArgs<ExtArgs>;
+    _count?: boolean | CompanyUserCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type CompanyUserIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
@@ -3550,6 +4200,7 @@ export namespace Prisma {
     name: 'CompanyUser';
     objects: {
       company: Prisma.$CompanyPayload<ExtArgs>;
+      transactionLog: Prisma.$TransactionLogPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -4130,6 +4781,17 @@ export namespace Prisma {
       ExtArgs,
       GlobalOmitOptions
     >;
+    transactionLog<T extends CompanyUser$transactionLogArgs<ExtArgs> = {}>(
+      args?: Subset<T, CompanyUser$transactionLogArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TransactionLogPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4615,6 +5277,34 @@ export namespace Prisma {
      * Limit how many CompanyUsers to delete.
      */
     limit?: number;
+  };
+
+  /**
+   * CompanyUser.transactionLog
+   */
+  export type CompanyUser$transactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    where?: TransactionLogWhereInput;
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    cursor?: TransactionLogWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TransactionLogScalarFieldEnum | TransactionLogScalarFieldEnum[];
   };
 
   /**
@@ -6211,6 +6901,7 @@ export namespace Prisma {
       deletedAt?: boolean;
       address?: boolean | Customer$addressArgs<ExtArgs>;
       company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      order?: boolean | Customer$orderArgs<ExtArgs>;
       _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['customer']
@@ -6283,6 +6974,7 @@ export namespace Prisma {
   > = {
     address?: boolean | Customer$addressArgs<ExtArgs>;
     company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    order?: boolean | Customer$orderArgs<ExtArgs>;
     _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type CustomerIncludeCreateManyAndReturn<
@@ -6303,6 +6995,7 @@ export namespace Prisma {
     objects: {
       address: Prisma.$AddressCustomerPayload<ExtArgs>[];
       company: Prisma.$CompanyPayload<ExtArgs>;
+      order: Prisma.$OrderPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -6887,6 +7580,17 @@ export namespace Prisma {
       ExtArgs,
       GlobalOmitOptions
     >;
+    order<T extends Customer$orderArgs<ExtArgs> = {}>(
+      args?: Subset<T, Customer$orderArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$OrderPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7398,6 +8102,32 @@ export namespace Prisma {
     distinct?:
       | AddressCustomerScalarFieldEnum
       | AddressCustomerScalarFieldEnum[];
+  };
+
+  /**
+   * Customer.order
+   */
+  export type Customer$orderArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[];
+    cursor?: OrderWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[];
   };
 
   /**
@@ -10494,8 +11224,8 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked: number | null;
-    qtySold: number | null;
+    qtyBooked: number;
+    qtySold: number;
     image: string | null;
     categoryId: number;
     companyId: number;
@@ -10541,6 +11271,9 @@ export namespace Prisma {
       deletedAt?: boolean;
       category?: boolean | CategoryDefaultArgs<ExtArgs>;
       company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      orderDetail?: boolean | Product$orderDetailArgs<ExtArgs>;
+      transactionLog?: boolean | Product$transactionLogArgs<ExtArgs>;
+      _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['product']
   >;
@@ -10630,6 +11363,9 @@ export namespace Prisma {
   > = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>;
     company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    orderDetail?: boolean | Product$orderDetailArgs<ExtArgs>;
+    transactionLog?: boolean | Product$transactionLogArgs<ExtArgs>;
+    _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type ProductIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
@@ -10651,6 +11387,8 @@ export namespace Prisma {
     objects: {
       category: Prisma.$CategoryPayload<ExtArgs>;
       company: Prisma.$CompanyPayload<ExtArgs>;
+      orderDetail: Prisma.$OrderDetailPayload<ExtArgs>[];
+      transactionLog: Prisma.$TransactionLogPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -10659,8 +11397,8 @@ export namespace Prisma {
         description: string;
         price: number;
         qty: number;
-        qtyBooked: number | null;
-        qtySold: number | null;
+        qtyBooked: number;
+        qtySold: number;
         image: string | null;
         categoryId: number;
         companyId: number;
@@ -11241,6 +11979,28 @@ export namespace Prisma {
       ExtArgs,
       GlobalOmitOptions
     >;
+    orderDetail<T extends Product$orderDetailArgs<ExtArgs> = {}>(
+      args?: Subset<T, Product$orderDetailArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$OrderDetailPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    transactionLog<T extends Product$transactionLogArgs<ExtArgs> = {}>(
+      args?: Subset<T, Product$transactionLogArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TransactionLogPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11723,6 +12483,62 @@ export namespace Prisma {
   };
 
   /**
+   * Product.orderDetail
+   */
+  export type Product$orderDetailArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    where?: OrderDetailWhereInput;
+    orderBy?:
+      | OrderDetailOrderByWithRelationInput
+      | OrderDetailOrderByWithRelationInput[];
+    cursor?: OrderDetailWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: OrderDetailScalarFieldEnum | OrderDetailScalarFieldEnum[];
+  };
+
+  /**
+   * Product.transactionLog
+   */
+  export type Product$transactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    where?: TransactionLogWhereInput;
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    cursor?: TransactionLogWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TransactionLogScalarFieldEnum | TransactionLogScalarFieldEnum[];
+  };
+
+  /**
    * Product without action
    */
   export type ProductDefaultArgs<
@@ -11740,6 +12556,4557 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProductInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model Order
+   */
+
+  export type AggregateOrder = {
+    _count: OrderCountAggregateOutputType | null;
+    _avg: OrderAvgAggregateOutputType | null;
+    _sum: OrderSumAggregateOutputType | null;
+    _min: OrderMinAggregateOutputType | null;
+    _max: OrderMaxAggregateOutputType | null;
+  };
+
+  export type OrderAvgAggregateOutputType = {
+    id: number | null;
+    customerId: number | null;
+    companyId: number | null;
+    grandTotal: number | null;
+  };
+
+  export type OrderSumAggregateOutputType = {
+    id: number | null;
+    customerId: number | null;
+    companyId: number | null;
+    grandTotal: number | null;
+  };
+
+  export type OrderMinAggregateOutputType = {
+    id: number | null;
+    customerId: number | null;
+    companyId: number | null;
+    grandTotal: number | null;
+    paymentStatus: $Enums.PaymentStatus | null;
+    shippingStatus: $Enums.ShippingStatus | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
+  };
+
+  export type OrderMaxAggregateOutputType = {
+    id: number | null;
+    customerId: number | null;
+    companyId: number | null;
+    grandTotal: number | null;
+    paymentStatus: $Enums.PaymentStatus | null;
+    shippingStatus: $Enums.ShippingStatus | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
+  };
+
+  export type OrderCountAggregateOutputType = {
+    id: number;
+    customerId: number;
+    companyId: number;
+    grandTotal: number;
+    paymentStatus: number;
+    shippingStatus: number;
+    createdAt: number;
+    updatedAt: number;
+    deletedAt: number;
+    _all: number;
+  };
+
+  export type OrderAvgAggregateInputType = {
+    id?: true;
+    customerId?: true;
+    companyId?: true;
+    grandTotal?: true;
+  };
+
+  export type OrderSumAggregateInputType = {
+    id?: true;
+    customerId?: true;
+    companyId?: true;
+    grandTotal?: true;
+  };
+
+  export type OrderMinAggregateInputType = {
+    id?: true;
+    customerId?: true;
+    companyId?: true;
+    grandTotal?: true;
+    paymentStatus?: true;
+    shippingStatus?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    deletedAt?: true;
+  };
+
+  export type OrderMaxAggregateInputType = {
+    id?: true;
+    customerId?: true;
+    companyId?: true;
+    grandTotal?: true;
+    paymentStatus?: true;
+    shippingStatus?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    deletedAt?: true;
+  };
+
+  export type OrderCountAggregateInputType = {
+    id?: true;
+    customerId?: true;
+    companyId?: true;
+    grandTotal?: true;
+    paymentStatus?: true;
+    shippingStatus?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    deletedAt?: true;
+    _all?: true;
+  };
+
+  export type OrderAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Order to aggregate.
+     */
+    where?: OrderWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: OrderWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Orders.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Orders
+     **/
+    _count?: true | OrderCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+     **/
+    _avg?: OrderAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+     **/
+    _sum?: OrderSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: OrderMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: OrderMaxAggregateInputType;
+  };
+
+  export type GetOrderAggregateType<T extends OrderAggregateArgs> = {
+    [P in keyof T & keyof AggregateOrder]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrder[P]>
+      : GetScalarType<T[P], AggregateOrder[P]>;
+  };
+
+  export type OrderGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OrderWhereInput;
+    orderBy?:
+      | OrderOrderByWithAggregationInput
+      | OrderOrderByWithAggregationInput[];
+    by: OrderScalarFieldEnum[] | OrderScalarFieldEnum;
+    having?: OrderScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: OrderCountAggregateInputType | true;
+    _avg?: OrderAvgAggregateInputType;
+    _sum?: OrderSumAggregateInputType;
+    _min?: OrderMinAggregateInputType;
+    _max?: OrderMaxAggregateInputType;
+  };
+
+  export type OrderGroupByOutputType = {
+    id: number;
+    customerId: number;
+    companyId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus: $Enums.ShippingStatus | null;
+    createdAt: Date;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
+    _count: OrderCountAggregateOutputType | null;
+    _avg: OrderAvgAggregateOutputType | null;
+    _sum: OrderSumAggregateOutputType | null;
+    _min: OrderMinAggregateOutputType | null;
+    _max: OrderMaxAggregateOutputType | null;
+  };
+
+  type GetOrderGroupByPayload<T extends OrderGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<OrderGroupByOutputType, T['by']> & {
+          [P in keyof T & keyof OrderGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrderGroupByOutputType[P]>
+            : GetScalarType<T[P], OrderGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type OrderSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      customerId?: boolean;
+      companyId?: boolean;
+      grandTotal?: boolean;
+      paymentStatus?: boolean;
+      shippingStatus?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+      deletedAt?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      customer?: boolean | CustomerDefaultArgs<ExtArgs>;
+      orderDetail?: boolean | Order$orderDetailArgs<ExtArgs>;
+      _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['order']
+  >;
+
+  export type OrderSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      customerId?: boolean;
+      companyId?: boolean;
+      grandTotal?: boolean;
+      paymentStatus?: boolean;
+      shippingStatus?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+      deletedAt?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      customer?: boolean | CustomerDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['order']
+  >;
+
+  export type OrderSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      customerId?: boolean;
+      companyId?: boolean;
+      grandTotal?: boolean;
+      paymentStatus?: boolean;
+      shippingStatus?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+      deletedAt?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      customer?: boolean | CustomerDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['order']
+  >;
+
+  export type OrderSelectScalar = {
+    id?: boolean;
+    customerId?: boolean;
+    companyId?: boolean;
+    grandTotal?: boolean;
+    paymentStatus?: boolean;
+    shippingStatus?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    deletedAt?: boolean;
+  };
+
+  export type OrderOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    | 'id'
+    | 'customerId'
+    | 'companyId'
+    | 'grandTotal'
+    | 'paymentStatus'
+    | 'shippingStatus'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'deletedAt',
+    ExtArgs['result']['order']
+  >;
+  export type OrderInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>;
+    orderDetail?: boolean | Order$orderDetailArgs<ExtArgs>;
+    _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+  export type OrderIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>;
+  };
+  export type OrderIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>;
+  };
+
+  export type $OrderPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'Order';
+    objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>;
+      customer: Prisma.$CustomerPayload<ExtArgs>;
+      orderDetail: Prisma.$OrderDetailPayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: number;
+        customerId: number;
+        companyId: number;
+        grandTotal: number;
+        paymentStatus: $Enums.PaymentStatus;
+        shippingStatus: $Enums.ShippingStatus | null;
+        createdAt: Date;
+        updatedAt: Date | null;
+        deletedAt: Date | null;
+      },
+      ExtArgs['result']['order']
+    >;
+    composites: {};
+  };
+
+  type OrderGetPayload<
+    S extends boolean | null | undefined | OrderDefaultArgs,
+  > = $Result.GetResult<Prisma.$OrderPayload, S>;
+
+  type OrderCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<OrderFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: OrderCountAggregateInputType | true;
+  };
+
+  export interface OrderDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['Order'];
+      meta: { name: 'Order' };
+    };
+    /**
+     * Find zero or one Order that matches the filter.
+     * @param {OrderFindUniqueArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrderFindUniqueArgs>(
+      args: SelectSubset<T, OrderFindUniqueArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'findUnique',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find one Order that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OrderFindUniqueOrThrowArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrderFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, OrderFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find the first Order that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderFindFirstArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrderFindFirstArgs>(
+      args?: SelectSubset<T, OrderFindFirstArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'findFirst',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find the first Order that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderFindFirstOrThrowArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrderFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, OrderFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find zero or more Orders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Orders
+     * const orders = await prisma.order.findMany()
+     *
+     * // Get first 10 Orders
+     * const orders = await prisma.order.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const orderWithIdOnly = await prisma.order.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends OrderFindManyArgs>(
+      args?: SelectSubset<T, OrderFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Create a Order.
+     * @param {OrderCreateArgs} args - Arguments to create a Order.
+     * @example
+     * // Create one Order
+     * const Order = await prisma.order.create({
+     *   data: {
+     *     // ... data to create a Order
+     *   }
+     * })
+     *
+     */
+    create<T extends OrderCreateArgs>(
+      args: SelectSubset<T, OrderCreateArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'create',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Create many Orders.
+     * @param {OrderCreateManyArgs} args - Arguments to create many Orders.
+     * @example
+     * // Create many Orders
+     * const order = await prisma.order.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends OrderCreateManyArgs>(
+      args?: SelectSubset<T, OrderCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many Orders and returns the data saved in the database.
+     * @param {OrderCreateManyAndReturnArgs} args - Arguments to create many Orders.
+     * @example
+     * // Create many Orders
+     * const order = await prisma.order.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Orders and only return the `id`
+     * const orderWithIdOnly = await prisma.order.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends OrderCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, OrderCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Delete a Order.
+     * @param {OrderDeleteArgs} args - Arguments to delete one Order.
+     * @example
+     * // Delete one Order
+     * const Order = await prisma.order.delete({
+     *   where: {
+     *     // ... filter to delete one Order
+     *   }
+     * })
+     *
+     */
+    delete<T extends OrderDeleteArgs>(
+      args: SelectSubset<T, OrderDeleteArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'delete',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Update one Order.
+     * @param {OrderUpdateArgs} args - Arguments to update one Order.
+     * @example
+     * // Update one Order
+     * const order = await prisma.order.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends OrderUpdateArgs>(
+      args: SelectSubset<T, OrderUpdateArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'update',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Delete zero or more Orders.
+     * @param {OrderDeleteManyArgs} args - Arguments to filter Orders to delete.
+     * @example
+     * // Delete a few Orders
+     * const { count } = await prisma.order.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends OrderDeleteManyArgs>(
+      args?: SelectSubset<T, OrderDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more Orders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Orders
+     * const order = await prisma.order.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends OrderUpdateManyArgs>(
+      args: SelectSubset<T, OrderUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more Orders and returns the data updated in the database.
+     * @param {OrderUpdateManyAndReturnArgs} args - Arguments to update many Orders.
+     * @example
+     * // Update many Orders
+     * const order = await prisma.order.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Orders and only return the `id`
+     * const orderWithIdOnly = await prisma.order.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends OrderUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, OrderUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Create or update one Order.
+     * @param {OrderUpsertArgs} args - Arguments to update or create a Order.
+     * @example
+     * // Update or create a Order
+     * const order = await prisma.order.upsert({
+     *   create: {
+     *     // ... data to create a Order
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Order we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrderUpsertArgs>(
+      args: SelectSubset<T, OrderUpsertArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      $Result.GetResult<
+        Prisma.$OrderPayload<ExtArgs>,
+        T,
+        'upsert',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Count the number of Orders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderCountArgs} args - Arguments to filter Orders to count.
+     * @example
+     * // Count the number of Orders
+     * const count = await prisma.order.count({
+     *   where: {
+     *     // ... the filter for the Orders we want to count
+     *   }
+     * })
+     **/
+    count<T extends OrderCountArgs>(
+      args?: Subset<T, OrderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrderCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a Order.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends OrderAggregateArgs>(
+      args: Subset<T, OrderAggregateArgs>,
+    ): Prisma.PrismaPromise<GetOrderAggregateType<T>>;
+
+    /**
+     * Group by Order.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends OrderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrderGroupByArgs['orderBy'] }
+        : { orderBy?: OrderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, OrderGroupByArgs, OrderByArg> & InputErrors,
+    ): {} extends InputErrors
+      ? GetOrderGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Order model
+     */
+    readonly fields: OrderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Order.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrderClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, CompanyDefaultArgs<ExtArgs>>,
+    ): Prisma__CompanyClient<
+      | $Result.GetResult<
+          Prisma.$CompanyPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          GlobalOmitOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    customer<T extends CustomerDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, CustomerDefaultArgs<ExtArgs>>,
+    ): Prisma__CustomerClient<
+      | $Result.GetResult<
+          Prisma.$CustomerPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          GlobalOmitOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    orderDetail<T extends Order$orderDetailArgs<ExtArgs> = {}>(
+      args?: Subset<T, Order$orderDetailArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$OrderDetailPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the Order model
+   */
+  interface OrderFieldRefs {
+    readonly id: FieldRef<'Order', 'Int'>;
+    readonly customerId: FieldRef<'Order', 'Int'>;
+    readonly companyId: FieldRef<'Order', 'Int'>;
+    readonly grandTotal: FieldRef<'Order', 'Float'>;
+    readonly paymentStatus: FieldRef<'Order', 'PaymentStatus'>;
+    readonly shippingStatus: FieldRef<'Order', 'ShippingStatus'>;
+    readonly createdAt: FieldRef<'Order', 'DateTime'>;
+    readonly updatedAt: FieldRef<'Order', 'DateTime'>;
+    readonly deletedAt: FieldRef<'Order', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * Order findUnique
+   */
+  export type OrderFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * Filter, which Order to fetch.
+     */
+    where: OrderWhereUniqueInput;
+  };
+
+  /**
+   * Order findUniqueOrThrow
+   */
+  export type OrderFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * Filter, which Order to fetch.
+     */
+    where: OrderWhereUniqueInput;
+  };
+
+  /**
+   * Order findFirst
+   */
+  export type OrderFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * Filter, which Order to fetch.
+     */
+    where?: OrderWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Orders.
+     */
+    cursor?: OrderWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Orders.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Orders.
+     */
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[];
+  };
+
+  /**
+   * Order findFirstOrThrow
+   */
+  export type OrderFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * Filter, which Order to fetch.
+     */
+    where?: OrderWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Orders.
+     */
+    cursor?: OrderWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Orders.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Orders.
+     */
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[];
+  };
+
+  /**
+   * Order findMany
+   */
+  export type OrderFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * Filter, which Orders to fetch.
+     */
+    where?: OrderWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Orders.
+     */
+    cursor?: OrderWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Orders.
+     */
+    skip?: number;
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[];
+  };
+
+  /**
+   * Order create
+   */
+  export type OrderCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Order.
+     */
+    data: XOR<OrderCreateInput, OrderUncheckedCreateInput>;
+  };
+
+  /**
+   * Order createMany
+   */
+  export type OrderCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many Orders.
+     */
+    data: OrderCreateManyInput | OrderCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * Order createManyAndReturn
+   */
+  export type OrderCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Orders.
+     */
+    data: OrderCreateManyInput | OrderCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * Order update
+   */
+  export type OrderUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Order.
+     */
+    data: XOR<OrderUpdateInput, OrderUncheckedUpdateInput>;
+    /**
+     * Choose, which Order to update.
+     */
+    where: OrderWhereUniqueInput;
+  };
+
+  /**
+   * Order updateMany
+   */
+  export type OrderUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update Orders.
+     */
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyInput>;
+    /**
+     * Filter which Orders to update
+     */
+    where?: OrderWhereInput;
+    /**
+     * Limit how many Orders to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * Order updateManyAndReturn
+   */
+  export type OrderUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * The data used to update Orders.
+     */
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyInput>;
+    /**
+     * Filter which Orders to update
+     */
+    where?: OrderWhereInput;
+    /**
+     * Limit how many Orders to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * Order upsert
+   */
+  export type OrderUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Order to update in case it exists.
+     */
+    where: OrderWhereUniqueInput;
+    /**
+     * In case the Order found by the `where` argument doesn't exist, create a new Order with this data.
+     */
+    create: XOR<OrderCreateInput, OrderUncheckedCreateInput>;
+    /**
+     * In case the Order was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrderUpdateInput, OrderUncheckedUpdateInput>;
+  };
+
+  /**
+   * Order delete
+   */
+  export type OrderDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+    /**
+     * Filter which Order to delete.
+     */
+    where: OrderWhereUniqueInput;
+  };
+
+  /**
+   * Order deleteMany
+   */
+  export type OrderDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Orders to delete
+     */
+    where?: OrderWhereInput;
+    /**
+     * Limit how many Orders to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * Order.orderDetail
+   */
+  export type Order$orderDetailArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    where?: OrderDetailWhereInput;
+    orderBy?:
+      | OrderDetailOrderByWithRelationInput
+      | OrderDetailOrderByWithRelationInput[];
+    cursor?: OrderDetailWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: OrderDetailScalarFieldEnum | OrderDetailScalarFieldEnum[];
+  };
+
+  /**
+   * Order without action
+   */
+  export type OrderDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model OrderDetail
+   */
+
+  export type AggregateOrderDetail = {
+    _count: OrderDetailCountAggregateOutputType | null;
+    _avg: OrderDetailAvgAggregateOutputType | null;
+    _sum: OrderDetailSumAggregateOutputType | null;
+    _min: OrderDetailMinAggregateOutputType | null;
+    _max: OrderDetailMaxAggregateOutputType | null;
+  };
+
+  export type OrderDetailAvgAggregateOutputType = {
+    id: number | null;
+    orderId: number | null;
+    companyId: number | null;
+    productId: number | null;
+    qty: number | null;
+    price: number | null;
+    subTotal: number | null;
+  };
+
+  export type OrderDetailSumAggregateOutputType = {
+    id: number | null;
+    orderId: number | null;
+    companyId: number | null;
+    productId: number | null;
+    qty: number | null;
+    price: number | null;
+    subTotal: number | null;
+  };
+
+  export type OrderDetailMinAggregateOutputType = {
+    id: number | null;
+    orderId: number | null;
+    companyId: number | null;
+    productId: number | null;
+    qty: number | null;
+    price: number | null;
+    subTotal: number | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
+  };
+
+  export type OrderDetailMaxAggregateOutputType = {
+    id: number | null;
+    orderId: number | null;
+    companyId: number | null;
+    productId: number | null;
+    qty: number | null;
+    price: number | null;
+    subTotal: number | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
+  };
+
+  export type OrderDetailCountAggregateOutputType = {
+    id: number;
+    orderId: number;
+    companyId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: number;
+    updatedAt: number;
+    deletedAt: number;
+    _all: number;
+  };
+
+  export type OrderDetailAvgAggregateInputType = {
+    id?: true;
+    orderId?: true;
+    companyId?: true;
+    productId?: true;
+    qty?: true;
+    price?: true;
+    subTotal?: true;
+  };
+
+  export type OrderDetailSumAggregateInputType = {
+    id?: true;
+    orderId?: true;
+    companyId?: true;
+    productId?: true;
+    qty?: true;
+    price?: true;
+    subTotal?: true;
+  };
+
+  export type OrderDetailMinAggregateInputType = {
+    id?: true;
+    orderId?: true;
+    companyId?: true;
+    productId?: true;
+    qty?: true;
+    price?: true;
+    subTotal?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    deletedAt?: true;
+  };
+
+  export type OrderDetailMaxAggregateInputType = {
+    id?: true;
+    orderId?: true;
+    companyId?: true;
+    productId?: true;
+    qty?: true;
+    price?: true;
+    subTotal?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    deletedAt?: true;
+  };
+
+  export type OrderDetailCountAggregateInputType = {
+    id?: true;
+    orderId?: true;
+    companyId?: true;
+    productId?: true;
+    qty?: true;
+    price?: true;
+    subTotal?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    deletedAt?: true;
+    _all?: true;
+  };
+
+  export type OrderDetailAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which OrderDetail to aggregate.
+     */
+    where?: OrderDetailWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of OrderDetails to fetch.
+     */
+    orderBy?:
+      | OrderDetailOrderByWithRelationInput
+      | OrderDetailOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: OrderDetailWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` OrderDetails from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` OrderDetails.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned OrderDetails
+     **/
+    _count?: true | OrderDetailCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+     **/
+    _avg?: OrderDetailAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+     **/
+    _sum?: OrderDetailSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: OrderDetailMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: OrderDetailMaxAggregateInputType;
+  };
+
+  export type GetOrderDetailAggregateType<T extends OrderDetailAggregateArgs> =
+    {
+      [P in keyof T & keyof AggregateOrderDetail]: P extends '_count' | 'count'
+        ? T[P] extends true
+          ? number
+          : GetScalarType<T[P], AggregateOrderDetail[P]>
+        : GetScalarType<T[P], AggregateOrderDetail[P]>;
+    };
+
+  export type OrderDetailGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OrderDetailWhereInput;
+    orderBy?:
+      | OrderDetailOrderByWithAggregationInput
+      | OrderDetailOrderByWithAggregationInput[];
+    by: OrderDetailScalarFieldEnum[] | OrderDetailScalarFieldEnum;
+    having?: OrderDetailScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: OrderDetailCountAggregateInputType | true;
+    _avg?: OrderDetailAvgAggregateInputType;
+    _sum?: OrderDetailSumAggregateInputType;
+    _min?: OrderDetailMinAggregateInputType;
+    _max?: OrderDetailMaxAggregateInputType;
+  };
+
+  export type OrderDetailGroupByOutputType = {
+    id: number;
+    orderId: number;
+    companyId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
+    _count: OrderDetailCountAggregateOutputType | null;
+    _avg: OrderDetailAvgAggregateOutputType | null;
+    _sum: OrderDetailSumAggregateOutputType | null;
+    _min: OrderDetailMinAggregateOutputType | null;
+    _max: OrderDetailMaxAggregateOutputType | null;
+  };
+
+  type GetOrderDetailGroupByPayload<T extends OrderDetailGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<OrderDetailGroupByOutputType, T['by']> & {
+          [P in keyof T &
+            keyof OrderDetailGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrderDetailGroupByOutputType[P]>
+            : GetScalarType<T[P], OrderDetailGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type OrderDetailSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      orderId?: boolean;
+      companyId?: boolean;
+      productId?: boolean;
+      qty?: boolean;
+      price?: boolean;
+      subTotal?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+      deletedAt?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      order?: boolean | OrderDefaultArgs<ExtArgs>;
+      product?: boolean | ProductDefaultArgs<ExtArgs>;
+      transactionLog?: boolean | OrderDetail$transactionLogArgs<ExtArgs>;
+      _count?: boolean | OrderDetailCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['orderDetail']
+  >;
+
+  export type OrderDetailSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      orderId?: boolean;
+      companyId?: boolean;
+      productId?: boolean;
+      qty?: boolean;
+      price?: boolean;
+      subTotal?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+      deletedAt?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      order?: boolean | OrderDefaultArgs<ExtArgs>;
+      product?: boolean | ProductDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['orderDetail']
+  >;
+
+  export type OrderDetailSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      orderId?: boolean;
+      companyId?: boolean;
+      productId?: boolean;
+      qty?: boolean;
+      price?: boolean;
+      subTotal?: boolean;
+      createdAt?: boolean;
+      updatedAt?: boolean;
+      deletedAt?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      order?: boolean | OrderDefaultArgs<ExtArgs>;
+      product?: boolean | ProductDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['orderDetail']
+  >;
+
+  export type OrderDetailSelectScalar = {
+    id?: boolean;
+    orderId?: boolean;
+    companyId?: boolean;
+    productId?: boolean;
+    qty?: boolean;
+    price?: boolean;
+    subTotal?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    deletedAt?: boolean;
+  };
+
+  export type OrderDetailOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    | 'id'
+    | 'orderId'
+    | 'companyId'
+    | 'productId'
+    | 'qty'
+    | 'price'
+    | 'subTotal'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'deletedAt',
+    ExtArgs['result']['orderDetail']
+  >;
+  export type OrderDetailInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    order?: boolean | OrderDefaultArgs<ExtArgs>;
+    product?: boolean | ProductDefaultArgs<ExtArgs>;
+    transactionLog?: boolean | OrderDetail$transactionLogArgs<ExtArgs>;
+    _count?: boolean | OrderDetailCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+  export type OrderDetailIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    order?: boolean | OrderDefaultArgs<ExtArgs>;
+    product?: boolean | ProductDefaultArgs<ExtArgs>;
+  };
+  export type OrderDetailIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    order?: boolean | OrderDefaultArgs<ExtArgs>;
+    product?: boolean | ProductDefaultArgs<ExtArgs>;
+  };
+
+  export type $OrderDetailPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'OrderDetail';
+    objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>;
+      order: Prisma.$OrderPayload<ExtArgs>;
+      product: Prisma.$ProductPayload<ExtArgs>;
+      transactionLog: Prisma.$TransactionLogPayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: number;
+        orderId: number;
+        companyId: number;
+        productId: number;
+        qty: number;
+        price: number;
+        subTotal: number;
+        createdAt: Date;
+        updatedAt: Date | null;
+        deletedAt: Date | null;
+      },
+      ExtArgs['result']['orderDetail']
+    >;
+    composites: {};
+  };
+
+  type OrderDetailGetPayload<
+    S extends boolean | null | undefined | OrderDetailDefaultArgs,
+  > = $Result.GetResult<Prisma.$OrderDetailPayload, S>;
+
+  type OrderDetailCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    OrderDetailFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: OrderDetailCountAggregateInputType | true;
+  };
+
+  export interface OrderDetailDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['OrderDetail'];
+      meta: { name: 'OrderDetail' };
+    };
+    /**
+     * Find zero or one OrderDetail that matches the filter.
+     * @param {OrderDetailFindUniqueArgs} args - Arguments to find a OrderDetail
+     * @example
+     * // Get one OrderDetail
+     * const orderDetail = await prisma.orderDetail.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrderDetailFindUniqueArgs>(
+      args: SelectSubset<T, OrderDetailFindUniqueArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'findUnique',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find one OrderDetail that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OrderDetailFindUniqueOrThrowArgs} args - Arguments to find a OrderDetail
+     * @example
+     * // Get one OrderDetail
+     * const orderDetail = await prisma.orderDetail.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrderDetailFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, OrderDetailFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find the first OrderDetail that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderDetailFindFirstArgs} args - Arguments to find a OrderDetail
+     * @example
+     * // Get one OrderDetail
+     * const orderDetail = await prisma.orderDetail.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrderDetailFindFirstArgs>(
+      args?: SelectSubset<T, OrderDetailFindFirstArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'findFirst',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find the first OrderDetail that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderDetailFindFirstOrThrowArgs} args - Arguments to find a OrderDetail
+     * @example
+     * // Get one OrderDetail
+     * const orderDetail = await prisma.orderDetail.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrderDetailFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, OrderDetailFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find zero or more OrderDetails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderDetailFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OrderDetails
+     * const orderDetails = await prisma.orderDetail.findMany()
+     *
+     * // Get first 10 OrderDetails
+     * const orderDetails = await prisma.orderDetail.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const orderDetailWithIdOnly = await prisma.orderDetail.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends OrderDetailFindManyArgs>(
+      args?: SelectSubset<T, OrderDetailFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Create a OrderDetail.
+     * @param {OrderDetailCreateArgs} args - Arguments to create a OrderDetail.
+     * @example
+     * // Create one OrderDetail
+     * const OrderDetail = await prisma.orderDetail.create({
+     *   data: {
+     *     // ... data to create a OrderDetail
+     *   }
+     * })
+     *
+     */
+    create<T extends OrderDetailCreateArgs>(
+      args: SelectSubset<T, OrderDetailCreateArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'create',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Create many OrderDetails.
+     * @param {OrderDetailCreateManyArgs} args - Arguments to create many OrderDetails.
+     * @example
+     * // Create many OrderDetails
+     * const orderDetail = await prisma.orderDetail.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends OrderDetailCreateManyArgs>(
+      args?: SelectSubset<T, OrderDetailCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many OrderDetails and returns the data saved in the database.
+     * @param {OrderDetailCreateManyAndReturnArgs} args - Arguments to create many OrderDetails.
+     * @example
+     * // Create many OrderDetails
+     * const orderDetail = await prisma.orderDetail.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many OrderDetails and only return the `id`
+     * const orderDetailWithIdOnly = await prisma.orderDetail.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends OrderDetailCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, OrderDetailCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Delete a OrderDetail.
+     * @param {OrderDetailDeleteArgs} args - Arguments to delete one OrderDetail.
+     * @example
+     * // Delete one OrderDetail
+     * const OrderDetail = await prisma.orderDetail.delete({
+     *   where: {
+     *     // ... filter to delete one OrderDetail
+     *   }
+     * })
+     *
+     */
+    delete<T extends OrderDetailDeleteArgs>(
+      args: SelectSubset<T, OrderDetailDeleteArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'delete',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Update one OrderDetail.
+     * @param {OrderDetailUpdateArgs} args - Arguments to update one OrderDetail.
+     * @example
+     * // Update one OrderDetail
+     * const orderDetail = await prisma.orderDetail.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends OrderDetailUpdateArgs>(
+      args: SelectSubset<T, OrderDetailUpdateArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'update',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Delete zero or more OrderDetails.
+     * @param {OrderDetailDeleteManyArgs} args - Arguments to filter OrderDetails to delete.
+     * @example
+     * // Delete a few OrderDetails
+     * const { count } = await prisma.orderDetail.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends OrderDetailDeleteManyArgs>(
+      args?: SelectSubset<T, OrderDetailDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more OrderDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderDetailUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OrderDetails
+     * const orderDetail = await prisma.orderDetail.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends OrderDetailUpdateManyArgs>(
+      args: SelectSubset<T, OrderDetailUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more OrderDetails and returns the data updated in the database.
+     * @param {OrderDetailUpdateManyAndReturnArgs} args - Arguments to update many OrderDetails.
+     * @example
+     * // Update many OrderDetails
+     * const orderDetail = await prisma.orderDetail.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more OrderDetails and only return the `id`
+     * const orderDetailWithIdOnly = await prisma.orderDetail.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends OrderDetailUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, OrderDetailUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Create or update one OrderDetail.
+     * @param {OrderDetailUpsertArgs} args - Arguments to update or create a OrderDetail.
+     * @example
+     * // Update or create a OrderDetail
+     * const orderDetail = await prisma.orderDetail.upsert({
+     *   create: {
+     *     // ... data to create a OrderDetail
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OrderDetail we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrderDetailUpsertArgs>(
+      args: SelectSubset<T, OrderDetailUpsertArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'upsert',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Count the number of OrderDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderDetailCountArgs} args - Arguments to filter OrderDetails to count.
+     * @example
+     * // Count the number of OrderDetails
+     * const count = await prisma.orderDetail.count({
+     *   where: {
+     *     // ... the filter for the OrderDetails we want to count
+     *   }
+     * })
+     **/
+    count<T extends OrderDetailCountArgs>(
+      args?: Subset<T, OrderDetailCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrderDetailCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a OrderDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderDetailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends OrderDetailAggregateArgs>(
+      args: Subset<T, OrderDetailAggregateArgs>,
+    ): Prisma.PrismaPromise<GetOrderDetailAggregateType<T>>;
+
+    /**
+     * Group by OrderDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderDetailGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends OrderDetailGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrderDetailGroupByArgs['orderBy'] }
+        : { orderBy?: OrderDetailGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, OrderDetailGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetOrderDetailGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the OrderDetail model
+     */
+    readonly fields: OrderDetailFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OrderDetail.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrderDetailClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, CompanyDefaultArgs<ExtArgs>>,
+    ): Prisma__CompanyClient<
+      | $Result.GetResult<
+          Prisma.$CompanyPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          GlobalOmitOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    order<T extends OrderDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, OrderDefaultArgs<ExtArgs>>,
+    ): Prisma__OrderClient<
+      | $Result.GetResult<
+          Prisma.$OrderPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          GlobalOmitOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProductDefaultArgs<ExtArgs>>,
+    ): Prisma__ProductClient<
+      | $Result.GetResult<
+          Prisma.$ProductPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          GlobalOmitOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    transactionLog<T extends OrderDetail$transactionLogArgs<ExtArgs> = {}>(
+      args?: Subset<T, OrderDetail$transactionLogArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TransactionLogPayload<ExtArgs>,
+          T,
+          'findMany',
+          GlobalOmitOptions
+        >
+      | Null
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the OrderDetail model
+   */
+  interface OrderDetailFieldRefs {
+    readonly id: FieldRef<'OrderDetail', 'Int'>;
+    readonly orderId: FieldRef<'OrderDetail', 'Int'>;
+    readonly companyId: FieldRef<'OrderDetail', 'Int'>;
+    readonly productId: FieldRef<'OrderDetail', 'Int'>;
+    readonly qty: FieldRef<'OrderDetail', 'Int'>;
+    readonly price: FieldRef<'OrderDetail', 'Float'>;
+    readonly subTotal: FieldRef<'OrderDetail', 'Float'>;
+    readonly createdAt: FieldRef<'OrderDetail', 'DateTime'>;
+    readonly updatedAt: FieldRef<'OrderDetail', 'DateTime'>;
+    readonly deletedAt: FieldRef<'OrderDetail', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * OrderDetail findUnique
+   */
+  export type OrderDetailFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * Filter, which OrderDetail to fetch.
+     */
+    where: OrderDetailWhereUniqueInput;
+  };
+
+  /**
+   * OrderDetail findUniqueOrThrow
+   */
+  export type OrderDetailFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * Filter, which OrderDetail to fetch.
+     */
+    where: OrderDetailWhereUniqueInput;
+  };
+
+  /**
+   * OrderDetail findFirst
+   */
+  export type OrderDetailFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * Filter, which OrderDetail to fetch.
+     */
+    where?: OrderDetailWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of OrderDetails to fetch.
+     */
+    orderBy?:
+      | OrderDetailOrderByWithRelationInput
+      | OrderDetailOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for OrderDetails.
+     */
+    cursor?: OrderDetailWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` OrderDetails from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` OrderDetails.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of OrderDetails.
+     */
+    distinct?: OrderDetailScalarFieldEnum | OrderDetailScalarFieldEnum[];
+  };
+
+  /**
+   * OrderDetail findFirstOrThrow
+   */
+  export type OrderDetailFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * Filter, which OrderDetail to fetch.
+     */
+    where?: OrderDetailWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of OrderDetails to fetch.
+     */
+    orderBy?:
+      | OrderDetailOrderByWithRelationInput
+      | OrderDetailOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for OrderDetails.
+     */
+    cursor?: OrderDetailWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` OrderDetails from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` OrderDetails.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of OrderDetails.
+     */
+    distinct?: OrderDetailScalarFieldEnum | OrderDetailScalarFieldEnum[];
+  };
+
+  /**
+   * OrderDetail findMany
+   */
+  export type OrderDetailFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * Filter, which OrderDetails to fetch.
+     */
+    where?: OrderDetailWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of OrderDetails to fetch.
+     */
+    orderBy?:
+      | OrderDetailOrderByWithRelationInput
+      | OrderDetailOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing OrderDetails.
+     */
+    cursor?: OrderDetailWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` OrderDetails from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` OrderDetails.
+     */
+    skip?: number;
+    distinct?: OrderDetailScalarFieldEnum | OrderDetailScalarFieldEnum[];
+  };
+
+  /**
+   * OrderDetail create
+   */
+  export type OrderDetailCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a OrderDetail.
+     */
+    data: XOR<OrderDetailCreateInput, OrderDetailUncheckedCreateInput>;
+  };
+
+  /**
+   * OrderDetail createMany
+   */
+  export type OrderDetailCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many OrderDetails.
+     */
+    data: OrderDetailCreateManyInput | OrderDetailCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * OrderDetail createManyAndReturn
+   */
+  export type OrderDetailCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * The data used to create many OrderDetails.
+     */
+    data: OrderDetailCreateManyInput | OrderDetailCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * OrderDetail update
+   */
+  export type OrderDetailUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a OrderDetail.
+     */
+    data: XOR<OrderDetailUpdateInput, OrderDetailUncheckedUpdateInput>;
+    /**
+     * Choose, which OrderDetail to update.
+     */
+    where: OrderDetailWhereUniqueInput;
+  };
+
+  /**
+   * OrderDetail updateMany
+   */
+  export type OrderDetailUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update OrderDetails.
+     */
+    data: XOR<
+      OrderDetailUpdateManyMutationInput,
+      OrderDetailUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which OrderDetails to update
+     */
+    where?: OrderDetailWhereInput;
+    /**
+     * Limit how many OrderDetails to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * OrderDetail updateManyAndReturn
+   */
+  export type OrderDetailUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * The data used to update OrderDetails.
+     */
+    data: XOR<
+      OrderDetailUpdateManyMutationInput,
+      OrderDetailUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which OrderDetails to update
+     */
+    where?: OrderDetailWhereInput;
+    /**
+     * Limit how many OrderDetails to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * OrderDetail upsert
+   */
+  export type OrderDetailUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the OrderDetail to update in case it exists.
+     */
+    where: OrderDetailWhereUniqueInput;
+    /**
+     * In case the OrderDetail found by the `where` argument doesn't exist, create a new OrderDetail with this data.
+     */
+    create: XOR<OrderDetailCreateInput, OrderDetailUncheckedCreateInput>;
+    /**
+     * In case the OrderDetail was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrderDetailUpdateInput, OrderDetailUncheckedUpdateInput>;
+  };
+
+  /**
+   * OrderDetail delete
+   */
+  export type OrderDetailDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    /**
+     * Filter which OrderDetail to delete.
+     */
+    where: OrderDetailWhereUniqueInput;
+  };
+
+  /**
+   * OrderDetail deleteMany
+   */
+  export type OrderDetailDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which OrderDetails to delete
+     */
+    where?: OrderDetailWhereInput;
+    /**
+     * Limit how many OrderDetails to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * OrderDetail.transactionLog
+   */
+  export type OrderDetail$transactionLogArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    where?: TransactionLogWhereInput;
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    cursor?: TransactionLogWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TransactionLogScalarFieldEnum | TransactionLogScalarFieldEnum[];
+  };
+
+  /**
+   * OrderDetail without action
+   */
+  export type OrderDetailDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model TransactionLog
+   */
+
+  export type AggregateTransactionLog = {
+    _count: TransactionLogCountAggregateOutputType | null;
+    _avg: TransactionLogAvgAggregateOutputType | null;
+    _sum: TransactionLogSumAggregateOutputType | null;
+    _min: TransactionLogMinAggregateOutputType | null;
+    _max: TransactionLogMaxAggregateOutputType | null;
+  };
+
+  export type TransactionLogAvgAggregateOutputType = {
+    id: number | null;
+    companyId: number | null;
+    companyUserId: number | null;
+    productId: number | null;
+    quantity: number | null;
+    orderDetailId: number | null;
+  };
+
+  export type TransactionLogSumAggregateOutputType = {
+    id: number | null;
+    companyId: number | null;
+    companyUserId: number | null;
+    productId: number | null;
+    quantity: number | null;
+    orderDetailId: number | null;
+  };
+
+  export type TransactionLogMinAggregateOutputType = {
+    id: number | null;
+    companyId: number | null;
+    companyUserId: number | null;
+    productId: number | null;
+    type: $Enums.TransactionType | null;
+    quantity: number | null;
+    orderDetailId: number | null;
+    createdAt: Date | null;
+    transactionDate: Date | null;
+    deletedAt: Date | null;
+    remarks: string | null;
+  };
+
+  export type TransactionLogMaxAggregateOutputType = {
+    id: number | null;
+    companyId: number | null;
+    companyUserId: number | null;
+    productId: number | null;
+    type: $Enums.TransactionType | null;
+    quantity: number | null;
+    orderDetailId: number | null;
+    createdAt: Date | null;
+    transactionDate: Date | null;
+    deletedAt: Date | null;
+    remarks: string | null;
+  };
+
+  export type TransactionLogCountAggregateOutputType = {
+    id: number;
+    companyId: number;
+    companyUserId: number;
+    productId: number;
+    type: number;
+    quantity: number;
+    orderDetailId: number;
+    createdAt: number;
+    transactionDate: number;
+    deletedAt: number;
+    remarks: number;
+    _all: number;
+  };
+
+  export type TransactionLogAvgAggregateInputType = {
+    id?: true;
+    companyId?: true;
+    companyUserId?: true;
+    productId?: true;
+    quantity?: true;
+    orderDetailId?: true;
+  };
+
+  export type TransactionLogSumAggregateInputType = {
+    id?: true;
+    companyId?: true;
+    companyUserId?: true;
+    productId?: true;
+    quantity?: true;
+    orderDetailId?: true;
+  };
+
+  export type TransactionLogMinAggregateInputType = {
+    id?: true;
+    companyId?: true;
+    companyUserId?: true;
+    productId?: true;
+    type?: true;
+    quantity?: true;
+    orderDetailId?: true;
+    createdAt?: true;
+    transactionDate?: true;
+    deletedAt?: true;
+    remarks?: true;
+  };
+
+  export type TransactionLogMaxAggregateInputType = {
+    id?: true;
+    companyId?: true;
+    companyUserId?: true;
+    productId?: true;
+    type?: true;
+    quantity?: true;
+    orderDetailId?: true;
+    createdAt?: true;
+    transactionDate?: true;
+    deletedAt?: true;
+    remarks?: true;
+  };
+
+  export type TransactionLogCountAggregateInputType = {
+    id?: true;
+    companyId?: true;
+    companyUserId?: true;
+    productId?: true;
+    type?: true;
+    quantity?: true;
+    orderDetailId?: true;
+    createdAt?: true;
+    transactionDate?: true;
+    deletedAt?: true;
+    remarks?: true;
+    _all?: true;
+  };
+
+  export type TransactionLogAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which TransactionLog to aggregate.
+     */
+    where?: TransactionLogWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TransactionLogs to fetch.
+     */
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: TransactionLogWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TransactionLogs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TransactionLogs.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned TransactionLogs
+     **/
+    _count?: true | TransactionLogCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+     **/
+    _avg?: TransactionLogAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+     **/
+    _sum?: TransactionLogSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: TransactionLogMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: TransactionLogMaxAggregateInputType;
+  };
+
+  export type GetTransactionLogAggregateType<
+    T extends TransactionLogAggregateArgs,
+  > = {
+    [P in keyof T & keyof AggregateTransactionLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTransactionLog[P]>
+      : GetScalarType<T[P], AggregateTransactionLog[P]>;
+  };
+
+  export type TransactionLogGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TransactionLogWhereInput;
+    orderBy?:
+      | TransactionLogOrderByWithAggregationInput
+      | TransactionLogOrderByWithAggregationInput[];
+    by: TransactionLogScalarFieldEnum[] | TransactionLogScalarFieldEnum;
+    having?: TransactionLogScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: TransactionLogCountAggregateInputType | true;
+    _avg?: TransactionLogAvgAggregateInputType;
+    _sum?: TransactionLogSumAggregateInputType;
+    _min?: TransactionLogMinAggregateInputType;
+    _max?: TransactionLogMaxAggregateInputType;
+  };
+
+  export type TransactionLogGroupByOutputType = {
+    id: number;
+    companyId: number;
+    companyUserId: number | null;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId: number | null;
+    createdAt: Date;
+    transactionDate: Date;
+    deletedAt: Date | null;
+    remarks: string;
+    _count: TransactionLogCountAggregateOutputType | null;
+    _avg: TransactionLogAvgAggregateOutputType | null;
+    _sum: TransactionLogSumAggregateOutputType | null;
+    _min: TransactionLogMinAggregateOutputType | null;
+    _max: TransactionLogMaxAggregateOutputType | null;
+  };
+
+  type GetTransactionLogGroupByPayload<T extends TransactionLogGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<TransactionLogGroupByOutputType, T['by']> & {
+          [P in keyof T &
+            keyof TransactionLogGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TransactionLogGroupByOutputType[P]>
+            : GetScalarType<T[P], TransactionLogGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type TransactionLogSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      companyId?: boolean;
+      companyUserId?: boolean;
+      productId?: boolean;
+      type?: boolean;
+      quantity?: boolean;
+      orderDetailId?: boolean;
+      createdAt?: boolean;
+      transactionDate?: boolean;
+      deletedAt?: boolean;
+      remarks?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      companyUser?: boolean | TransactionLog$companyUserArgs<ExtArgs>;
+      product?: boolean | ProductDefaultArgs<ExtArgs>;
+      orderDetail?: boolean | TransactionLog$orderDetailArgs<ExtArgs>;
+    },
+    ExtArgs['result']['transactionLog']
+  >;
+
+  export type TransactionLogSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      companyId?: boolean;
+      companyUserId?: boolean;
+      productId?: boolean;
+      type?: boolean;
+      quantity?: boolean;
+      orderDetailId?: boolean;
+      createdAt?: boolean;
+      transactionDate?: boolean;
+      deletedAt?: boolean;
+      remarks?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      companyUser?: boolean | TransactionLog$companyUserArgs<ExtArgs>;
+      product?: boolean | ProductDefaultArgs<ExtArgs>;
+      orderDetail?: boolean | TransactionLog$orderDetailArgs<ExtArgs>;
+    },
+    ExtArgs['result']['transactionLog']
+  >;
+
+  export type TransactionLogSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      companyId?: boolean;
+      companyUserId?: boolean;
+      productId?: boolean;
+      type?: boolean;
+      quantity?: boolean;
+      orderDetailId?: boolean;
+      createdAt?: boolean;
+      transactionDate?: boolean;
+      deletedAt?: boolean;
+      remarks?: boolean;
+      company?: boolean | CompanyDefaultArgs<ExtArgs>;
+      companyUser?: boolean | TransactionLog$companyUserArgs<ExtArgs>;
+      product?: boolean | ProductDefaultArgs<ExtArgs>;
+      orderDetail?: boolean | TransactionLog$orderDetailArgs<ExtArgs>;
+    },
+    ExtArgs['result']['transactionLog']
+  >;
+
+  export type TransactionLogSelectScalar = {
+    id?: boolean;
+    companyId?: boolean;
+    companyUserId?: boolean;
+    productId?: boolean;
+    type?: boolean;
+    quantity?: boolean;
+    orderDetailId?: boolean;
+    createdAt?: boolean;
+    transactionDate?: boolean;
+    deletedAt?: boolean;
+    remarks?: boolean;
+  };
+
+  export type TransactionLogOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    | 'id'
+    | 'companyId'
+    | 'companyUserId'
+    | 'productId'
+    | 'type'
+    | 'quantity'
+    | 'orderDetailId'
+    | 'createdAt'
+    | 'transactionDate'
+    | 'deletedAt'
+    | 'remarks',
+    ExtArgs['result']['transactionLog']
+  >;
+  export type TransactionLogInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    companyUser?: boolean | TransactionLog$companyUserArgs<ExtArgs>;
+    product?: boolean | ProductDefaultArgs<ExtArgs>;
+    orderDetail?: boolean | TransactionLog$orderDetailArgs<ExtArgs>;
+  };
+  export type TransactionLogIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    companyUser?: boolean | TransactionLog$companyUserArgs<ExtArgs>;
+    product?: boolean | ProductDefaultArgs<ExtArgs>;
+    orderDetail?: boolean | TransactionLog$orderDetailArgs<ExtArgs>;
+  };
+  export type TransactionLogIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>;
+    companyUser?: boolean | TransactionLog$companyUserArgs<ExtArgs>;
+    product?: boolean | ProductDefaultArgs<ExtArgs>;
+    orderDetail?: boolean | TransactionLog$orderDetailArgs<ExtArgs>;
+  };
+
+  export type $TransactionLogPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'TransactionLog';
+    objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>;
+      companyUser: Prisma.$CompanyUserPayload<ExtArgs> | null;
+      product: Prisma.$ProductPayload<ExtArgs>;
+      orderDetail: Prisma.$OrderDetailPayload<ExtArgs> | null;
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: number;
+        companyId: number;
+        companyUserId: number | null;
+        productId: number;
+        type: $Enums.TransactionType;
+        quantity: number;
+        orderDetailId: number | null;
+        createdAt: Date;
+        transactionDate: Date;
+        deletedAt: Date | null;
+        remarks: string;
+      },
+      ExtArgs['result']['transactionLog']
+    >;
+    composites: {};
+  };
+
+  type TransactionLogGetPayload<
+    S extends boolean | null | undefined | TransactionLogDefaultArgs,
+  > = $Result.GetResult<Prisma.$TransactionLogPayload, S>;
+
+  type TransactionLogCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    TransactionLogFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: TransactionLogCountAggregateInputType | true;
+  };
+
+  export interface TransactionLogDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['TransactionLog'];
+      meta: { name: 'TransactionLog' };
+    };
+    /**
+     * Find zero or one TransactionLog that matches the filter.
+     * @param {TransactionLogFindUniqueArgs} args - Arguments to find a TransactionLog
+     * @example
+     * // Get one TransactionLog
+     * const transactionLog = await prisma.transactionLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TransactionLogFindUniqueArgs>(
+      args: SelectSubset<T, TransactionLogFindUniqueArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'findUnique',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find one TransactionLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TransactionLogFindUniqueOrThrowArgs} args - Arguments to find a TransactionLog
+     * @example
+     * // Get one TransactionLog
+     * const transactionLog = await prisma.transactionLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TransactionLogFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, TransactionLogFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find the first TransactionLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransactionLogFindFirstArgs} args - Arguments to find a TransactionLog
+     * @example
+     * // Get one TransactionLog
+     * const transactionLog = await prisma.transactionLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TransactionLogFindFirstArgs>(
+      args?: SelectSubset<T, TransactionLogFindFirstArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'findFirst',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find the first TransactionLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransactionLogFindFirstOrThrowArgs} args - Arguments to find a TransactionLog
+     * @example
+     * // Get one TransactionLog
+     * const transactionLog = await prisma.transactionLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TransactionLogFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TransactionLogFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Find zero or more TransactionLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransactionLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TransactionLogs
+     * const transactionLogs = await prisma.transactionLog.findMany()
+     *
+     * // Get first 10 TransactionLogs
+     * const transactionLogs = await prisma.transactionLog.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const transactionLogWithIdOnly = await prisma.transactionLog.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends TransactionLogFindManyArgs>(
+      args?: SelectSubset<T, TransactionLogFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Create a TransactionLog.
+     * @param {TransactionLogCreateArgs} args - Arguments to create a TransactionLog.
+     * @example
+     * // Create one TransactionLog
+     * const TransactionLog = await prisma.transactionLog.create({
+     *   data: {
+     *     // ... data to create a TransactionLog
+     *   }
+     * })
+     *
+     */
+    create<T extends TransactionLogCreateArgs>(
+      args: SelectSubset<T, TransactionLogCreateArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'create',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Create many TransactionLogs.
+     * @param {TransactionLogCreateManyArgs} args - Arguments to create many TransactionLogs.
+     * @example
+     * // Create many TransactionLogs
+     * const transactionLog = await prisma.transactionLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends TransactionLogCreateManyArgs>(
+      args?: SelectSubset<T, TransactionLogCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many TransactionLogs and returns the data saved in the database.
+     * @param {TransactionLogCreateManyAndReturnArgs} args - Arguments to create many TransactionLogs.
+     * @example
+     * // Create many TransactionLogs
+     * const transactionLog = await prisma.transactionLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many TransactionLogs and only return the `id`
+     * const transactionLogWithIdOnly = await prisma.transactionLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends TransactionLogCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, TransactionLogCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Delete a TransactionLog.
+     * @param {TransactionLogDeleteArgs} args - Arguments to delete one TransactionLog.
+     * @example
+     * // Delete one TransactionLog
+     * const TransactionLog = await prisma.transactionLog.delete({
+     *   where: {
+     *     // ... filter to delete one TransactionLog
+     *   }
+     * })
+     *
+     */
+    delete<T extends TransactionLogDeleteArgs>(
+      args: SelectSubset<T, TransactionLogDeleteArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'delete',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Update one TransactionLog.
+     * @param {TransactionLogUpdateArgs} args - Arguments to update one TransactionLog.
+     * @example
+     * // Update one TransactionLog
+     * const transactionLog = await prisma.transactionLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends TransactionLogUpdateArgs>(
+      args: SelectSubset<T, TransactionLogUpdateArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'update',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Delete zero or more TransactionLogs.
+     * @param {TransactionLogDeleteManyArgs} args - Arguments to filter TransactionLogs to delete.
+     * @example
+     * // Delete a few TransactionLogs
+     * const { count } = await prisma.transactionLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends TransactionLogDeleteManyArgs>(
+      args?: SelectSubset<T, TransactionLogDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more TransactionLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransactionLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TransactionLogs
+     * const transactionLog = await prisma.transactionLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends TransactionLogUpdateManyArgs>(
+      args: SelectSubset<T, TransactionLogUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more TransactionLogs and returns the data updated in the database.
+     * @param {TransactionLogUpdateManyAndReturnArgs} args - Arguments to update many TransactionLogs.
+     * @example
+     * // Update many TransactionLogs
+     * const transactionLog = await prisma.transactionLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more TransactionLogs and only return the `id`
+     * const transactionLogWithIdOnly = await prisma.transactionLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends TransactionLogUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, TransactionLogUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        GlobalOmitOptions
+      >
+    >;
+
+    /**
+     * Create or update one TransactionLog.
+     * @param {TransactionLogUpsertArgs} args - Arguments to update or create a TransactionLog.
+     * @example
+     * // Update or create a TransactionLog
+     * const transactionLog = await prisma.transactionLog.upsert({
+     *   create: {
+     *     // ... data to create a TransactionLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TransactionLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TransactionLogUpsertArgs>(
+      args: SelectSubset<T, TransactionLogUpsertArgs<ExtArgs>>,
+    ): Prisma__TransactionLogClient<
+      $Result.GetResult<
+        Prisma.$TransactionLogPayload<ExtArgs>,
+        T,
+        'upsert',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+
+    /**
+     * Count the number of TransactionLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransactionLogCountArgs} args - Arguments to filter TransactionLogs to count.
+     * @example
+     * // Count the number of TransactionLogs
+     * const count = await prisma.transactionLog.count({
+     *   where: {
+     *     // ... the filter for the TransactionLogs we want to count
+     *   }
+     * })
+     **/
+    count<T extends TransactionLogCountArgs>(
+      args?: Subset<T, TransactionLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TransactionLogCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a TransactionLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransactionLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends TransactionLogAggregateArgs>(
+      args: Subset<T, TransactionLogAggregateArgs>,
+    ): Prisma.PrismaPromise<GetTransactionLogAggregateType<T>>;
+
+    /**
+     * Group by TransactionLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransactionLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends TransactionLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TransactionLogGroupByArgs['orderBy'] }
+        : { orderBy?: TransactionLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, TransactionLogGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetTransactionLogGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the TransactionLog model
+     */
+    readonly fields: TransactionLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TransactionLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TransactionLogClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, CompanyDefaultArgs<ExtArgs>>,
+    ): Prisma__CompanyClient<
+      | $Result.GetResult<
+          Prisma.$CompanyPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          GlobalOmitOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    companyUser<T extends TransactionLog$companyUserArgs<ExtArgs> = {}>(
+      args?: Subset<T, TransactionLog$companyUserArgs<ExtArgs>>,
+    ): Prisma__CompanyUserClient<
+      $Result.GetResult<
+        Prisma.$CompanyUserPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProductDefaultArgs<ExtArgs>>,
+    ): Prisma__ProductClient<
+      | $Result.GetResult<
+          Prisma.$ProductPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          GlobalOmitOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    orderDetail<T extends TransactionLog$orderDetailArgs<ExtArgs> = {}>(
+      args?: Subset<T, TransactionLog$orderDetailArgs<ExtArgs>>,
+    ): Prisma__OrderDetailClient<
+      $Result.GetResult<
+        Prisma.$OrderDetailPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the TransactionLog model
+   */
+  interface TransactionLogFieldRefs {
+    readonly id: FieldRef<'TransactionLog', 'Int'>;
+    readonly companyId: FieldRef<'TransactionLog', 'Int'>;
+    readonly companyUserId: FieldRef<'TransactionLog', 'Int'>;
+    readonly productId: FieldRef<'TransactionLog', 'Int'>;
+    readonly type: FieldRef<'TransactionLog', 'TransactionType'>;
+    readonly quantity: FieldRef<'TransactionLog', 'Int'>;
+    readonly orderDetailId: FieldRef<'TransactionLog', 'Int'>;
+    readonly createdAt: FieldRef<'TransactionLog', 'DateTime'>;
+    readonly transactionDate: FieldRef<'TransactionLog', 'DateTime'>;
+    readonly deletedAt: FieldRef<'TransactionLog', 'DateTime'>;
+    readonly remarks: FieldRef<'TransactionLog', 'String'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * TransactionLog findUnique
+   */
+  export type TransactionLogFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * Filter, which TransactionLog to fetch.
+     */
+    where: TransactionLogWhereUniqueInput;
+  };
+
+  /**
+   * TransactionLog findUniqueOrThrow
+   */
+  export type TransactionLogFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * Filter, which TransactionLog to fetch.
+     */
+    where: TransactionLogWhereUniqueInput;
+  };
+
+  /**
+   * TransactionLog findFirst
+   */
+  export type TransactionLogFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * Filter, which TransactionLog to fetch.
+     */
+    where?: TransactionLogWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TransactionLogs to fetch.
+     */
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for TransactionLogs.
+     */
+    cursor?: TransactionLogWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TransactionLogs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TransactionLogs.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of TransactionLogs.
+     */
+    distinct?: TransactionLogScalarFieldEnum | TransactionLogScalarFieldEnum[];
+  };
+
+  /**
+   * TransactionLog findFirstOrThrow
+   */
+  export type TransactionLogFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * Filter, which TransactionLog to fetch.
+     */
+    where?: TransactionLogWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TransactionLogs to fetch.
+     */
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for TransactionLogs.
+     */
+    cursor?: TransactionLogWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TransactionLogs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TransactionLogs.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of TransactionLogs.
+     */
+    distinct?: TransactionLogScalarFieldEnum | TransactionLogScalarFieldEnum[];
+  };
+
+  /**
+   * TransactionLog findMany
+   */
+  export type TransactionLogFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * Filter, which TransactionLogs to fetch.
+     */
+    where?: TransactionLogWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TransactionLogs to fetch.
+     */
+    orderBy?:
+      | TransactionLogOrderByWithRelationInput
+      | TransactionLogOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing TransactionLogs.
+     */
+    cursor?: TransactionLogWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TransactionLogs from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TransactionLogs.
+     */
+    skip?: number;
+    distinct?: TransactionLogScalarFieldEnum | TransactionLogScalarFieldEnum[];
+  };
+
+  /**
+   * TransactionLog create
+   */
+  export type TransactionLogCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a TransactionLog.
+     */
+    data: XOR<TransactionLogCreateInput, TransactionLogUncheckedCreateInput>;
+  };
+
+  /**
+   * TransactionLog createMany
+   */
+  export type TransactionLogCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many TransactionLogs.
+     */
+    data: TransactionLogCreateManyInput | TransactionLogCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * TransactionLog createManyAndReturn
+   */
+  export type TransactionLogCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * The data used to create many TransactionLogs.
+     */
+    data: TransactionLogCreateManyInput | TransactionLogCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * TransactionLog update
+   */
+  export type TransactionLogUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a TransactionLog.
+     */
+    data: XOR<TransactionLogUpdateInput, TransactionLogUncheckedUpdateInput>;
+    /**
+     * Choose, which TransactionLog to update.
+     */
+    where: TransactionLogWhereUniqueInput;
+  };
+
+  /**
+   * TransactionLog updateMany
+   */
+  export type TransactionLogUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update TransactionLogs.
+     */
+    data: XOR<
+      TransactionLogUpdateManyMutationInput,
+      TransactionLogUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which TransactionLogs to update
+     */
+    where?: TransactionLogWhereInput;
+    /**
+     * Limit how many TransactionLogs to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * TransactionLog updateManyAndReturn
+   */
+  export type TransactionLogUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * The data used to update TransactionLogs.
+     */
+    data: XOR<
+      TransactionLogUpdateManyMutationInput,
+      TransactionLogUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which TransactionLogs to update
+     */
+    where?: TransactionLogWhereInput;
+    /**
+     * Limit how many TransactionLogs to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * TransactionLog upsert
+   */
+  export type TransactionLogUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the TransactionLog to update in case it exists.
+     */
+    where: TransactionLogWhereUniqueInput;
+    /**
+     * In case the TransactionLog found by the `where` argument doesn't exist, create a new TransactionLog with this data.
+     */
+    create: XOR<TransactionLogCreateInput, TransactionLogUncheckedCreateInput>;
+    /**
+     * In case the TransactionLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TransactionLogUpdateInput, TransactionLogUncheckedUpdateInput>;
+  };
+
+  /**
+   * TransactionLog delete
+   */
+  export type TransactionLogDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
+    /**
+     * Filter which TransactionLog to delete.
+     */
+    where: TransactionLogWhereUniqueInput;
+  };
+
+  /**
+   * TransactionLog deleteMany
+   */
+  export type TransactionLogDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which TransactionLogs to delete
+     */
+    where?: TransactionLogWhereInput;
+    /**
+     * Limit how many TransactionLogs to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * TransactionLog.companyUser
+   */
+  export type TransactionLog$companyUserArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the CompanyUser
+     */
+    select?: CompanyUserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CompanyUser
+     */
+    omit?: CompanyUserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyUserInclude<ExtArgs> | null;
+    where?: CompanyUserWhereInput;
+  };
+
+  /**
+   * TransactionLog.orderDetail
+   */
+  export type TransactionLog$orderDetailArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the OrderDetail
+     */
+    select?: OrderDetailSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the OrderDetail
+     */
+    omit?: OrderDetailOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderDetailInclude<ExtArgs> | null;
+    where?: OrderDetailWhereInput;
+  };
+
+  /**
+   * TransactionLog without action
+   */
+  export type TransactionLogDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TransactionLog
+     */
+    select?: TransactionLogSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TransactionLog
+     */
+    omit?: TransactionLogOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionLogInclude<ExtArgs> | null;
   };
 
   /**
@@ -11866,6 +17233,54 @@ export namespace Prisma {
   export type ProductScalarFieldEnum =
     (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum];
 
+  export const OrderScalarFieldEnum: {
+    id: 'id';
+    customerId: 'customerId';
+    companyId: 'companyId';
+    grandTotal: 'grandTotal';
+    paymentStatus: 'paymentStatus';
+    shippingStatus: 'shippingStatus';
+    createdAt: 'createdAt';
+    updatedAt: 'updatedAt';
+    deletedAt: 'deletedAt';
+  };
+
+  export type OrderScalarFieldEnum =
+    (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum];
+
+  export const OrderDetailScalarFieldEnum: {
+    id: 'id';
+    orderId: 'orderId';
+    companyId: 'companyId';
+    productId: 'productId';
+    qty: 'qty';
+    price: 'price';
+    subTotal: 'subTotal';
+    createdAt: 'createdAt';
+    updatedAt: 'updatedAt';
+    deletedAt: 'deletedAt';
+  };
+
+  export type OrderDetailScalarFieldEnum =
+    (typeof OrderDetailScalarFieldEnum)[keyof typeof OrderDetailScalarFieldEnum];
+
+  export const TransactionLogScalarFieldEnum: {
+    id: 'id';
+    companyId: 'companyId';
+    companyUserId: 'companyUserId';
+    productId: 'productId';
+    type: 'type';
+    quantity: 'quantity';
+    orderDetailId: 'orderDetailId';
+    createdAt: 'createdAt';
+    transactionDate: 'transactionDate';
+    deletedAt: 'deletedAt';
+    remarks: 'remarks';
+  };
+
+  export type TransactionLogScalarFieldEnum =
+    (typeof TransactionLogScalarFieldEnum)[keyof typeof TransactionLogScalarFieldEnum];
+
   export const SortOrder: {
     asc: 'asc';
     desc: 'desc';
@@ -11978,6 +17393,46 @@ export namespace Prisma {
   >;
 
   /**
+   * Reference to a field of type 'PaymentStatus'
+   */
+  export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'PaymentStatus'
+  >;
+
+  /**
+   * Reference to a field of type 'PaymentStatus[]'
+   */
+  export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>;
+
+  /**
+   * Reference to a field of type 'ShippingStatus'
+   */
+  export type EnumShippingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'ShippingStatus'
+  >;
+
+  /**
+   * Reference to a field of type 'ShippingStatus[]'
+   */
+  export type ListEnumShippingStatusFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'ShippingStatus[]'>;
+
+  /**
+   * Reference to a field of type 'TransactionType'
+   */
+  export type EnumTransactionTypeFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'TransactionType'>;
+
+  /**
+   * Reference to a field of type 'TransactionType[]'
+   */
+  export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'TransactionType[]'>;
+
+  /**
    * Deep Input Types
    */
 
@@ -11996,6 +17451,9 @@ export namespace Prisma {
     customer?: CustomerListRelationFilter;
     category?: CategoryListRelationFilter;
     product?: ProductListRelationFilter;
+    order?: OrderListRelationFilter;
+    orderDetail?: OrderDetailListRelationFilter;
+    transactionLog?: TransactionLogListRelationFilter;
   };
 
   export type CompanyOrderByWithRelationInput = {
@@ -12010,6 +17468,9 @@ export namespace Prisma {
     customer?: CustomerOrderByRelationAggregateInput;
     category?: CategoryOrderByRelationAggregateInput;
     product?: ProductOrderByRelationAggregateInput;
+    order?: OrderOrderByRelationAggregateInput;
+    orderDetail?: OrderDetailOrderByRelationAggregateInput;
+    transactionLog?: TransactionLogOrderByRelationAggregateInput;
   };
 
   export type CompanyWhereUniqueInput = Prisma.AtLeast<
@@ -12028,6 +17489,9 @@ export namespace Prisma {
       customer?: CustomerListRelationFilter;
       category?: CategoryListRelationFilter;
       product?: ProductListRelationFilter;
+      order?: OrderListRelationFilter;
+      orderDetail?: OrderDetailListRelationFilter;
+      transactionLog?: TransactionLogListRelationFilter;
     },
     'id' | 'email'
   >;
@@ -12090,6 +17554,7 @@ export namespace Prisma {
     otp?: StringNullableFilter<'CompanyUser'> | string | null;
     otpExpired?: DateTimeNullableFilter<'CompanyUser'> | Date | string | null;
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+    transactionLog?: TransactionLogListRelationFilter;
   };
 
   export type CompanyUserOrderByWithRelationInput = {
@@ -12107,6 +17572,7 @@ export namespace Prisma {
     otp?: SortOrderInput | SortOrder;
     otpExpired?: SortOrderInput | SortOrder;
     company?: CompanyOrderByWithRelationInput;
+    transactionLog?: TransactionLogOrderByRelationAggregateInput;
   };
 
   export type CompanyUserWhereUniqueInput = Prisma.AtLeast<
@@ -12128,6 +17594,7 @@ export namespace Prisma {
       otp?: StringNullableFilter<'CompanyUser'> | string | null;
       otpExpired?: DateTimeNullableFilter<'CompanyUser'> | Date | string | null;
       company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+      transactionLog?: TransactionLogListRelationFilter;
     },
     'id' | 'email'
   >;
@@ -12308,6 +17775,7 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<'Customer'> | Date | string | null;
     address?: AddressCustomerListRelationFilter;
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+    order?: OrderListRelationFilter;
   };
 
   export type CustomerOrderByWithRelationInput = {
@@ -12322,6 +17790,7 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder;
     address?: AddressCustomerOrderByRelationAggregateInput;
     company?: CompanyOrderByWithRelationInput;
+    order?: OrderOrderByRelationAggregateInput;
   };
 
   export type CustomerWhereUniqueInput = Prisma.AtLeast<
@@ -12340,6 +17809,7 @@ export namespace Prisma {
       deletedAt?: DateTimeNullableFilter<'Customer'> | Date | string | null;
       address?: AddressCustomerListRelationFilter;
       company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+      order?: OrderListRelationFilter;
     },
     'id' | 'email'
   >;
@@ -12585,8 +18055,8 @@ export namespace Prisma {
     description?: StringFilter<'Product'> | string;
     price?: FloatFilter<'Product'> | number;
     qty?: IntFilter<'Product'> | number;
-    qtyBooked?: IntNullableFilter<'Product'> | number | null;
-    qtySold?: IntNullableFilter<'Product'> | number | null;
+    qtyBooked?: IntFilter<'Product'> | number;
+    qtySold?: IntFilter<'Product'> | number;
     image?: StringNullableFilter<'Product'> | string | null;
     categoryId?: IntFilter<'Product'> | number;
     companyId?: IntFilter<'Product'> | number;
@@ -12595,6 +18065,8 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<'Product'> | Date | string | null;
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>;
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+    orderDetail?: OrderDetailListRelationFilter;
+    transactionLog?: TransactionLogListRelationFilter;
   };
 
   export type ProductOrderByWithRelationInput = {
@@ -12603,8 +18075,8 @@ export namespace Prisma {
     description?: SortOrder;
     price?: SortOrder;
     qty?: SortOrder;
-    qtyBooked?: SortOrderInput | SortOrder;
-    qtySold?: SortOrderInput | SortOrder;
+    qtyBooked?: SortOrder;
+    qtySold?: SortOrder;
     image?: SortOrderInput | SortOrder;
     categoryId?: SortOrder;
     companyId?: SortOrder;
@@ -12613,6 +18085,8 @@ export namespace Prisma {
     deletedAt?: SortOrderInput | SortOrder;
     category?: CategoryOrderByWithRelationInput;
     company?: CompanyOrderByWithRelationInput;
+    orderDetail?: OrderDetailOrderByRelationAggregateInput;
+    transactionLog?: TransactionLogOrderByRelationAggregateInput;
   };
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<
@@ -12625,8 +18099,8 @@ export namespace Prisma {
       description?: StringFilter<'Product'> | string;
       price?: FloatFilter<'Product'> | number;
       qty?: IntFilter<'Product'> | number;
-      qtyBooked?: IntNullableFilter<'Product'> | number | null;
-      qtySold?: IntNullableFilter<'Product'> | number | null;
+      qtyBooked?: IntFilter<'Product'> | number;
+      qtySold?: IntFilter<'Product'> | number;
       image?: StringNullableFilter<'Product'> | string | null;
       categoryId?: IntFilter<'Product'> | number;
       companyId?: IntFilter<'Product'> | number;
@@ -12635,6 +18109,8 @@ export namespace Prisma {
       deletedAt?: DateTimeNullableFilter<'Product'> | Date | string | null;
       category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>;
       company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+      orderDetail?: OrderDetailListRelationFilter;
+      transactionLog?: TransactionLogListRelationFilter;
     },
     'id'
   >;
@@ -12645,8 +18121,8 @@ export namespace Prisma {
     description?: SortOrder;
     price?: SortOrder;
     qty?: SortOrder;
-    qtyBooked?: SortOrderInput | SortOrder;
-    qtySold?: SortOrderInput | SortOrder;
+    qtyBooked?: SortOrder;
+    qtySold?: SortOrder;
     image?: SortOrderInput | SortOrder;
     categoryId?: SortOrder;
     companyId?: SortOrder;
@@ -12673,8 +18149,8 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<'Product'> | string;
     price?: FloatWithAggregatesFilter<'Product'> | number;
     qty?: IntWithAggregatesFilter<'Product'> | number;
-    qtyBooked?: IntNullableWithAggregatesFilter<'Product'> | number | null;
-    qtySold?: IntNullableWithAggregatesFilter<'Product'> | number | null;
+    qtyBooked?: IntWithAggregatesFilter<'Product'> | number;
+    qtySold?: IntWithAggregatesFilter<'Product'> | number;
     image?: StringNullableWithAggregatesFilter<'Product'> | string | null;
     categoryId?: IntWithAggregatesFilter<'Product'> | number;
     companyId?: IntWithAggregatesFilter<'Product'> | number;
@@ -12691,6 +18167,357 @@ export namespace Prisma {
       | null;
   };
 
+  export type OrderWhereInput = {
+    AND?: OrderWhereInput | OrderWhereInput[];
+    OR?: OrderWhereInput[];
+    NOT?: OrderWhereInput | OrderWhereInput[];
+    id?: IntFilter<'Order'> | number;
+    customerId?: IntFilter<'Order'> | number;
+    companyId?: IntFilter<'Order'> | number;
+    grandTotal?: FloatFilter<'Order'> | number;
+    paymentStatus?: EnumPaymentStatusFilter<'Order'> | $Enums.PaymentStatus;
+    shippingStatus?:
+      | EnumShippingStatusNullableFilter<'Order'>
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFilter<'Order'> | Date | string;
+    updatedAt?: DateTimeNullableFilter<'Order'> | Date | string | null;
+    deletedAt?: DateTimeNullableFilter<'Order'> | Date | string | null;
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+    customer?: XOR<CustomerScalarRelationFilter, CustomerWhereInput>;
+    orderDetail?: OrderDetailListRelationFilter;
+  };
+
+  export type OrderOrderByWithRelationInput = {
+    id?: SortOrder;
+    customerId?: SortOrder;
+    companyId?: SortOrder;
+    grandTotal?: SortOrder;
+    paymentStatus?: SortOrder;
+    shippingStatus?: SortOrderInput | SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrderInput | SortOrder;
+    deletedAt?: SortOrderInput | SortOrder;
+    company?: CompanyOrderByWithRelationInput;
+    customer?: CustomerOrderByWithRelationInput;
+    orderDetail?: OrderDetailOrderByRelationAggregateInput;
+  };
+
+  export type OrderWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: number;
+      AND?: OrderWhereInput | OrderWhereInput[];
+      OR?: OrderWhereInput[];
+      NOT?: OrderWhereInput | OrderWhereInput[];
+      customerId?: IntFilter<'Order'> | number;
+      companyId?: IntFilter<'Order'> | number;
+      grandTotal?: FloatFilter<'Order'> | number;
+      paymentStatus?: EnumPaymentStatusFilter<'Order'> | $Enums.PaymentStatus;
+      shippingStatus?:
+        | EnumShippingStatusNullableFilter<'Order'>
+        | $Enums.ShippingStatus
+        | null;
+      createdAt?: DateTimeFilter<'Order'> | Date | string;
+      updatedAt?: DateTimeNullableFilter<'Order'> | Date | string | null;
+      deletedAt?: DateTimeNullableFilter<'Order'> | Date | string | null;
+      company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+      customer?: XOR<CustomerScalarRelationFilter, CustomerWhereInput>;
+      orderDetail?: OrderDetailListRelationFilter;
+    },
+    'id'
+  >;
+
+  export type OrderOrderByWithAggregationInput = {
+    id?: SortOrder;
+    customerId?: SortOrder;
+    companyId?: SortOrder;
+    grandTotal?: SortOrder;
+    paymentStatus?: SortOrder;
+    shippingStatus?: SortOrderInput | SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrderInput | SortOrder;
+    deletedAt?: SortOrderInput | SortOrder;
+    _count?: OrderCountOrderByAggregateInput;
+    _avg?: OrderAvgOrderByAggregateInput;
+    _max?: OrderMaxOrderByAggregateInput;
+    _min?: OrderMinOrderByAggregateInput;
+    _sum?: OrderSumOrderByAggregateInput;
+  };
+
+  export type OrderScalarWhereWithAggregatesInput = {
+    AND?:
+      | OrderScalarWhereWithAggregatesInput
+      | OrderScalarWhereWithAggregatesInput[];
+    OR?: OrderScalarWhereWithAggregatesInput[];
+    NOT?:
+      | OrderScalarWhereWithAggregatesInput
+      | OrderScalarWhereWithAggregatesInput[];
+    id?: IntWithAggregatesFilter<'Order'> | number;
+    customerId?: IntWithAggregatesFilter<'Order'> | number;
+    companyId?: IntWithAggregatesFilter<'Order'> | number;
+    grandTotal?: FloatWithAggregatesFilter<'Order'> | number;
+    paymentStatus?:
+      | EnumPaymentStatusWithAggregatesFilter<'Order'>
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | EnumShippingStatusNullableWithAggregatesFilter<'Order'>
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeWithAggregatesFilter<'Order'> | Date | string;
+    updatedAt?:
+      | DateTimeNullableWithAggregatesFilter<'Order'>
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | DateTimeNullableWithAggregatesFilter<'Order'>
+      | Date
+      | string
+      | null;
+  };
+
+  export type OrderDetailWhereInput = {
+    AND?: OrderDetailWhereInput | OrderDetailWhereInput[];
+    OR?: OrderDetailWhereInput[];
+    NOT?: OrderDetailWhereInput | OrderDetailWhereInput[];
+    id?: IntFilter<'OrderDetail'> | number;
+    orderId?: IntFilter<'OrderDetail'> | number;
+    companyId?: IntFilter<'OrderDetail'> | number;
+    productId?: IntFilter<'OrderDetail'> | number;
+    qty?: IntFilter<'OrderDetail'> | number;
+    price?: FloatFilter<'OrderDetail'> | number;
+    subTotal?: FloatFilter<'OrderDetail'> | number;
+    createdAt?: DateTimeFilter<'OrderDetail'> | Date | string;
+    updatedAt?: DateTimeNullableFilter<'OrderDetail'> | Date | string | null;
+    deletedAt?: DateTimeNullableFilter<'OrderDetail'> | Date | string | null;
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+    order?: XOR<OrderScalarRelationFilter, OrderWhereInput>;
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>;
+    transactionLog?: TransactionLogListRelationFilter;
+  };
+
+  export type OrderDetailOrderByWithRelationInput = {
+    id?: SortOrder;
+    orderId?: SortOrder;
+    companyId?: SortOrder;
+    productId?: SortOrder;
+    qty?: SortOrder;
+    price?: SortOrder;
+    subTotal?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrderInput | SortOrder;
+    deletedAt?: SortOrderInput | SortOrder;
+    company?: CompanyOrderByWithRelationInput;
+    order?: OrderOrderByWithRelationInput;
+    product?: ProductOrderByWithRelationInput;
+    transactionLog?: TransactionLogOrderByRelationAggregateInput;
+  };
+
+  export type OrderDetailWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: number;
+      AND?: OrderDetailWhereInput | OrderDetailWhereInput[];
+      OR?: OrderDetailWhereInput[];
+      NOT?: OrderDetailWhereInput | OrderDetailWhereInput[];
+      orderId?: IntFilter<'OrderDetail'> | number;
+      companyId?: IntFilter<'OrderDetail'> | number;
+      productId?: IntFilter<'OrderDetail'> | number;
+      qty?: IntFilter<'OrderDetail'> | number;
+      price?: FloatFilter<'OrderDetail'> | number;
+      subTotal?: FloatFilter<'OrderDetail'> | number;
+      createdAt?: DateTimeFilter<'OrderDetail'> | Date | string;
+      updatedAt?: DateTimeNullableFilter<'OrderDetail'> | Date | string | null;
+      deletedAt?: DateTimeNullableFilter<'OrderDetail'> | Date | string | null;
+      company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+      order?: XOR<OrderScalarRelationFilter, OrderWhereInput>;
+      product?: XOR<ProductScalarRelationFilter, ProductWhereInput>;
+      transactionLog?: TransactionLogListRelationFilter;
+    },
+    'id'
+  >;
+
+  export type OrderDetailOrderByWithAggregationInput = {
+    id?: SortOrder;
+    orderId?: SortOrder;
+    companyId?: SortOrder;
+    productId?: SortOrder;
+    qty?: SortOrder;
+    price?: SortOrder;
+    subTotal?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrderInput | SortOrder;
+    deletedAt?: SortOrderInput | SortOrder;
+    _count?: OrderDetailCountOrderByAggregateInput;
+    _avg?: OrderDetailAvgOrderByAggregateInput;
+    _max?: OrderDetailMaxOrderByAggregateInput;
+    _min?: OrderDetailMinOrderByAggregateInput;
+    _sum?: OrderDetailSumOrderByAggregateInput;
+  };
+
+  export type OrderDetailScalarWhereWithAggregatesInput = {
+    AND?:
+      | OrderDetailScalarWhereWithAggregatesInput
+      | OrderDetailScalarWhereWithAggregatesInput[];
+    OR?: OrderDetailScalarWhereWithAggregatesInput[];
+    NOT?:
+      | OrderDetailScalarWhereWithAggregatesInput
+      | OrderDetailScalarWhereWithAggregatesInput[];
+    id?: IntWithAggregatesFilter<'OrderDetail'> | number;
+    orderId?: IntWithAggregatesFilter<'OrderDetail'> | number;
+    companyId?: IntWithAggregatesFilter<'OrderDetail'> | number;
+    productId?: IntWithAggregatesFilter<'OrderDetail'> | number;
+    qty?: IntWithAggregatesFilter<'OrderDetail'> | number;
+    price?: FloatWithAggregatesFilter<'OrderDetail'> | number;
+    subTotal?: FloatWithAggregatesFilter<'OrderDetail'> | number;
+    createdAt?: DateTimeWithAggregatesFilter<'OrderDetail'> | Date | string;
+    updatedAt?:
+      | DateTimeNullableWithAggregatesFilter<'OrderDetail'>
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | DateTimeNullableWithAggregatesFilter<'OrderDetail'>
+      | Date
+      | string
+      | null;
+  };
+
+  export type TransactionLogWhereInput = {
+    AND?: TransactionLogWhereInput | TransactionLogWhereInput[];
+    OR?: TransactionLogWhereInput[];
+    NOT?: TransactionLogWhereInput | TransactionLogWhereInput[];
+    id?: IntFilter<'TransactionLog'> | number;
+    companyId?: IntFilter<'TransactionLog'> | number;
+    companyUserId?: IntNullableFilter<'TransactionLog'> | number | null;
+    productId?: IntFilter<'TransactionLog'> | number;
+    type?: EnumTransactionTypeFilter<'TransactionLog'> | $Enums.TransactionType;
+    quantity?: IntFilter<'TransactionLog'> | number;
+    orderDetailId?: IntNullableFilter<'TransactionLog'> | number | null;
+    createdAt?: DateTimeFilter<'TransactionLog'> | Date | string;
+    transactionDate?: DateTimeFilter<'TransactionLog'> | Date | string;
+    deletedAt?: DateTimeNullableFilter<'TransactionLog'> | Date | string | null;
+    remarks?: StringFilter<'TransactionLog'> | string;
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+    companyUser?: XOR<
+      CompanyUserNullableScalarRelationFilter,
+      CompanyUserWhereInput
+    > | null;
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>;
+    orderDetail?: XOR<
+      OrderDetailNullableScalarRelationFilter,
+      OrderDetailWhereInput
+    > | null;
+  };
+
+  export type TransactionLogOrderByWithRelationInput = {
+    id?: SortOrder;
+    companyId?: SortOrder;
+    companyUserId?: SortOrderInput | SortOrder;
+    productId?: SortOrder;
+    type?: SortOrder;
+    quantity?: SortOrder;
+    orderDetailId?: SortOrderInput | SortOrder;
+    createdAt?: SortOrder;
+    transactionDate?: SortOrder;
+    deletedAt?: SortOrderInput | SortOrder;
+    remarks?: SortOrder;
+    company?: CompanyOrderByWithRelationInput;
+    companyUser?: CompanyUserOrderByWithRelationInput;
+    product?: ProductOrderByWithRelationInput;
+    orderDetail?: OrderDetailOrderByWithRelationInput;
+  };
+
+  export type TransactionLogWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: number;
+      AND?: TransactionLogWhereInput | TransactionLogWhereInput[];
+      OR?: TransactionLogWhereInput[];
+      NOT?: TransactionLogWhereInput | TransactionLogWhereInput[];
+      companyId?: IntFilter<'TransactionLog'> | number;
+      companyUserId?: IntNullableFilter<'TransactionLog'> | number | null;
+      productId?: IntFilter<'TransactionLog'> | number;
+      type?:
+        | EnumTransactionTypeFilter<'TransactionLog'>
+        | $Enums.TransactionType;
+      quantity?: IntFilter<'TransactionLog'> | number;
+      orderDetailId?: IntNullableFilter<'TransactionLog'> | number | null;
+      createdAt?: DateTimeFilter<'TransactionLog'> | Date | string;
+      transactionDate?: DateTimeFilter<'TransactionLog'> | Date | string;
+      deletedAt?:
+        | DateTimeNullableFilter<'TransactionLog'>
+        | Date
+        | string
+        | null;
+      remarks?: StringFilter<'TransactionLog'> | string;
+      company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>;
+      companyUser?: XOR<
+        CompanyUserNullableScalarRelationFilter,
+        CompanyUserWhereInput
+      > | null;
+      product?: XOR<ProductScalarRelationFilter, ProductWhereInput>;
+      orderDetail?: XOR<
+        OrderDetailNullableScalarRelationFilter,
+        OrderDetailWhereInput
+      > | null;
+    },
+    'id'
+  >;
+
+  export type TransactionLogOrderByWithAggregationInput = {
+    id?: SortOrder;
+    companyId?: SortOrder;
+    companyUserId?: SortOrderInput | SortOrder;
+    productId?: SortOrder;
+    type?: SortOrder;
+    quantity?: SortOrder;
+    orderDetailId?: SortOrderInput | SortOrder;
+    createdAt?: SortOrder;
+    transactionDate?: SortOrder;
+    deletedAt?: SortOrderInput | SortOrder;
+    remarks?: SortOrder;
+    _count?: TransactionLogCountOrderByAggregateInput;
+    _avg?: TransactionLogAvgOrderByAggregateInput;
+    _max?: TransactionLogMaxOrderByAggregateInput;
+    _min?: TransactionLogMinOrderByAggregateInput;
+    _sum?: TransactionLogSumOrderByAggregateInput;
+  };
+
+  export type TransactionLogScalarWhereWithAggregatesInput = {
+    AND?:
+      | TransactionLogScalarWhereWithAggregatesInput
+      | TransactionLogScalarWhereWithAggregatesInput[];
+    OR?: TransactionLogScalarWhereWithAggregatesInput[];
+    NOT?:
+      | TransactionLogScalarWhereWithAggregatesInput
+      | TransactionLogScalarWhereWithAggregatesInput[];
+    id?: IntWithAggregatesFilter<'TransactionLog'> | number;
+    companyId?: IntWithAggregatesFilter<'TransactionLog'> | number;
+    companyUserId?:
+      | IntNullableWithAggregatesFilter<'TransactionLog'>
+      | number
+      | null;
+    productId?: IntWithAggregatesFilter<'TransactionLog'> | number;
+    type?:
+      | EnumTransactionTypeWithAggregatesFilter<'TransactionLog'>
+      | $Enums.TransactionType;
+    quantity?: IntWithAggregatesFilter<'TransactionLog'> | number;
+    orderDetailId?:
+      | IntNullableWithAggregatesFilter<'TransactionLog'>
+      | number
+      | null;
+    createdAt?: DateTimeWithAggregatesFilter<'TransactionLog'> | Date | string;
+    transactionDate?:
+      | DateTimeWithAggregatesFilter<'TransactionLog'>
+      | Date
+      | string;
+    deletedAt?:
+      | DateTimeNullableWithAggregatesFilter<'TransactionLog'>
+      | Date
+      | string
+      | null;
+    remarks?: StringWithAggregatesFilter<'TransactionLog'> | string;
+  };
+
   export type CompanyCreateInput = {
     name: string;
     email: string;
@@ -12702,6 +18529,9 @@ export namespace Prisma {
     customer?: CustomerCreateNestedManyWithoutCompanyInput;
     category?: CategoryCreateNestedManyWithoutCompanyInput;
     product?: ProductCreateNestedManyWithoutCompanyInput;
+    order?: OrderCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyUncheckedCreateInput = {
@@ -12716,6 +18546,9 @@ export namespace Prisma {
     customer?: CustomerUncheckedCreateNestedManyWithoutCompanyInput;
     category?: CategoryUncheckedCreateNestedManyWithoutCompanyInput;
     product?: ProductUncheckedCreateNestedManyWithoutCompanyInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyUpdateInput = {
@@ -12737,6 +18570,9 @@ export namespace Prisma {
     customer?: CustomerUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUpdateManyWithoutCompanyNestedInput;
     product?: ProductUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyNestedInput;
   };
 
   export type CompanyUncheckedUpdateInput = {
@@ -12759,6 +18595,9 @@ export namespace Prisma {
     customer?: CustomerUncheckedUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUncheckedUpdateManyWithoutCompanyNestedInput;
     product?: ProductUncheckedUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput;
   };
 
   export type CompanyCreateManyInput = {
@@ -12819,6 +18658,7 @@ export namespace Prisma {
     otp?: string | null;
     otpExpired?: Date | string | null;
     company: CompanyCreateNestedOneWithoutCompanyUsersInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyUserInput;
   };
 
   export type CompanyUserUncheckedCreateInput = {
@@ -12835,6 +18675,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null;
     otp?: string | null;
     otpExpired?: Date | string | null;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyUserInput;
   };
 
   export type CompanyUserUpdateInput = {
@@ -12862,6 +18703,7 @@ export namespace Prisma {
       | string
       | null;
     company?: CompanyUpdateOneRequiredWithoutCompanyUsersNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyUserNestedInput;
   };
 
   export type CompanyUserUncheckedUpdateInput = {
@@ -12890,6 +18732,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyUserNestedInput;
   };
 
   export type CompanyUserCreateManyInput = {
@@ -13115,6 +18958,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null;
     address?: AddressCustomerCreateNestedManyWithoutCustomerInput;
     company: CompanyCreateNestedOneWithoutCustomerInput;
+    order?: OrderCreateNestedManyWithoutCustomerInput;
   };
 
   export type CustomerUncheckedCreateInput = {
@@ -13128,6 +18972,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
     address?: AddressCustomerUncheckedCreateNestedManyWithoutCustomerInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCustomerInput;
   };
 
   export type CustomerUpdateInput = {
@@ -13148,6 +18993,7 @@ export namespace Prisma {
       | null;
     address?: AddressCustomerUpdateManyWithoutCustomerNestedInput;
     company?: CompanyUpdateOneRequiredWithoutCustomerNestedInput;
+    order?: OrderUpdateManyWithoutCustomerNestedInput;
   };
 
   export type CustomerUncheckedUpdateInput = {
@@ -13169,6 +19015,7 @@ export namespace Prisma {
       | string
       | null;
     address?: AddressCustomerUncheckedUpdateManyWithoutCustomerNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCustomerNestedInput;
   };
 
   export type CustomerCreateManyInput = {
@@ -13433,14 +19280,16 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
     category: CategoryCreateNestedOneWithoutProductInput;
     company: CompanyCreateNestedOneWithoutProductInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutProductInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutProductInput;
   };
 
   export type ProductUncheckedCreateInput = {
@@ -13449,14 +19298,16 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     categoryId: number;
     companyId: number;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutProductInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutProductInput;
   };
 
   export type ProductUpdateInput = {
@@ -13464,8 +19315,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
@@ -13480,6 +19331,8 @@ export namespace Prisma {
       | null;
     category?: CategoryUpdateOneRequiredWithoutProductNestedInput;
     company?: CompanyUpdateOneRequiredWithoutProductNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutProductNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutProductNestedInput;
   };
 
   export type ProductUncheckedUpdateInput = {
@@ -13488,8 +19341,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     categoryId?: IntFieldUpdateOperationsInput | number;
     companyId?: IntFieldUpdateOperationsInput | number;
@@ -13504,6 +19357,8 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutProductNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutProductNestedInput;
   };
 
   export type ProductCreateManyInput = {
@@ -13512,8 +19367,8 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     categoryId: number;
     companyId: number;
@@ -13527,8 +19382,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
@@ -13549,8 +19404,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     categoryId?: IntFieldUpdateOperationsInput | number;
     companyId?: IntFieldUpdateOperationsInput | number;
@@ -13565,6 +19420,377 @@ export namespace Prisma {
       | Date
       | string
       | null;
+  };
+
+  export type OrderCreateInput = {
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutOrderInput;
+    customer: CustomerCreateNestedOneWithoutOrderInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutOrderInput;
+  };
+
+  export type OrderUncheckedCreateInput = {
+    id?: number;
+    customerId: number;
+    companyId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutOrderInput;
+  };
+
+  export type OrderUpdateInput = {
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    company?: CompanyUpdateOneRequiredWithoutOrderNestedInput;
+    customer?: CustomerUpdateOneRequiredWithoutOrderNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutOrderNestedInput;
+  };
+
+  export type OrderUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    customerId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutOrderNestedInput;
+  };
+
+  export type OrderCreateManyInput = {
+    id?: number;
+    customerId: number;
+    companyId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type OrderUpdateManyMutationInput = {
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type OrderUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    customerId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type OrderDetailCreateInput = {
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutOrderDetailInput;
+    order: OrderCreateNestedOneWithoutOrderDetailInput;
+    product: ProductCreateNestedOneWithoutOrderDetailInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailUncheckedCreateInput = {
+    id?: number;
+    orderId: number;
+    companyId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailUpdateInput = {
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    company?: CompanyUpdateOneRequiredWithoutOrderDetailNestedInput;
+    order?: OrderUpdateOneRequiredWithoutOrderDetailNestedInput;
+    product?: ProductUpdateOneRequiredWithoutOrderDetailNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    orderId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailCreateManyInput = {
+    id?: number;
+    orderId: number;
+    companyId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type OrderDetailUpdateManyMutationInput = {
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type OrderDetailUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    orderId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type TransactionLogCreateInput = {
+    type: $Enums.TransactionType;
+    quantity: number;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+    company: CompanyCreateNestedOneWithoutTransactionLogInput;
+    companyUser?: CompanyUserCreateNestedOneWithoutTransactionLogInput;
+    product: ProductCreateNestedOneWithoutTransactionLogInput;
+    orderDetail?: OrderDetailCreateNestedOneWithoutTransactionLogInput;
+  };
+
+  export type TransactionLogUncheckedCreateInput = {
+    id?: number;
+    companyId: number;
+    companyUserId?: number | null;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogUpdateInput = {
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+    company?: CompanyUpdateOneRequiredWithoutTransactionLogNestedInput;
+    companyUser?: CompanyUserUpdateOneWithoutTransactionLogNestedInput;
+    product?: ProductUpdateOneRequiredWithoutTransactionLogNestedInput;
+    orderDetail?: OrderDetailUpdateOneWithoutTransactionLogNestedInput;
+  };
+
+  export type TransactionLogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type TransactionLogCreateManyInput = {
+    id?: number;
+    companyId: number;
+    companyUserId?: number | null;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogUpdateManyMutationInput = {
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type TransactionLogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
   };
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13644,6 +19870,24 @@ export namespace Prisma {
     none?: ProductWhereInput;
   };
 
+  export type OrderListRelationFilter = {
+    every?: OrderWhereInput;
+    some?: OrderWhereInput;
+    none?: OrderWhereInput;
+  };
+
+  export type OrderDetailListRelationFilter = {
+    every?: OrderDetailWhereInput;
+    some?: OrderDetailWhereInput;
+    none?: OrderDetailWhereInput;
+  };
+
+  export type TransactionLogListRelationFilter = {
+    every?: TransactionLogWhereInput;
+    some?: TransactionLogWhereInput;
+    none?: TransactionLogWhereInput;
+  };
+
   export type SortOrderInput = {
     sort: SortOrder;
     nulls?: NullsOrder;
@@ -13662,6 +19906,18 @@ export namespace Prisma {
   };
 
   export type ProductOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type OrderOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type OrderDetailOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type TransactionLogOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -14104,17 +20360,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number;
   };
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
-  };
-
   export type CategoryScalarRelationFilter = {
     is?: CategoryWhereInput;
     isNot?: CategoryWhereInput;
@@ -14204,6 +20449,295 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>;
   };
 
+  export type EnumPaymentStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.PaymentStatus
+      | EnumPaymentStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus;
+  };
+
+  export type EnumShippingStatusNullableFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.ShippingStatus
+      | EnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    in?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    notIn?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    not?:
+      | NestedEnumShippingStatusNullableFilter<$PrismaModel>
+      | $Enums.ShippingStatus
+      | null;
+  };
+
+  export type OrderCountOrderByAggregateInput = {
+    id?: SortOrder;
+    customerId?: SortOrder;
+    companyId?: SortOrder;
+    grandTotal?: SortOrder;
+    paymentStatus?: SortOrder;
+    shippingStatus?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrder;
+    deletedAt?: SortOrder;
+  };
+
+  export type OrderAvgOrderByAggregateInput = {
+    id?: SortOrder;
+    customerId?: SortOrder;
+    companyId?: SortOrder;
+    grandTotal?: SortOrder;
+  };
+
+  export type OrderMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    customerId?: SortOrder;
+    companyId?: SortOrder;
+    grandTotal?: SortOrder;
+    paymentStatus?: SortOrder;
+    shippingStatus?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrder;
+    deletedAt?: SortOrder;
+  };
+
+  export type OrderMinOrderByAggregateInput = {
+    id?: SortOrder;
+    customerId?: SortOrder;
+    companyId?: SortOrder;
+    grandTotal?: SortOrder;
+    paymentStatus?: SortOrder;
+    shippingStatus?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrder;
+    deletedAt?: SortOrder;
+  };
+
+  export type OrderSumOrderByAggregateInput = {
+    id?: SortOrder;
+    customerId?: SortOrder;
+    companyId?: SortOrder;
+    grandTotal?: SortOrder;
+  };
+
+  export type EnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.PaymentStatus
+      | EnumPaymentStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel>
+      | $Enums.PaymentStatus;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>;
+    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>;
+  };
+
+  export type EnumShippingStatusNullableWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.ShippingStatus
+      | EnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    in?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    notIn?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    not?:
+      | NestedEnumShippingStatusNullableWithAggregatesFilter<$PrismaModel>
+      | $Enums.ShippingStatus
+      | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedEnumShippingStatusNullableFilter<$PrismaModel>;
+    _max?: NestedEnumShippingStatusNullableFilter<$PrismaModel>;
+  };
+
+  export type OrderScalarRelationFilter = {
+    is?: OrderWhereInput;
+    isNot?: OrderWhereInput;
+  };
+
+  export type ProductScalarRelationFilter = {
+    is?: ProductWhereInput;
+    isNot?: ProductWhereInput;
+  };
+
+  export type OrderDetailCountOrderByAggregateInput = {
+    id?: SortOrder;
+    orderId?: SortOrder;
+    companyId?: SortOrder;
+    productId?: SortOrder;
+    qty?: SortOrder;
+    price?: SortOrder;
+    subTotal?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrder;
+    deletedAt?: SortOrder;
+  };
+
+  export type OrderDetailAvgOrderByAggregateInput = {
+    id?: SortOrder;
+    orderId?: SortOrder;
+    companyId?: SortOrder;
+    productId?: SortOrder;
+    qty?: SortOrder;
+    price?: SortOrder;
+    subTotal?: SortOrder;
+  };
+
+  export type OrderDetailMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    orderId?: SortOrder;
+    companyId?: SortOrder;
+    productId?: SortOrder;
+    qty?: SortOrder;
+    price?: SortOrder;
+    subTotal?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrder;
+    deletedAt?: SortOrder;
+  };
+
+  export type OrderDetailMinOrderByAggregateInput = {
+    id?: SortOrder;
+    orderId?: SortOrder;
+    companyId?: SortOrder;
+    productId?: SortOrder;
+    qty?: SortOrder;
+    price?: SortOrder;
+    subTotal?: SortOrder;
+    createdAt?: SortOrder;
+    updatedAt?: SortOrder;
+    deletedAt?: SortOrder;
+  };
+
+  export type OrderDetailSumOrderByAggregateInput = {
+    id?: SortOrder;
+    orderId?: SortOrder;
+    companyId?: SortOrder;
+    productId?: SortOrder;
+    qty?: SortOrder;
+    price?: SortOrder;
+    subTotal?: SortOrder;
+  };
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
+  };
+
+  export type EnumTransactionTypeFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.TransactionType
+      | EnumTransactionTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumTransactionTypeFilter<$PrismaModel>
+      | $Enums.TransactionType;
+  };
+
+  export type CompanyUserNullableScalarRelationFilter = {
+    is?: CompanyUserWhereInput | null;
+    isNot?: CompanyUserWhereInput | null;
+  };
+
+  export type OrderDetailNullableScalarRelationFilter = {
+    is?: OrderDetailWhereInput | null;
+    isNot?: OrderDetailWhereInput | null;
+  };
+
+  export type TransactionLogCountOrderByAggregateInput = {
+    id?: SortOrder;
+    companyId?: SortOrder;
+    companyUserId?: SortOrder;
+    productId?: SortOrder;
+    type?: SortOrder;
+    quantity?: SortOrder;
+    orderDetailId?: SortOrder;
+    createdAt?: SortOrder;
+    transactionDate?: SortOrder;
+    deletedAt?: SortOrder;
+    remarks?: SortOrder;
+  };
+
+  export type TransactionLogAvgOrderByAggregateInput = {
+    id?: SortOrder;
+    companyId?: SortOrder;
+    companyUserId?: SortOrder;
+    productId?: SortOrder;
+    quantity?: SortOrder;
+    orderDetailId?: SortOrder;
+  };
+
+  export type TransactionLogMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    companyId?: SortOrder;
+    companyUserId?: SortOrder;
+    productId?: SortOrder;
+    type?: SortOrder;
+    quantity?: SortOrder;
+    orderDetailId?: SortOrder;
+    createdAt?: SortOrder;
+    transactionDate?: SortOrder;
+    deletedAt?: SortOrder;
+    remarks?: SortOrder;
+  };
+
+  export type TransactionLogMinOrderByAggregateInput = {
+    id?: SortOrder;
+    companyId?: SortOrder;
+    companyUserId?: SortOrder;
+    productId?: SortOrder;
+    type?: SortOrder;
+    quantity?: SortOrder;
+    orderDetailId?: SortOrder;
+    createdAt?: SortOrder;
+    transactionDate?: SortOrder;
+    deletedAt?: SortOrder;
+    remarks?: SortOrder;
+  };
+
+  export type TransactionLogSumOrderByAggregateInput = {
+    id?: SortOrder;
+    companyId?: SortOrder;
+    companyUserId?: SortOrder;
+    productId?: SortOrder;
+    quantity?: SortOrder;
+    orderDetailId?: SortOrder;
+  };
+
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
@@ -14218,6 +20752,24 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>;
     _min?: NestedIntNullableFilter<$PrismaModel>;
     _max?: NestedIntNullableFilter<$PrismaModel>;
+  };
+
+  export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.TransactionType
+      | EnumTransactionTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel>
+      | $Enums.TransactionType;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumTransactionTypeFilter<$PrismaModel>;
+    _max?: NestedEnumTransactionTypeFilter<$PrismaModel>;
   };
 
   export type CompanyUserCreateNestedManyWithoutCompanyInput = {
@@ -14280,6 +20832,51 @@ export namespace Prisma {
     connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[];
   };
 
+  export type OrderCreateNestedManyWithoutCompanyInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCompanyInput,
+          OrderUncheckedCreateWithoutCompanyInput
+        >
+      | OrderCreateWithoutCompanyInput[]
+      | OrderUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCompanyInput
+      | OrderCreateOrConnectWithoutCompanyInput[];
+    createMany?: OrderCreateManyCompanyInputEnvelope;
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+  };
+
+  export type OrderDetailCreateNestedManyWithoutCompanyInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutCompanyInput,
+          OrderDetailUncheckedCreateWithoutCompanyInput
+        >
+      | OrderDetailCreateWithoutCompanyInput[]
+      | OrderDetailUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutCompanyInput
+      | OrderDetailCreateOrConnectWithoutCompanyInput[];
+    createMany?: OrderDetailCreateManyCompanyInputEnvelope;
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+  };
+
+  export type TransactionLogCreateNestedManyWithoutCompanyInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyInput,
+          TransactionLogUncheckedCreateWithoutCompanyInput
+        >
+      | TransactionLogCreateWithoutCompanyInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyInput
+      | TransactionLogCreateOrConnectWithoutCompanyInput[];
+    createMany?: TransactionLogCreateManyCompanyInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+  };
+
   export type CompanyUserUncheckedCreateNestedManyWithoutCompanyInput = {
     create?:
       | XOR<
@@ -14338,6 +20935,51 @@ export namespace Prisma {
       | ProductCreateOrConnectWithoutCompanyInput[];
     createMany?: ProductCreateManyCompanyInputEnvelope;
     connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[];
+  };
+
+  export type OrderUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCompanyInput,
+          OrderUncheckedCreateWithoutCompanyInput
+        >
+      | OrderCreateWithoutCompanyInput[]
+      | OrderUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCompanyInput
+      | OrderCreateOrConnectWithoutCompanyInput[];
+    createMany?: OrderCreateManyCompanyInputEnvelope;
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+  };
+
+  export type OrderDetailUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutCompanyInput,
+          OrderDetailUncheckedCreateWithoutCompanyInput
+        >
+      | OrderDetailCreateWithoutCompanyInput[]
+      | OrderDetailUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutCompanyInput
+      | OrderDetailCreateOrConnectWithoutCompanyInput[];
+    createMany?: OrderDetailCreateManyCompanyInputEnvelope;
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+  };
+
+  export type TransactionLogUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyInput,
+          TransactionLogUncheckedCreateWithoutCompanyInput
+        >
+      | TransactionLogCreateWithoutCompanyInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyInput
+      | TransactionLogCreateOrConnectWithoutCompanyInput[];
+    createMany?: TransactionLogCreateManyCompanyInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
   };
 
   export type StringFieldUpdateOperationsInput = {
@@ -14468,6 +21110,94 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[];
   };
 
+  export type OrderUpdateManyWithoutCompanyNestedInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCompanyInput,
+          OrderUncheckedCreateWithoutCompanyInput
+        >
+      | OrderCreateWithoutCompanyInput[]
+      | OrderUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCompanyInput
+      | OrderCreateOrConnectWithoutCompanyInput[];
+    upsert?:
+      | OrderUpsertWithWhereUniqueWithoutCompanyInput
+      | OrderUpsertWithWhereUniqueWithoutCompanyInput[];
+    createMany?: OrderCreateManyCompanyInputEnvelope;
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    update?:
+      | OrderUpdateWithWhereUniqueWithoutCompanyInput
+      | OrderUpdateWithWhereUniqueWithoutCompanyInput[];
+    updateMany?:
+      | OrderUpdateManyWithWhereWithoutCompanyInput
+      | OrderUpdateManyWithWhereWithoutCompanyInput[];
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[];
+  };
+
+  export type OrderDetailUpdateManyWithoutCompanyNestedInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutCompanyInput,
+          OrderDetailUncheckedCreateWithoutCompanyInput
+        >
+      | OrderDetailCreateWithoutCompanyInput[]
+      | OrderDetailUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutCompanyInput
+      | OrderDetailCreateOrConnectWithoutCompanyInput[];
+    upsert?:
+      | OrderDetailUpsertWithWhereUniqueWithoutCompanyInput
+      | OrderDetailUpsertWithWhereUniqueWithoutCompanyInput[];
+    createMany?: OrderDetailCreateManyCompanyInputEnvelope;
+    set?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    disconnect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    delete?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    update?:
+      | OrderDetailUpdateWithWhereUniqueWithoutCompanyInput
+      | OrderDetailUpdateWithWhereUniqueWithoutCompanyInput[];
+    updateMany?:
+      | OrderDetailUpdateManyWithWhereWithoutCompanyInput
+      | OrderDetailUpdateManyWithWhereWithoutCompanyInput[];
+    deleteMany?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+  };
+
+  export type TransactionLogUpdateManyWithoutCompanyNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyInput,
+          TransactionLogUncheckedCreateWithoutCompanyInput
+        >
+      | TransactionLogCreateWithoutCompanyInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyInput
+      | TransactionLogCreateOrConnectWithoutCompanyInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyInput
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyInput[];
+    createMany?: TransactionLogCreateManyCompanyInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyInput
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutCompanyInput
+      | TransactionLogUpdateManyWithWhereWithoutCompanyInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
+  };
+
   export type IntFieldUpdateOperationsInput = {
     set?: number;
     increment?: number;
@@ -14588,6 +21318,94 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[];
   };
 
+  export type OrderUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCompanyInput,
+          OrderUncheckedCreateWithoutCompanyInput
+        >
+      | OrderCreateWithoutCompanyInput[]
+      | OrderUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCompanyInput
+      | OrderCreateOrConnectWithoutCompanyInput[];
+    upsert?:
+      | OrderUpsertWithWhereUniqueWithoutCompanyInput
+      | OrderUpsertWithWhereUniqueWithoutCompanyInput[];
+    createMany?: OrderCreateManyCompanyInputEnvelope;
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    update?:
+      | OrderUpdateWithWhereUniqueWithoutCompanyInput
+      | OrderUpdateWithWhereUniqueWithoutCompanyInput[];
+    updateMany?:
+      | OrderUpdateManyWithWhereWithoutCompanyInput
+      | OrderUpdateManyWithWhereWithoutCompanyInput[];
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[];
+  };
+
+  export type OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutCompanyInput,
+          OrderDetailUncheckedCreateWithoutCompanyInput
+        >
+      | OrderDetailCreateWithoutCompanyInput[]
+      | OrderDetailUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutCompanyInput
+      | OrderDetailCreateOrConnectWithoutCompanyInput[];
+    upsert?:
+      | OrderDetailUpsertWithWhereUniqueWithoutCompanyInput
+      | OrderDetailUpsertWithWhereUniqueWithoutCompanyInput[];
+    createMany?: OrderDetailCreateManyCompanyInputEnvelope;
+    set?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    disconnect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    delete?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    update?:
+      | OrderDetailUpdateWithWhereUniqueWithoutCompanyInput
+      | OrderDetailUpdateWithWhereUniqueWithoutCompanyInput[];
+    updateMany?:
+      | OrderDetailUpdateManyWithWhereWithoutCompanyInput
+      | OrderDetailUpdateManyWithWhereWithoutCompanyInput[];
+    deleteMany?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyInput,
+          TransactionLogUncheckedCreateWithoutCompanyInput
+        >
+      | TransactionLogCreateWithoutCompanyInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyInput
+      | TransactionLogCreateOrConnectWithoutCompanyInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyInput
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyInput[];
+    createMany?: TransactionLogCreateManyCompanyInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyInput
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutCompanyInput
+      | TransactionLogUpdateManyWithWhereWithoutCompanyInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
+  };
+
   export type CompanyCreateNestedOneWithoutCompanyUsersInput = {
     create?: XOR<
       CompanyCreateWithoutCompanyUsersInput,
@@ -14595,6 +21413,36 @@ export namespace Prisma {
     >;
     connectOrCreate?: CompanyCreateOrConnectWithoutCompanyUsersInput;
     connect?: CompanyWhereUniqueInput;
+  };
+
+  export type TransactionLogCreateNestedManyWithoutCompanyUserInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyUserInput,
+          TransactionLogUncheckedCreateWithoutCompanyUserInput
+        >
+      | TransactionLogCreateWithoutCompanyUserInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyUserInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput[];
+    createMany?: TransactionLogCreateManyCompanyUserInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+  };
+
+  export type TransactionLogUncheckedCreateNestedManyWithoutCompanyUserInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyUserInput,
+          TransactionLogUncheckedCreateWithoutCompanyUserInput
+        >
+      | TransactionLogCreateWithoutCompanyUserInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyUserInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput[];
+    createMany?: TransactionLogCreateManyCompanyUserInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
   };
 
   export type EnumLevelStatusFieldUpdateOperationsInput = {
@@ -14620,6 +21468,70 @@ export namespace Prisma {
       >,
       CompanyUncheckedUpdateWithoutCompanyUsersInput
     >;
+  };
+
+  export type TransactionLogUpdateManyWithoutCompanyUserNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyUserInput,
+          TransactionLogUncheckedCreateWithoutCompanyUserInput
+        >
+      | TransactionLogCreateWithoutCompanyUserInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyUserInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyUserInput
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyUserInput[];
+    createMany?: TransactionLogCreateManyCompanyUserInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyUserInput
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyUserInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutCompanyUserInput
+      | TransactionLogUpdateManyWithWhereWithoutCompanyUserInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutCompanyUserNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutCompanyUserInput,
+          TransactionLogUncheckedCreateWithoutCompanyUserInput
+        >
+      | TransactionLogCreateWithoutCompanyUserInput[]
+      | TransactionLogUncheckedCreateWithoutCompanyUserInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput
+      | TransactionLogCreateOrConnectWithoutCompanyUserInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyUserInput
+      | TransactionLogUpsertWithWhereUniqueWithoutCompanyUserInput[];
+    createMany?: TransactionLogCreateManyCompanyUserInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyUserInput
+      | TransactionLogUpdateWithWhereUniqueWithoutCompanyUserInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutCompanyUserInput
+      | TransactionLogUpdateManyWithWhereWithoutCompanyUserInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
   };
 
   export type AddressCustomerCreateNestedManyWithoutCustomerInput = {
@@ -14648,6 +21560,21 @@ export namespace Prisma {
     connect?: CompanyWhereUniqueInput;
   };
 
+  export type OrderCreateNestedManyWithoutCustomerInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCustomerInput,
+          OrderUncheckedCreateWithoutCustomerInput
+        >
+      | OrderCreateWithoutCustomerInput[]
+      | OrderUncheckedCreateWithoutCustomerInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCustomerInput
+      | OrderCreateOrConnectWithoutCustomerInput[];
+    createMany?: OrderCreateManyCustomerInputEnvelope;
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+  };
+
   export type AddressCustomerUncheckedCreateNestedManyWithoutCustomerInput = {
     create?:
       | XOR<
@@ -14663,6 +21590,21 @@ export namespace Prisma {
     connect?:
       | AddressCustomerWhereUniqueInput
       | AddressCustomerWhereUniqueInput[];
+  };
+
+  export type OrderUncheckedCreateNestedManyWithoutCustomerInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCustomerInput,
+          OrderUncheckedCreateWithoutCustomerInput
+        >
+      | OrderCreateWithoutCustomerInput[]
+      | OrderUncheckedCreateWithoutCustomerInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCustomerInput
+      | OrderCreateOrConnectWithoutCustomerInput[];
+    createMany?: OrderCreateManyCustomerInputEnvelope;
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
   };
 
   export type AddressCustomerUpdateManyWithoutCustomerNestedInput = {
@@ -14718,6 +21660,34 @@ export namespace Prisma {
     >;
   };
 
+  export type OrderUpdateManyWithoutCustomerNestedInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCustomerInput,
+          OrderUncheckedCreateWithoutCustomerInput
+        >
+      | OrderCreateWithoutCustomerInput[]
+      | OrderUncheckedCreateWithoutCustomerInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCustomerInput
+      | OrderCreateOrConnectWithoutCustomerInput[];
+    upsert?:
+      | OrderUpsertWithWhereUniqueWithoutCustomerInput
+      | OrderUpsertWithWhereUniqueWithoutCustomerInput[];
+    createMany?: OrderCreateManyCustomerInputEnvelope;
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    update?:
+      | OrderUpdateWithWhereUniqueWithoutCustomerInput
+      | OrderUpdateWithWhereUniqueWithoutCustomerInput[];
+    updateMany?:
+      | OrderUpdateManyWithWhereWithoutCustomerInput
+      | OrderUpdateManyWithWhereWithoutCustomerInput[];
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[];
+  };
+
   export type AddressCustomerUncheckedUpdateManyWithoutCustomerNestedInput = {
     create?:
       | XOR<
@@ -14752,6 +21722,34 @@ export namespace Prisma {
     deleteMany?:
       | AddressCustomerScalarWhereInput
       | AddressCustomerScalarWhereInput[];
+  };
+
+  export type OrderUncheckedUpdateManyWithoutCustomerNestedInput = {
+    create?:
+      | XOR<
+          OrderCreateWithoutCustomerInput,
+          OrderUncheckedCreateWithoutCustomerInput
+        >
+      | OrderCreateWithoutCustomerInput[]
+      | OrderUncheckedCreateWithoutCustomerInput[];
+    connectOrCreate?:
+      | OrderCreateOrConnectWithoutCustomerInput
+      | OrderCreateOrConnectWithoutCustomerInput[];
+    upsert?:
+      | OrderUpsertWithWhereUniqueWithoutCustomerInput
+      | OrderUpsertWithWhereUniqueWithoutCustomerInput[];
+    createMany?: OrderCreateManyCustomerInputEnvelope;
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[];
+    update?:
+      | OrderUpdateWithWhereUniqueWithoutCustomerInput
+      | OrderUpdateWithWhereUniqueWithoutCustomerInput[];
+    updateMany?:
+      | OrderUpdateManyWithWhereWithoutCustomerInput
+      | OrderUpdateManyWithWhereWithoutCustomerInput[];
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[];
   };
 
   export type CustomerCreateNestedOneWithoutAddressInput = {
@@ -14910,16 +21908,68 @@ export namespace Prisma {
     connect?: CompanyWhereUniqueInput;
   };
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
+  export type OrderDetailCreateNestedManyWithoutProductInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutProductInput,
+          OrderDetailUncheckedCreateWithoutProductInput
+        >
+      | OrderDetailCreateWithoutProductInput[]
+      | OrderDetailUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutProductInput
+      | OrderDetailCreateOrConnectWithoutProductInput[];
+    createMany?: OrderDetailCreateManyProductInputEnvelope;
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
   };
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null;
+  export type TransactionLogCreateNestedManyWithoutProductInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutProductInput,
+          TransactionLogUncheckedCreateWithoutProductInput
+        >
+      | TransactionLogCreateWithoutProductInput[]
+      | TransactionLogUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutProductInput
+      | TransactionLogCreateOrConnectWithoutProductInput[];
+    createMany?: TransactionLogCreateManyProductInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+  };
+
+  export type OrderDetailUncheckedCreateNestedManyWithoutProductInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutProductInput,
+          OrderDetailUncheckedCreateWithoutProductInput
+        >
+      | OrderDetailCreateWithoutProductInput[]
+      | OrderDetailUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutProductInput
+      | OrderDetailCreateOrConnectWithoutProductInput[];
+    createMany?: OrderDetailCreateManyProductInputEnvelope;
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+  };
+
+  export type TransactionLogUncheckedCreateNestedManyWithoutProductInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutProductInput,
+          TransactionLogUncheckedCreateWithoutProductInput
+        >
+      | TransactionLogCreateWithoutProductInput[]
+      | TransactionLogUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutProductInput
+      | TransactionLogCreateOrConnectWithoutProductInput[];
+    createMany?: TransactionLogCreateManyProductInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+  };
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number;
     increment?: number;
     decrement?: number;
     multiply?: number;
@@ -14958,6 +22008,564 @@ export namespace Prisma {
       >,
       CompanyUncheckedUpdateWithoutProductInput
     >;
+  };
+
+  export type OrderDetailUpdateManyWithoutProductNestedInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutProductInput,
+          OrderDetailUncheckedCreateWithoutProductInput
+        >
+      | OrderDetailCreateWithoutProductInput[]
+      | OrderDetailUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutProductInput
+      | OrderDetailCreateOrConnectWithoutProductInput[];
+    upsert?:
+      | OrderDetailUpsertWithWhereUniqueWithoutProductInput
+      | OrderDetailUpsertWithWhereUniqueWithoutProductInput[];
+    createMany?: OrderDetailCreateManyProductInputEnvelope;
+    set?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    disconnect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    delete?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    update?:
+      | OrderDetailUpdateWithWhereUniqueWithoutProductInput
+      | OrderDetailUpdateWithWhereUniqueWithoutProductInput[];
+    updateMany?:
+      | OrderDetailUpdateManyWithWhereWithoutProductInput
+      | OrderDetailUpdateManyWithWhereWithoutProductInput[];
+    deleteMany?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+  };
+
+  export type TransactionLogUpdateManyWithoutProductNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutProductInput,
+          TransactionLogUncheckedCreateWithoutProductInput
+        >
+      | TransactionLogCreateWithoutProductInput[]
+      | TransactionLogUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutProductInput
+      | TransactionLogCreateOrConnectWithoutProductInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutProductInput
+      | TransactionLogUpsertWithWhereUniqueWithoutProductInput[];
+    createMany?: TransactionLogCreateManyProductInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutProductInput
+      | TransactionLogUpdateWithWhereUniqueWithoutProductInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutProductInput
+      | TransactionLogUpdateManyWithWhereWithoutProductInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
+  };
+
+  export type OrderDetailUncheckedUpdateManyWithoutProductNestedInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutProductInput,
+          OrderDetailUncheckedCreateWithoutProductInput
+        >
+      | OrderDetailCreateWithoutProductInput[]
+      | OrderDetailUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutProductInput
+      | OrderDetailCreateOrConnectWithoutProductInput[];
+    upsert?:
+      | OrderDetailUpsertWithWhereUniqueWithoutProductInput
+      | OrderDetailUpsertWithWhereUniqueWithoutProductInput[];
+    createMany?: OrderDetailCreateManyProductInputEnvelope;
+    set?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    disconnect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    delete?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    update?:
+      | OrderDetailUpdateWithWhereUniqueWithoutProductInput
+      | OrderDetailUpdateWithWhereUniqueWithoutProductInput[];
+    updateMany?:
+      | OrderDetailUpdateManyWithWhereWithoutProductInput
+      | OrderDetailUpdateManyWithWhereWithoutProductInput[];
+    deleteMany?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutProductNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutProductInput,
+          TransactionLogUncheckedCreateWithoutProductInput
+        >
+      | TransactionLogCreateWithoutProductInput[]
+      | TransactionLogUncheckedCreateWithoutProductInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutProductInput
+      | TransactionLogCreateOrConnectWithoutProductInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutProductInput
+      | TransactionLogUpsertWithWhereUniqueWithoutProductInput[];
+    createMany?: TransactionLogCreateManyProductInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutProductInput
+      | TransactionLogUpdateWithWhereUniqueWithoutProductInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutProductInput
+      | TransactionLogUpdateManyWithWhereWithoutProductInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
+  };
+
+  export type CompanyCreateNestedOneWithoutOrderInput = {
+    create?: XOR<
+      CompanyCreateWithoutOrderInput,
+      CompanyUncheckedCreateWithoutOrderInput
+    >;
+    connectOrCreate?: CompanyCreateOrConnectWithoutOrderInput;
+    connect?: CompanyWhereUniqueInput;
+  };
+
+  export type CustomerCreateNestedOneWithoutOrderInput = {
+    create?: XOR<
+      CustomerCreateWithoutOrderInput,
+      CustomerUncheckedCreateWithoutOrderInput
+    >;
+    connectOrCreate?: CustomerCreateOrConnectWithoutOrderInput;
+    connect?: CustomerWhereUniqueInput;
+  };
+
+  export type OrderDetailCreateNestedManyWithoutOrderInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutOrderInput,
+          OrderDetailUncheckedCreateWithoutOrderInput
+        >
+      | OrderDetailCreateWithoutOrderInput[]
+      | OrderDetailUncheckedCreateWithoutOrderInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutOrderInput
+      | OrderDetailCreateOrConnectWithoutOrderInput[];
+    createMany?: OrderDetailCreateManyOrderInputEnvelope;
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+  };
+
+  export type OrderDetailUncheckedCreateNestedManyWithoutOrderInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutOrderInput,
+          OrderDetailUncheckedCreateWithoutOrderInput
+        >
+      | OrderDetailCreateWithoutOrderInput[]
+      | OrderDetailUncheckedCreateWithoutOrderInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutOrderInput
+      | OrderDetailCreateOrConnectWithoutOrderInput[];
+    createMany?: OrderDetailCreateManyOrderInputEnvelope;
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+  };
+
+  export type EnumPaymentStatusFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentStatus;
+  };
+
+  export type NullableEnumShippingStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ShippingStatus | null;
+  };
+
+  export type CompanyUpdateOneRequiredWithoutOrderNestedInput = {
+    create?: XOR<
+      CompanyCreateWithoutOrderInput,
+      CompanyUncheckedCreateWithoutOrderInput
+    >;
+    connectOrCreate?: CompanyCreateOrConnectWithoutOrderInput;
+    upsert?: CompanyUpsertWithoutOrderInput;
+    connect?: CompanyWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        CompanyUpdateToOneWithWhereWithoutOrderInput,
+        CompanyUpdateWithoutOrderInput
+      >,
+      CompanyUncheckedUpdateWithoutOrderInput
+    >;
+  };
+
+  export type CustomerUpdateOneRequiredWithoutOrderNestedInput = {
+    create?: XOR<
+      CustomerCreateWithoutOrderInput,
+      CustomerUncheckedCreateWithoutOrderInput
+    >;
+    connectOrCreate?: CustomerCreateOrConnectWithoutOrderInput;
+    upsert?: CustomerUpsertWithoutOrderInput;
+    connect?: CustomerWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        CustomerUpdateToOneWithWhereWithoutOrderInput,
+        CustomerUpdateWithoutOrderInput
+      >,
+      CustomerUncheckedUpdateWithoutOrderInput
+    >;
+  };
+
+  export type OrderDetailUpdateManyWithoutOrderNestedInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutOrderInput,
+          OrderDetailUncheckedCreateWithoutOrderInput
+        >
+      | OrderDetailCreateWithoutOrderInput[]
+      | OrderDetailUncheckedCreateWithoutOrderInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutOrderInput
+      | OrderDetailCreateOrConnectWithoutOrderInput[];
+    upsert?:
+      | OrderDetailUpsertWithWhereUniqueWithoutOrderInput
+      | OrderDetailUpsertWithWhereUniqueWithoutOrderInput[];
+    createMany?: OrderDetailCreateManyOrderInputEnvelope;
+    set?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    disconnect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    delete?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    update?:
+      | OrderDetailUpdateWithWhereUniqueWithoutOrderInput
+      | OrderDetailUpdateWithWhereUniqueWithoutOrderInput[];
+    updateMany?:
+      | OrderDetailUpdateManyWithWhereWithoutOrderInput
+      | OrderDetailUpdateManyWithWhereWithoutOrderInput[];
+    deleteMany?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+  };
+
+  export type OrderDetailUncheckedUpdateManyWithoutOrderNestedInput = {
+    create?:
+      | XOR<
+          OrderDetailCreateWithoutOrderInput,
+          OrderDetailUncheckedCreateWithoutOrderInput
+        >
+      | OrderDetailCreateWithoutOrderInput[]
+      | OrderDetailUncheckedCreateWithoutOrderInput[];
+    connectOrCreate?:
+      | OrderDetailCreateOrConnectWithoutOrderInput
+      | OrderDetailCreateOrConnectWithoutOrderInput[];
+    upsert?:
+      | OrderDetailUpsertWithWhereUniqueWithoutOrderInput
+      | OrderDetailUpsertWithWhereUniqueWithoutOrderInput[];
+    createMany?: OrderDetailCreateManyOrderInputEnvelope;
+    set?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    disconnect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    delete?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    connect?: OrderDetailWhereUniqueInput | OrderDetailWhereUniqueInput[];
+    update?:
+      | OrderDetailUpdateWithWhereUniqueWithoutOrderInput
+      | OrderDetailUpdateWithWhereUniqueWithoutOrderInput[];
+    updateMany?:
+      | OrderDetailUpdateManyWithWhereWithoutOrderInput
+      | OrderDetailUpdateManyWithWhereWithoutOrderInput[];
+    deleteMany?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+  };
+
+  export type CompanyCreateNestedOneWithoutOrderDetailInput = {
+    create?: XOR<
+      CompanyCreateWithoutOrderDetailInput,
+      CompanyUncheckedCreateWithoutOrderDetailInput
+    >;
+    connectOrCreate?: CompanyCreateOrConnectWithoutOrderDetailInput;
+    connect?: CompanyWhereUniqueInput;
+  };
+
+  export type OrderCreateNestedOneWithoutOrderDetailInput = {
+    create?: XOR<
+      OrderCreateWithoutOrderDetailInput,
+      OrderUncheckedCreateWithoutOrderDetailInput
+    >;
+    connectOrCreate?: OrderCreateOrConnectWithoutOrderDetailInput;
+    connect?: OrderWhereUniqueInput;
+  };
+
+  export type ProductCreateNestedOneWithoutOrderDetailInput = {
+    create?: XOR<
+      ProductCreateWithoutOrderDetailInput,
+      ProductUncheckedCreateWithoutOrderDetailInput
+    >;
+    connectOrCreate?: ProductCreateOrConnectWithoutOrderDetailInput;
+    connect?: ProductWhereUniqueInput;
+  };
+
+  export type TransactionLogCreateNestedManyWithoutOrderDetailInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutOrderDetailInput,
+          TransactionLogUncheckedCreateWithoutOrderDetailInput
+        >
+      | TransactionLogCreateWithoutOrderDetailInput[]
+      | TransactionLogUncheckedCreateWithoutOrderDetailInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput[];
+    createMany?: TransactionLogCreateManyOrderDetailInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+  };
+
+  export type TransactionLogUncheckedCreateNestedManyWithoutOrderDetailInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutOrderDetailInput,
+          TransactionLogUncheckedCreateWithoutOrderDetailInput
+        >
+      | TransactionLogCreateWithoutOrderDetailInput[]
+      | TransactionLogUncheckedCreateWithoutOrderDetailInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput[];
+    createMany?: TransactionLogCreateManyOrderDetailInputEnvelope;
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+  };
+
+  export type CompanyUpdateOneRequiredWithoutOrderDetailNestedInput = {
+    create?: XOR<
+      CompanyCreateWithoutOrderDetailInput,
+      CompanyUncheckedCreateWithoutOrderDetailInput
+    >;
+    connectOrCreate?: CompanyCreateOrConnectWithoutOrderDetailInput;
+    upsert?: CompanyUpsertWithoutOrderDetailInput;
+    connect?: CompanyWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        CompanyUpdateToOneWithWhereWithoutOrderDetailInput,
+        CompanyUpdateWithoutOrderDetailInput
+      >,
+      CompanyUncheckedUpdateWithoutOrderDetailInput
+    >;
+  };
+
+  export type OrderUpdateOneRequiredWithoutOrderDetailNestedInput = {
+    create?: XOR<
+      OrderCreateWithoutOrderDetailInput,
+      OrderUncheckedCreateWithoutOrderDetailInput
+    >;
+    connectOrCreate?: OrderCreateOrConnectWithoutOrderDetailInput;
+    upsert?: OrderUpsertWithoutOrderDetailInput;
+    connect?: OrderWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        OrderUpdateToOneWithWhereWithoutOrderDetailInput,
+        OrderUpdateWithoutOrderDetailInput
+      >,
+      OrderUncheckedUpdateWithoutOrderDetailInput
+    >;
+  };
+
+  export type ProductUpdateOneRequiredWithoutOrderDetailNestedInput = {
+    create?: XOR<
+      ProductCreateWithoutOrderDetailInput,
+      ProductUncheckedCreateWithoutOrderDetailInput
+    >;
+    connectOrCreate?: ProductCreateOrConnectWithoutOrderDetailInput;
+    upsert?: ProductUpsertWithoutOrderDetailInput;
+    connect?: ProductWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProductUpdateToOneWithWhereWithoutOrderDetailInput,
+        ProductUpdateWithoutOrderDetailInput
+      >,
+      ProductUncheckedUpdateWithoutOrderDetailInput
+    >;
+  };
+
+  export type TransactionLogUpdateManyWithoutOrderDetailNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutOrderDetailInput,
+          TransactionLogUncheckedCreateWithoutOrderDetailInput
+        >
+      | TransactionLogCreateWithoutOrderDetailInput[]
+      | TransactionLogUncheckedCreateWithoutOrderDetailInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutOrderDetailInput
+      | TransactionLogUpsertWithWhereUniqueWithoutOrderDetailInput[];
+    createMany?: TransactionLogCreateManyOrderDetailInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutOrderDetailInput
+      | TransactionLogUpdateWithWhereUniqueWithoutOrderDetailInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutOrderDetailInput
+      | TransactionLogUpdateManyWithWhereWithoutOrderDetailInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutOrderDetailNestedInput = {
+    create?:
+      | XOR<
+          TransactionLogCreateWithoutOrderDetailInput,
+          TransactionLogUncheckedCreateWithoutOrderDetailInput
+        >
+      | TransactionLogCreateWithoutOrderDetailInput[]
+      | TransactionLogUncheckedCreateWithoutOrderDetailInput[];
+    connectOrCreate?:
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput
+      | TransactionLogCreateOrConnectWithoutOrderDetailInput[];
+    upsert?:
+      | TransactionLogUpsertWithWhereUniqueWithoutOrderDetailInput
+      | TransactionLogUpsertWithWhereUniqueWithoutOrderDetailInput[];
+    createMany?: TransactionLogCreateManyOrderDetailInputEnvelope;
+    set?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    disconnect?:
+      | TransactionLogWhereUniqueInput
+      | TransactionLogWhereUniqueInput[];
+    delete?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    connect?: TransactionLogWhereUniqueInput | TransactionLogWhereUniqueInput[];
+    update?:
+      | TransactionLogUpdateWithWhereUniqueWithoutOrderDetailInput
+      | TransactionLogUpdateWithWhereUniqueWithoutOrderDetailInput[];
+    updateMany?:
+      | TransactionLogUpdateManyWithWhereWithoutOrderDetailInput
+      | TransactionLogUpdateManyWithWhereWithoutOrderDetailInput[];
+    deleteMany?:
+      | TransactionLogScalarWhereInput
+      | TransactionLogScalarWhereInput[];
+  };
+
+  export type CompanyCreateNestedOneWithoutTransactionLogInput = {
+    create?: XOR<
+      CompanyCreateWithoutTransactionLogInput,
+      CompanyUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: CompanyCreateOrConnectWithoutTransactionLogInput;
+    connect?: CompanyWhereUniqueInput;
+  };
+
+  export type CompanyUserCreateNestedOneWithoutTransactionLogInput = {
+    create?: XOR<
+      CompanyUserCreateWithoutTransactionLogInput,
+      CompanyUserUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: CompanyUserCreateOrConnectWithoutTransactionLogInput;
+    connect?: CompanyUserWhereUniqueInput;
+  };
+
+  export type ProductCreateNestedOneWithoutTransactionLogInput = {
+    create?: XOR<
+      ProductCreateWithoutTransactionLogInput,
+      ProductUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: ProductCreateOrConnectWithoutTransactionLogInput;
+    connect?: ProductWhereUniqueInput;
+  };
+
+  export type OrderDetailCreateNestedOneWithoutTransactionLogInput = {
+    create?: XOR<
+      OrderDetailCreateWithoutTransactionLogInput,
+      OrderDetailUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: OrderDetailCreateOrConnectWithoutTransactionLogInput;
+    connect?: OrderDetailWhereUniqueInput;
+  };
+
+  export type EnumTransactionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.TransactionType;
+  };
+
+  export type CompanyUpdateOneRequiredWithoutTransactionLogNestedInput = {
+    create?: XOR<
+      CompanyCreateWithoutTransactionLogInput,
+      CompanyUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: CompanyCreateOrConnectWithoutTransactionLogInput;
+    upsert?: CompanyUpsertWithoutTransactionLogInput;
+    connect?: CompanyWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        CompanyUpdateToOneWithWhereWithoutTransactionLogInput,
+        CompanyUpdateWithoutTransactionLogInput
+      >,
+      CompanyUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type CompanyUserUpdateOneWithoutTransactionLogNestedInput = {
+    create?: XOR<
+      CompanyUserCreateWithoutTransactionLogInput,
+      CompanyUserUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: CompanyUserCreateOrConnectWithoutTransactionLogInput;
+    upsert?: CompanyUserUpsertWithoutTransactionLogInput;
+    disconnect?: CompanyUserWhereInput | boolean;
+    delete?: CompanyUserWhereInput | boolean;
+    connect?: CompanyUserWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        CompanyUserUpdateToOneWithWhereWithoutTransactionLogInput,
+        CompanyUserUpdateWithoutTransactionLogInput
+      >,
+      CompanyUserUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type ProductUpdateOneRequiredWithoutTransactionLogNestedInput = {
+    create?: XOR<
+      ProductCreateWithoutTransactionLogInput,
+      ProductUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: ProductCreateOrConnectWithoutTransactionLogInput;
+    upsert?: ProductUpsertWithoutTransactionLogInput;
+    connect?: ProductWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProductUpdateToOneWithWhereWithoutTransactionLogInput,
+        ProductUpdateWithoutTransactionLogInput
+      >,
+      ProductUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type OrderDetailUpdateOneWithoutTransactionLogNestedInput = {
+    create?: XOR<
+      OrderDetailCreateWithoutTransactionLogInput,
+      OrderDetailUncheckedCreateWithoutTransactionLogInput
+    >;
+    connectOrCreate?: OrderDetailCreateOrConnectWithoutTransactionLogInput;
+    upsert?: OrderDetailUpsertWithoutTransactionLogInput;
+    disconnect?: OrderDetailWhereInput | boolean;
+    delete?: OrderDetailWhereInput | boolean;
+    connect?: OrderDetailWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        OrderDetailUpdateToOneWithWhereWithoutTransactionLogInput,
+        OrderDetailUpdateWithoutTransactionLogInput
+      >,
+      OrderDetailUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
   };
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -15188,6 +22796,97 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>;
   };
 
+  export type NestedEnumPaymentStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.PaymentStatus
+      | EnumPaymentStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus;
+  };
+
+  export type NestedEnumShippingStatusNullableFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.ShippingStatus
+      | EnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    in?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    notIn?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    not?:
+      | NestedEnumShippingStatusNullableFilter<$PrismaModel>
+      | $Enums.ShippingStatus
+      | null;
+  };
+
+  export type NestedEnumPaymentStatusWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.PaymentStatus
+      | EnumPaymentStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.PaymentStatus[]
+      | ListEnumPaymentStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel>
+      | $Enums.PaymentStatus;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumPaymentStatusFilter<$PrismaModel>;
+    _max?: NestedEnumPaymentStatusFilter<$PrismaModel>;
+  };
+
+  export type NestedEnumShippingStatusNullableWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.ShippingStatus
+      | EnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    in?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    notIn?:
+      | $Enums.ShippingStatus[]
+      | ListEnumShippingStatusFieldRefInput<$PrismaModel>
+      | null;
+    not?:
+      | NestedEnumShippingStatusNullableWithAggregatesFilter<$PrismaModel>
+      | $Enums.ShippingStatus
+      | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedEnumShippingStatusNullableFilter<$PrismaModel>;
+    _max?: NestedEnumShippingStatusNullableFilter<$PrismaModel>;
+  };
+
+  export type NestedEnumTransactionTypeFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.TransactionType
+      | EnumTransactionTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumTransactionTypeFilter<$PrismaModel>
+      | $Enums.TransactionType;
+  };
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
@@ -15215,6 +22914,26 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
   };
 
+  export type NestedEnumTransactionTypeWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.TransactionType
+      | EnumTransactionTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.TransactionType[]
+      | ListEnumTransactionTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel>
+      | $Enums.TransactionType;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumTransactionTypeFilter<$PrismaModel>;
+    _max?: NestedEnumTransactionTypeFilter<$PrismaModel>;
+  };
+
   export type CompanyUserCreateWithoutCompanyInput = {
     name: string;
     email: string;
@@ -15227,6 +22946,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null;
     otp?: string | null;
     otpExpired?: Date | string | null;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyUserInput;
   };
 
   export type CompanyUserUncheckedCreateWithoutCompanyInput = {
@@ -15242,6 +22962,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null;
     otp?: string | null;
     otpExpired?: Date | string | null;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyUserInput;
   };
 
   export type CompanyUserCreateOrConnectWithoutCompanyInput = {
@@ -15268,6 +22989,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
     address?: AddressCustomerCreateNestedManyWithoutCustomerInput;
+    order?: OrderCreateNestedManyWithoutCustomerInput;
   };
 
   export type CustomerUncheckedCreateWithoutCompanyInput = {
@@ -15280,6 +23002,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
     address?: AddressCustomerUncheckedCreateNestedManyWithoutCustomerInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCustomerInput;
   };
 
   export type CustomerCreateOrConnectWithoutCompanyInput = {
@@ -15330,13 +23053,15 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
     category: CategoryCreateNestedOneWithoutProductInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutProductInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutProductInput;
   };
 
   export type ProductUncheckedCreateWithoutCompanyInput = {
@@ -15345,13 +23070,15 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     categoryId: number;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutProductInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutProductInput;
   };
 
   export type ProductCreateOrConnectWithoutCompanyInput = {
@@ -15364,6 +23091,122 @@ export namespace Prisma {
 
   export type ProductCreateManyCompanyInputEnvelope = {
     data: ProductCreateManyCompanyInput | ProductCreateManyCompanyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type OrderCreateWithoutCompanyInput = {
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    customer: CustomerCreateNestedOneWithoutOrderInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutOrderInput;
+  };
+
+  export type OrderUncheckedCreateWithoutCompanyInput = {
+    id?: number;
+    customerId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutOrderInput;
+  };
+
+  export type OrderCreateOrConnectWithoutCompanyInput = {
+    where: OrderWhereUniqueInput;
+    create: XOR<
+      OrderCreateWithoutCompanyInput,
+      OrderUncheckedCreateWithoutCompanyInput
+    >;
+  };
+
+  export type OrderCreateManyCompanyInputEnvelope = {
+    data: OrderCreateManyCompanyInput | OrderCreateManyCompanyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type OrderDetailCreateWithoutCompanyInput = {
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    order: OrderCreateNestedOneWithoutOrderDetailInput;
+    product: ProductCreateNestedOneWithoutOrderDetailInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailUncheckedCreateWithoutCompanyInput = {
+    id?: number;
+    orderId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailCreateOrConnectWithoutCompanyInput = {
+    where: OrderDetailWhereUniqueInput;
+    create: XOR<
+      OrderDetailCreateWithoutCompanyInput,
+      OrderDetailUncheckedCreateWithoutCompanyInput
+    >;
+  };
+
+  export type OrderDetailCreateManyCompanyInputEnvelope = {
+    data:
+      | OrderDetailCreateManyCompanyInput
+      | OrderDetailCreateManyCompanyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type TransactionLogCreateWithoutCompanyInput = {
+    type: $Enums.TransactionType;
+    quantity: number;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+    companyUser?: CompanyUserCreateNestedOneWithoutTransactionLogInput;
+    product: ProductCreateNestedOneWithoutTransactionLogInput;
+    orderDetail?: OrderDetailCreateNestedOneWithoutTransactionLogInput;
+  };
+
+  export type TransactionLogUncheckedCreateWithoutCompanyInput = {
+    id?: number;
+    companyUserId?: number | null;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogCreateOrConnectWithoutCompanyInput = {
+    where: TransactionLogWhereUniqueInput;
+    create: XOR<
+      TransactionLogCreateWithoutCompanyInput,
+      TransactionLogUncheckedCreateWithoutCompanyInput
+    >;
+  };
+
+  export type TransactionLogCreateManyCompanyInputEnvelope = {
+    data:
+      | TransactionLogCreateManyCompanyInput
+      | TransactionLogCreateManyCompanyInput[];
     skipDuplicates?: boolean;
   };
 
@@ -15534,14 +23377,149 @@ export namespace Prisma {
     description?: StringFilter<'Product'> | string;
     price?: FloatFilter<'Product'> | number;
     qty?: IntFilter<'Product'> | number;
-    qtyBooked?: IntNullableFilter<'Product'> | number | null;
-    qtySold?: IntNullableFilter<'Product'> | number | null;
+    qtyBooked?: IntFilter<'Product'> | number;
+    qtySold?: IntFilter<'Product'> | number;
     image?: StringNullableFilter<'Product'> | string | null;
     categoryId?: IntFilter<'Product'> | number;
     companyId?: IntFilter<'Product'> | number;
     createdAt?: DateTimeFilter<'Product'> | Date | string;
     updatedAt?: DateTimeNullableFilter<'Product'> | Date | string | null;
     deletedAt?: DateTimeNullableFilter<'Product'> | Date | string | null;
+  };
+
+  export type OrderUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: OrderWhereUniqueInput;
+    update: XOR<
+      OrderUpdateWithoutCompanyInput,
+      OrderUncheckedUpdateWithoutCompanyInput
+    >;
+    create: XOR<
+      OrderCreateWithoutCompanyInput,
+      OrderUncheckedCreateWithoutCompanyInput
+    >;
+  };
+
+  export type OrderUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: OrderWhereUniqueInput;
+    data: XOR<
+      OrderUpdateWithoutCompanyInput,
+      OrderUncheckedUpdateWithoutCompanyInput
+    >;
+  };
+
+  export type OrderUpdateManyWithWhereWithoutCompanyInput = {
+    where: OrderScalarWhereInput;
+    data: XOR<
+      OrderUpdateManyMutationInput,
+      OrderUncheckedUpdateManyWithoutCompanyInput
+    >;
+  };
+
+  export type OrderScalarWhereInput = {
+    AND?: OrderScalarWhereInput | OrderScalarWhereInput[];
+    OR?: OrderScalarWhereInput[];
+    NOT?: OrderScalarWhereInput | OrderScalarWhereInput[];
+    id?: IntFilter<'Order'> | number;
+    customerId?: IntFilter<'Order'> | number;
+    companyId?: IntFilter<'Order'> | number;
+    grandTotal?: FloatFilter<'Order'> | number;
+    paymentStatus?: EnumPaymentStatusFilter<'Order'> | $Enums.PaymentStatus;
+    shippingStatus?:
+      | EnumShippingStatusNullableFilter<'Order'>
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFilter<'Order'> | Date | string;
+    updatedAt?: DateTimeNullableFilter<'Order'> | Date | string | null;
+    deletedAt?: DateTimeNullableFilter<'Order'> | Date | string | null;
+  };
+
+  export type OrderDetailUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: OrderDetailWhereUniqueInput;
+    update: XOR<
+      OrderDetailUpdateWithoutCompanyInput,
+      OrderDetailUncheckedUpdateWithoutCompanyInput
+    >;
+    create: XOR<
+      OrderDetailCreateWithoutCompanyInput,
+      OrderDetailUncheckedCreateWithoutCompanyInput
+    >;
+  };
+
+  export type OrderDetailUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: OrderDetailWhereUniqueInput;
+    data: XOR<
+      OrderDetailUpdateWithoutCompanyInput,
+      OrderDetailUncheckedUpdateWithoutCompanyInput
+    >;
+  };
+
+  export type OrderDetailUpdateManyWithWhereWithoutCompanyInput = {
+    where: OrderDetailScalarWhereInput;
+    data: XOR<
+      OrderDetailUpdateManyMutationInput,
+      OrderDetailUncheckedUpdateManyWithoutCompanyInput
+    >;
+  };
+
+  export type OrderDetailScalarWhereInput = {
+    AND?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+    OR?: OrderDetailScalarWhereInput[];
+    NOT?: OrderDetailScalarWhereInput | OrderDetailScalarWhereInput[];
+    id?: IntFilter<'OrderDetail'> | number;
+    orderId?: IntFilter<'OrderDetail'> | number;
+    companyId?: IntFilter<'OrderDetail'> | number;
+    productId?: IntFilter<'OrderDetail'> | number;
+    qty?: IntFilter<'OrderDetail'> | number;
+    price?: FloatFilter<'OrderDetail'> | number;
+    subTotal?: FloatFilter<'OrderDetail'> | number;
+    createdAt?: DateTimeFilter<'OrderDetail'> | Date | string;
+    updatedAt?: DateTimeNullableFilter<'OrderDetail'> | Date | string | null;
+    deletedAt?: DateTimeNullableFilter<'OrderDetail'> | Date | string | null;
+  };
+
+  export type TransactionLogUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: TransactionLogWhereUniqueInput;
+    update: XOR<
+      TransactionLogUpdateWithoutCompanyInput,
+      TransactionLogUncheckedUpdateWithoutCompanyInput
+    >;
+    create: XOR<
+      TransactionLogCreateWithoutCompanyInput,
+      TransactionLogUncheckedCreateWithoutCompanyInput
+    >;
+  };
+
+  export type TransactionLogUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: TransactionLogWhereUniqueInput;
+    data: XOR<
+      TransactionLogUpdateWithoutCompanyInput,
+      TransactionLogUncheckedUpdateWithoutCompanyInput
+    >;
+  };
+
+  export type TransactionLogUpdateManyWithWhereWithoutCompanyInput = {
+    where: TransactionLogScalarWhereInput;
+    data: XOR<
+      TransactionLogUpdateManyMutationInput,
+      TransactionLogUncheckedUpdateManyWithoutCompanyInput
+    >;
+  };
+
+  export type TransactionLogScalarWhereInput = {
+    AND?: TransactionLogScalarWhereInput | TransactionLogScalarWhereInput[];
+    OR?: TransactionLogScalarWhereInput[];
+    NOT?: TransactionLogScalarWhereInput | TransactionLogScalarWhereInput[];
+    id?: IntFilter<'TransactionLog'> | number;
+    companyId?: IntFilter<'TransactionLog'> | number;
+    companyUserId?: IntNullableFilter<'TransactionLog'> | number | null;
+    productId?: IntFilter<'TransactionLog'> | number;
+    type?: EnumTransactionTypeFilter<'TransactionLog'> | $Enums.TransactionType;
+    quantity?: IntFilter<'TransactionLog'> | number;
+    orderDetailId?: IntNullableFilter<'TransactionLog'> | number | null;
+    createdAt?: DateTimeFilter<'TransactionLog'> | Date | string;
+    transactionDate?: DateTimeFilter<'TransactionLog'> | Date | string;
+    deletedAt?: DateTimeNullableFilter<'TransactionLog'> | Date | string | null;
+    remarks?: StringFilter<'TransactionLog'> | string;
   };
 
   export type CompanyCreateWithoutCompanyUsersInput = {
@@ -15554,6 +23532,9 @@ export namespace Prisma {
     customer?: CustomerCreateNestedManyWithoutCompanyInput;
     category?: CategoryCreateNestedManyWithoutCompanyInput;
     product?: ProductCreateNestedManyWithoutCompanyInput;
+    order?: OrderCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyUncheckedCreateWithoutCompanyUsersInput = {
@@ -15567,6 +23548,9 @@ export namespace Prisma {
     customer?: CustomerUncheckedCreateNestedManyWithoutCompanyInput;
     category?: CategoryUncheckedCreateNestedManyWithoutCompanyInput;
     product?: ProductUncheckedCreateNestedManyWithoutCompanyInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyCreateOrConnectWithoutCompanyUsersInput = {
@@ -15575,6 +23559,46 @@ export namespace Prisma {
       CompanyCreateWithoutCompanyUsersInput,
       CompanyUncheckedCreateWithoutCompanyUsersInput
     >;
+  };
+
+  export type TransactionLogCreateWithoutCompanyUserInput = {
+    type: $Enums.TransactionType;
+    quantity: number;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+    company: CompanyCreateNestedOneWithoutTransactionLogInput;
+    product: ProductCreateNestedOneWithoutTransactionLogInput;
+    orderDetail?: OrderDetailCreateNestedOneWithoutTransactionLogInput;
+  };
+
+  export type TransactionLogUncheckedCreateWithoutCompanyUserInput = {
+    id?: number;
+    companyId: number;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogCreateOrConnectWithoutCompanyUserInput = {
+    where: TransactionLogWhereUniqueInput;
+    create: XOR<
+      TransactionLogCreateWithoutCompanyUserInput,
+      TransactionLogUncheckedCreateWithoutCompanyUserInput
+    >;
+  };
+
+  export type TransactionLogCreateManyCompanyUserInputEnvelope = {
+    data:
+      | TransactionLogCreateManyCompanyUserInput
+      | TransactionLogCreateManyCompanyUserInput[];
+    skipDuplicates?: boolean;
   };
 
   export type CompanyUpsertWithoutCompanyUsersInput = {
@@ -15615,6 +23639,9 @@ export namespace Prisma {
     customer?: CustomerUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUpdateManyWithoutCompanyNestedInput;
     product?: ProductUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyNestedInput;
   };
 
   export type CompanyUncheckedUpdateWithoutCompanyUsersInput = {
@@ -15636,6 +23663,37 @@ export namespace Prisma {
     customer?: CustomerUncheckedUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUncheckedUpdateManyWithoutCompanyNestedInput;
     product?: ProductUncheckedUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type TransactionLogUpsertWithWhereUniqueWithoutCompanyUserInput = {
+    where: TransactionLogWhereUniqueInput;
+    update: XOR<
+      TransactionLogUpdateWithoutCompanyUserInput,
+      TransactionLogUncheckedUpdateWithoutCompanyUserInput
+    >;
+    create: XOR<
+      TransactionLogCreateWithoutCompanyUserInput,
+      TransactionLogUncheckedCreateWithoutCompanyUserInput
+    >;
+  };
+
+  export type TransactionLogUpdateWithWhereUniqueWithoutCompanyUserInput = {
+    where: TransactionLogWhereUniqueInput;
+    data: XOR<
+      TransactionLogUpdateWithoutCompanyUserInput,
+      TransactionLogUncheckedUpdateWithoutCompanyUserInput
+    >;
+  };
+
+  export type TransactionLogUpdateManyWithWhereWithoutCompanyUserInput = {
+    where: TransactionLogScalarWhereInput;
+    data: XOR<
+      TransactionLogUpdateManyMutationInput,
+      TransactionLogUncheckedUpdateManyWithoutCompanyUserInput
+    >;
   };
 
   export type AddressCustomerCreateWithoutCustomerInput = {
@@ -15684,6 +23742,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserCreateNestedManyWithoutCompanyInput;
     category?: CategoryCreateNestedManyWithoutCompanyInput;
     product?: ProductCreateNestedManyWithoutCompanyInput;
+    order?: OrderCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyUncheckedCreateWithoutCustomerInput = {
@@ -15697,6 +23758,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserUncheckedCreateNestedManyWithoutCompanyInput;
     category?: CategoryUncheckedCreateNestedManyWithoutCompanyInput;
     product?: ProductUncheckedCreateNestedManyWithoutCompanyInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyCreateOrConnectWithoutCustomerInput = {
@@ -15705,6 +23769,42 @@ export namespace Prisma {
       CompanyCreateWithoutCustomerInput,
       CompanyUncheckedCreateWithoutCustomerInput
     >;
+  };
+
+  export type OrderCreateWithoutCustomerInput = {
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutOrderInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutOrderInput;
+  };
+
+  export type OrderUncheckedCreateWithoutCustomerInput = {
+    id?: number;
+    companyId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutOrderInput;
+  };
+
+  export type OrderCreateOrConnectWithoutCustomerInput = {
+    where: OrderWhereUniqueInput;
+    create: XOR<
+      OrderCreateWithoutCustomerInput,
+      OrderUncheckedCreateWithoutCustomerInput
+    >;
+  };
+
+  export type OrderCreateManyCustomerInputEnvelope = {
+    data: OrderCreateManyCustomerInput | OrderCreateManyCustomerInput[];
+    skipDuplicates?: boolean;
   };
 
   export type AddressCustomerUpsertWithWhereUniqueWithoutCustomerInput = {
@@ -15796,6 +23896,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUpdateManyWithoutCompanyNestedInput;
     product?: ProductUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyNestedInput;
   };
 
   export type CompanyUncheckedUpdateWithoutCustomerInput = {
@@ -15817,6 +23920,37 @@ export namespace Prisma {
     companyUsers?: CompanyUserUncheckedUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUncheckedUpdateManyWithoutCompanyNestedInput;
     product?: ProductUncheckedUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type OrderUpsertWithWhereUniqueWithoutCustomerInput = {
+    where: OrderWhereUniqueInput;
+    update: XOR<
+      OrderUpdateWithoutCustomerInput,
+      OrderUncheckedUpdateWithoutCustomerInput
+    >;
+    create: XOR<
+      OrderCreateWithoutCustomerInput,
+      OrderUncheckedCreateWithoutCustomerInput
+    >;
+  };
+
+  export type OrderUpdateWithWhereUniqueWithoutCustomerInput = {
+    where: OrderWhereUniqueInput;
+    data: XOR<
+      OrderUpdateWithoutCustomerInput,
+      OrderUncheckedUpdateWithoutCustomerInput
+    >;
+  };
+
+  export type OrderUpdateManyWithWhereWithoutCustomerInput = {
+    where: OrderScalarWhereInput;
+    data: XOR<
+      OrderUpdateManyMutationInput,
+      OrderUncheckedUpdateManyWithoutCustomerInput
+    >;
   };
 
   export type CustomerCreateWithoutAddressInput = {
@@ -15828,6 +23962,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
     company: CompanyCreateNestedOneWithoutCustomerInput;
+    order?: OrderCreateNestedManyWithoutCustomerInput;
   };
 
   export type CustomerUncheckedCreateWithoutAddressInput = {
@@ -15840,6 +23975,7 @@ export namespace Prisma {
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
+    order?: OrderUncheckedCreateNestedManyWithoutCustomerInput;
   };
 
   export type CustomerCreateOrConnectWithoutAddressInput = {
@@ -15887,6 +24023,7 @@ export namespace Prisma {
       | string
       | null;
     company?: CompanyUpdateOneRequiredWithoutCustomerNestedInput;
+    order?: OrderUpdateManyWithoutCustomerNestedInput;
   };
 
   export type CustomerUncheckedUpdateWithoutAddressInput = {
@@ -15907,6 +24044,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    order?: OrderUncheckedUpdateManyWithoutCustomerNestedInput;
   };
 
   export type CompanyCreateWithoutCategoryInput = {
@@ -15919,6 +24057,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserCreateNestedManyWithoutCompanyInput;
     customer?: CustomerCreateNestedManyWithoutCompanyInput;
     product?: ProductCreateNestedManyWithoutCompanyInput;
+    order?: OrderCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyUncheckedCreateWithoutCategoryInput = {
@@ -15932,6 +24073,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserUncheckedCreateNestedManyWithoutCompanyInput;
     customer?: CustomerUncheckedCreateNestedManyWithoutCompanyInput;
     product?: ProductUncheckedCreateNestedManyWithoutCompanyInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyCreateOrConnectWithoutCategoryInput = {
@@ -15947,13 +24091,15 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
     company: CompanyCreateNestedOneWithoutProductInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutProductInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutProductInput;
   };
 
   export type ProductUncheckedCreateWithoutCategoryInput = {
@@ -15962,13 +24108,15 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     companyId: number;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutProductInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutProductInput;
   };
 
   export type ProductCreateOrConnectWithoutCategoryInput = {
@@ -16022,6 +24170,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserUpdateManyWithoutCompanyNestedInput;
     customer?: CustomerUpdateManyWithoutCompanyNestedInput;
     product?: ProductUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyNestedInput;
   };
 
   export type CompanyUncheckedUpdateWithoutCategoryInput = {
@@ -16043,6 +24194,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserUncheckedUpdateManyWithoutCompanyNestedInput;
     customer?: CustomerUncheckedUpdateManyWithoutCompanyNestedInput;
     product?: ProductUncheckedUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput;
   };
 
   export type ProductUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -16108,6 +24262,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserCreateNestedManyWithoutCompanyInput;
     customer?: CustomerCreateNestedManyWithoutCompanyInput;
     category?: CategoryCreateNestedManyWithoutCompanyInput;
+    order?: OrderCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyUncheckedCreateWithoutProductInput = {
@@ -16121,6 +24278,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserUncheckedCreateNestedManyWithoutCompanyInput;
     customer?: CustomerUncheckedCreateNestedManyWithoutCompanyInput;
     category?: CategoryUncheckedCreateNestedManyWithoutCompanyInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyInput;
   };
 
   export type CompanyCreateOrConnectWithoutProductInput = {
@@ -16129,6 +24289,86 @@ export namespace Prisma {
       CompanyCreateWithoutProductInput,
       CompanyUncheckedCreateWithoutProductInput
     >;
+  };
+
+  export type OrderDetailCreateWithoutProductInput = {
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutOrderDetailInput;
+    order: OrderCreateNestedOneWithoutOrderDetailInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailUncheckedCreateWithoutProductInput = {
+    id?: number;
+    orderId: number;
+    companyId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailCreateOrConnectWithoutProductInput = {
+    where: OrderDetailWhereUniqueInput;
+    create: XOR<
+      OrderDetailCreateWithoutProductInput,
+      OrderDetailUncheckedCreateWithoutProductInput
+    >;
+  };
+
+  export type OrderDetailCreateManyProductInputEnvelope = {
+    data:
+      | OrderDetailCreateManyProductInput
+      | OrderDetailCreateManyProductInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type TransactionLogCreateWithoutProductInput = {
+    type: $Enums.TransactionType;
+    quantity: number;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+    company: CompanyCreateNestedOneWithoutTransactionLogInput;
+    companyUser?: CompanyUserCreateNestedOneWithoutTransactionLogInput;
+    orderDetail?: OrderDetailCreateNestedOneWithoutTransactionLogInput;
+  };
+
+  export type TransactionLogUncheckedCreateWithoutProductInput = {
+    id?: number;
+    companyId: number;
+    companyUserId?: number | null;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogCreateOrConnectWithoutProductInput = {
+    where: TransactionLogWhereUniqueInput;
+    create: XOR<
+      TransactionLogCreateWithoutProductInput,
+      TransactionLogUncheckedCreateWithoutProductInput
+    >;
+  };
+
+  export type TransactionLogCreateManyProductInputEnvelope = {
+    data:
+      | TransactionLogCreateManyProductInput
+      | TransactionLogCreateManyProductInput[];
+    skipDuplicates?: boolean;
   };
 
   export type CategoryUpsertWithoutProductInput = {
@@ -16222,6 +24462,9 @@ export namespace Prisma {
     companyUsers?: CompanyUserUpdateManyWithoutCompanyNestedInput;
     customer?: CustomerUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyNestedInput;
   };
 
   export type CompanyUncheckedUpdateWithoutProductInput = {
@@ -16243,6 +24486,1139 @@ export namespace Prisma {
     companyUsers?: CompanyUserUncheckedUpdateManyWithoutCompanyNestedInput;
     customer?: CustomerUncheckedUpdateManyWithoutCompanyNestedInput;
     category?: CategoryUncheckedUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type OrderDetailUpsertWithWhereUniqueWithoutProductInput = {
+    where: OrderDetailWhereUniqueInput;
+    update: XOR<
+      OrderDetailUpdateWithoutProductInput,
+      OrderDetailUncheckedUpdateWithoutProductInput
+    >;
+    create: XOR<
+      OrderDetailCreateWithoutProductInput,
+      OrderDetailUncheckedCreateWithoutProductInput
+    >;
+  };
+
+  export type OrderDetailUpdateWithWhereUniqueWithoutProductInput = {
+    where: OrderDetailWhereUniqueInput;
+    data: XOR<
+      OrderDetailUpdateWithoutProductInput,
+      OrderDetailUncheckedUpdateWithoutProductInput
+    >;
+  };
+
+  export type OrderDetailUpdateManyWithWhereWithoutProductInput = {
+    where: OrderDetailScalarWhereInput;
+    data: XOR<
+      OrderDetailUpdateManyMutationInput,
+      OrderDetailUncheckedUpdateManyWithoutProductInput
+    >;
+  };
+
+  export type TransactionLogUpsertWithWhereUniqueWithoutProductInput = {
+    where: TransactionLogWhereUniqueInput;
+    update: XOR<
+      TransactionLogUpdateWithoutProductInput,
+      TransactionLogUncheckedUpdateWithoutProductInput
+    >;
+    create: XOR<
+      TransactionLogCreateWithoutProductInput,
+      TransactionLogUncheckedCreateWithoutProductInput
+    >;
+  };
+
+  export type TransactionLogUpdateWithWhereUniqueWithoutProductInput = {
+    where: TransactionLogWhereUniqueInput;
+    data: XOR<
+      TransactionLogUpdateWithoutProductInput,
+      TransactionLogUncheckedUpdateWithoutProductInput
+    >;
+  };
+
+  export type TransactionLogUpdateManyWithWhereWithoutProductInput = {
+    where: TransactionLogScalarWhereInput;
+    data: XOR<
+      TransactionLogUpdateManyMutationInput,
+      TransactionLogUncheckedUpdateManyWithoutProductInput
+    >;
+  };
+
+  export type CompanyCreateWithoutOrderInput = {
+    name: string;
+    email: string;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    companyUsers?: CompanyUserCreateNestedManyWithoutCompanyInput;
+    customer?: CustomerCreateNestedManyWithoutCompanyInput;
+    category?: CategoryCreateNestedManyWithoutCompanyInput;
+    product?: ProductCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyInput;
+  };
+
+  export type CompanyUncheckedCreateWithoutOrderInput = {
+    id?: number;
+    name: string;
+    email: string;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    companyUsers?: CompanyUserUncheckedCreateNestedManyWithoutCompanyInput;
+    customer?: CustomerUncheckedCreateNestedManyWithoutCompanyInput;
+    category?: CategoryUncheckedCreateNestedManyWithoutCompanyInput;
+    product?: ProductUncheckedCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyInput;
+  };
+
+  export type CompanyCreateOrConnectWithoutOrderInput = {
+    where: CompanyWhereUniqueInput;
+    create: XOR<
+      CompanyCreateWithoutOrderInput,
+      CompanyUncheckedCreateWithoutOrderInput
+    >;
+  };
+
+  export type CustomerCreateWithoutOrderInput = {
+    name: string;
+    email: string;
+    phoneNumber: string;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    address?: AddressCustomerCreateNestedManyWithoutCustomerInput;
+    company: CompanyCreateNestedOneWithoutCustomerInput;
+  };
+
+  export type CustomerUncheckedCreateWithoutOrderInput = {
+    id?: number;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    companyId: number;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    address?: AddressCustomerUncheckedCreateNestedManyWithoutCustomerInput;
+  };
+
+  export type CustomerCreateOrConnectWithoutOrderInput = {
+    where: CustomerWhereUniqueInput;
+    create: XOR<
+      CustomerCreateWithoutOrderInput,
+      CustomerUncheckedCreateWithoutOrderInput
+    >;
+  };
+
+  export type OrderDetailCreateWithoutOrderInput = {
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutOrderDetailInput;
+    product: ProductCreateNestedOneWithoutOrderDetailInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailUncheckedCreateWithoutOrderInput = {
+    id?: number;
+    companyId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailCreateOrConnectWithoutOrderInput = {
+    where: OrderDetailWhereUniqueInput;
+    create: XOR<
+      OrderDetailCreateWithoutOrderInput,
+      OrderDetailUncheckedCreateWithoutOrderInput
+    >;
+  };
+
+  export type OrderDetailCreateManyOrderInputEnvelope = {
+    data: OrderDetailCreateManyOrderInput | OrderDetailCreateManyOrderInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type CompanyUpsertWithoutOrderInput = {
+    update: XOR<
+      CompanyUpdateWithoutOrderInput,
+      CompanyUncheckedUpdateWithoutOrderInput
+    >;
+    create: XOR<
+      CompanyCreateWithoutOrderInput,
+      CompanyUncheckedCreateWithoutOrderInput
+    >;
+    where?: CompanyWhereInput;
+  };
+
+  export type CompanyUpdateToOneWithWhereWithoutOrderInput = {
+    where?: CompanyWhereInput;
+    data: XOR<
+      CompanyUpdateWithoutOrderInput,
+      CompanyUncheckedUpdateWithoutOrderInput
+    >;
+  };
+
+  export type CompanyUpdateWithoutOrderInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    companyUsers?: CompanyUserUpdateManyWithoutCompanyNestedInput;
+    customer?: CustomerUpdateManyWithoutCompanyNestedInput;
+    category?: CategoryUpdateManyWithoutCompanyNestedInput;
+    product?: ProductUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type CompanyUncheckedUpdateWithoutOrderInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    companyUsers?: CompanyUserUncheckedUpdateManyWithoutCompanyNestedInput;
+    customer?: CustomerUncheckedUpdateManyWithoutCompanyNestedInput;
+    category?: CategoryUncheckedUpdateManyWithoutCompanyNestedInput;
+    product?: ProductUncheckedUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type CustomerUpsertWithoutOrderInput = {
+    update: XOR<
+      CustomerUpdateWithoutOrderInput,
+      CustomerUncheckedUpdateWithoutOrderInput
+    >;
+    create: XOR<
+      CustomerCreateWithoutOrderInput,
+      CustomerUncheckedCreateWithoutOrderInput
+    >;
+    where?: CustomerWhereInput;
+  };
+
+  export type CustomerUpdateToOneWithWhereWithoutOrderInput = {
+    where?: CustomerWhereInput;
+    data: XOR<
+      CustomerUpdateWithoutOrderInput,
+      CustomerUncheckedUpdateWithoutOrderInput
+    >;
+  };
+
+  export type CustomerUpdateWithoutOrderInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    address?: AddressCustomerUpdateManyWithoutCustomerNestedInput;
+    company?: CompanyUpdateOneRequiredWithoutCustomerNestedInput;
+  };
+
+  export type CustomerUncheckedUpdateWithoutOrderInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    address?: AddressCustomerUncheckedUpdateManyWithoutCustomerNestedInput;
+  };
+
+  export type OrderDetailUpsertWithWhereUniqueWithoutOrderInput = {
+    where: OrderDetailWhereUniqueInput;
+    update: XOR<
+      OrderDetailUpdateWithoutOrderInput,
+      OrderDetailUncheckedUpdateWithoutOrderInput
+    >;
+    create: XOR<
+      OrderDetailCreateWithoutOrderInput,
+      OrderDetailUncheckedCreateWithoutOrderInput
+    >;
+  };
+
+  export type OrderDetailUpdateWithWhereUniqueWithoutOrderInput = {
+    where: OrderDetailWhereUniqueInput;
+    data: XOR<
+      OrderDetailUpdateWithoutOrderInput,
+      OrderDetailUncheckedUpdateWithoutOrderInput
+    >;
+  };
+
+  export type OrderDetailUpdateManyWithWhereWithoutOrderInput = {
+    where: OrderDetailScalarWhereInput;
+    data: XOR<
+      OrderDetailUpdateManyMutationInput,
+      OrderDetailUncheckedUpdateManyWithoutOrderInput
+    >;
+  };
+
+  export type CompanyCreateWithoutOrderDetailInput = {
+    name: string;
+    email: string;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    companyUsers?: CompanyUserCreateNestedManyWithoutCompanyInput;
+    customer?: CustomerCreateNestedManyWithoutCompanyInput;
+    category?: CategoryCreateNestedManyWithoutCompanyInput;
+    product?: ProductCreateNestedManyWithoutCompanyInput;
+    order?: OrderCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutCompanyInput;
+  };
+
+  export type CompanyUncheckedCreateWithoutOrderDetailInput = {
+    id?: number;
+    name: string;
+    email: string;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    companyUsers?: CompanyUserUncheckedCreateNestedManyWithoutCompanyInput;
+    customer?: CustomerUncheckedCreateNestedManyWithoutCompanyInput;
+    category?: CategoryUncheckedCreateNestedManyWithoutCompanyInput;
+    product?: ProductUncheckedCreateNestedManyWithoutCompanyInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCompanyInput;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutCompanyInput;
+  };
+
+  export type CompanyCreateOrConnectWithoutOrderDetailInput = {
+    where: CompanyWhereUniqueInput;
+    create: XOR<
+      CompanyCreateWithoutOrderDetailInput,
+      CompanyUncheckedCreateWithoutOrderDetailInput
+    >;
+  };
+
+  export type OrderCreateWithoutOrderDetailInput = {
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutOrderInput;
+    customer: CustomerCreateNestedOneWithoutOrderInput;
+  };
+
+  export type OrderUncheckedCreateWithoutOrderDetailInput = {
+    id?: number;
+    customerId: number;
+    companyId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type OrderCreateOrConnectWithoutOrderDetailInput = {
+    where: OrderWhereUniqueInput;
+    create: XOR<
+      OrderCreateWithoutOrderDetailInput,
+      OrderUncheckedCreateWithoutOrderDetailInput
+    >;
+  };
+
+  export type ProductCreateWithoutOrderDetailInput = {
+    name: string;
+    description: string;
+    price: number;
+    qty: number;
+    qtyBooked?: number;
+    qtySold?: number;
+    image?: string | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    category: CategoryCreateNestedOneWithoutProductInput;
+    company: CompanyCreateNestedOneWithoutProductInput;
+    transactionLog?: TransactionLogCreateNestedManyWithoutProductInput;
+  };
+
+  export type ProductUncheckedCreateWithoutOrderDetailInput = {
+    id?: number;
+    name: string;
+    description: string;
+    price: number;
+    qty: number;
+    qtyBooked?: number;
+    qtySold?: number;
+    image?: string | null;
+    categoryId: number;
+    companyId: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    transactionLog?: TransactionLogUncheckedCreateNestedManyWithoutProductInput;
+  };
+
+  export type ProductCreateOrConnectWithoutOrderDetailInput = {
+    where: ProductWhereUniqueInput;
+    create: XOR<
+      ProductCreateWithoutOrderDetailInput,
+      ProductUncheckedCreateWithoutOrderDetailInput
+    >;
+  };
+
+  export type TransactionLogCreateWithoutOrderDetailInput = {
+    type: $Enums.TransactionType;
+    quantity: number;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+    company: CompanyCreateNestedOneWithoutTransactionLogInput;
+    companyUser?: CompanyUserCreateNestedOneWithoutTransactionLogInput;
+    product: ProductCreateNestedOneWithoutTransactionLogInput;
+  };
+
+  export type TransactionLogUncheckedCreateWithoutOrderDetailInput = {
+    id?: number;
+    companyId: number;
+    companyUserId?: number | null;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogCreateOrConnectWithoutOrderDetailInput = {
+    where: TransactionLogWhereUniqueInput;
+    create: XOR<
+      TransactionLogCreateWithoutOrderDetailInput,
+      TransactionLogUncheckedCreateWithoutOrderDetailInput
+    >;
+  };
+
+  export type TransactionLogCreateManyOrderDetailInputEnvelope = {
+    data:
+      | TransactionLogCreateManyOrderDetailInput
+      | TransactionLogCreateManyOrderDetailInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type CompanyUpsertWithoutOrderDetailInput = {
+    update: XOR<
+      CompanyUpdateWithoutOrderDetailInput,
+      CompanyUncheckedUpdateWithoutOrderDetailInput
+    >;
+    create: XOR<
+      CompanyCreateWithoutOrderDetailInput,
+      CompanyUncheckedCreateWithoutOrderDetailInput
+    >;
+    where?: CompanyWhereInput;
+  };
+
+  export type CompanyUpdateToOneWithWhereWithoutOrderDetailInput = {
+    where?: CompanyWhereInput;
+    data: XOR<
+      CompanyUpdateWithoutOrderDetailInput,
+      CompanyUncheckedUpdateWithoutOrderDetailInput
+    >;
+  };
+
+  export type CompanyUpdateWithoutOrderDetailInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    companyUsers?: CompanyUserUpdateManyWithoutCompanyNestedInput;
+    customer?: CustomerUpdateManyWithoutCompanyNestedInput;
+    category?: CategoryUpdateManyWithoutCompanyNestedInput;
+    product?: ProductUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type CompanyUncheckedUpdateWithoutOrderDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    companyUsers?: CompanyUserUncheckedUpdateManyWithoutCompanyNestedInput;
+    customer?: CustomerUncheckedUpdateManyWithoutCompanyNestedInput;
+    category?: CategoryUncheckedUpdateManyWithoutCompanyNestedInput;
+    product?: ProductUncheckedUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCompanyNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type OrderUpsertWithoutOrderDetailInput = {
+    update: XOR<
+      OrderUpdateWithoutOrderDetailInput,
+      OrderUncheckedUpdateWithoutOrderDetailInput
+    >;
+    create: XOR<
+      OrderCreateWithoutOrderDetailInput,
+      OrderUncheckedCreateWithoutOrderDetailInput
+    >;
+    where?: OrderWhereInput;
+  };
+
+  export type OrderUpdateToOneWithWhereWithoutOrderDetailInput = {
+    where?: OrderWhereInput;
+    data: XOR<
+      OrderUpdateWithoutOrderDetailInput,
+      OrderUncheckedUpdateWithoutOrderDetailInput
+    >;
+  };
+
+  export type OrderUpdateWithoutOrderDetailInput = {
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    company?: CompanyUpdateOneRequiredWithoutOrderNestedInput;
+    customer?: CustomerUpdateOneRequiredWithoutOrderNestedInput;
+  };
+
+  export type OrderUncheckedUpdateWithoutOrderDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    customerId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type ProductUpsertWithoutOrderDetailInput = {
+    update: XOR<
+      ProductUpdateWithoutOrderDetailInput,
+      ProductUncheckedUpdateWithoutOrderDetailInput
+    >;
+    create: XOR<
+      ProductCreateWithoutOrderDetailInput,
+      ProductUncheckedCreateWithoutOrderDetailInput
+    >;
+    where?: ProductWhereInput;
+  };
+
+  export type ProductUpdateToOneWithWhereWithoutOrderDetailInput = {
+    where?: ProductWhereInput;
+    data: XOR<
+      ProductUpdateWithoutOrderDetailInput,
+      ProductUncheckedUpdateWithoutOrderDetailInput
+    >;
+  };
+
+  export type ProductUpdateWithoutOrderDetailInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
+    price?: FloatFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
+    image?: NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    category?: CategoryUpdateOneRequiredWithoutProductNestedInput;
+    company?: CompanyUpdateOneRequiredWithoutProductNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutProductNestedInput;
+  };
+
+  export type ProductUncheckedUpdateWithoutOrderDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
+    price?: FloatFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
+    image?: NullableStringFieldUpdateOperationsInput | string | null;
+    categoryId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutProductNestedInput;
+  };
+
+  export type TransactionLogUpsertWithWhereUniqueWithoutOrderDetailInput = {
+    where: TransactionLogWhereUniqueInput;
+    update: XOR<
+      TransactionLogUpdateWithoutOrderDetailInput,
+      TransactionLogUncheckedUpdateWithoutOrderDetailInput
+    >;
+    create: XOR<
+      TransactionLogCreateWithoutOrderDetailInput,
+      TransactionLogUncheckedCreateWithoutOrderDetailInput
+    >;
+  };
+
+  export type TransactionLogUpdateWithWhereUniqueWithoutOrderDetailInput = {
+    where: TransactionLogWhereUniqueInput;
+    data: XOR<
+      TransactionLogUpdateWithoutOrderDetailInput,
+      TransactionLogUncheckedUpdateWithoutOrderDetailInput
+    >;
+  };
+
+  export type TransactionLogUpdateManyWithWhereWithoutOrderDetailInput = {
+    where: TransactionLogScalarWhereInput;
+    data: XOR<
+      TransactionLogUpdateManyMutationInput,
+      TransactionLogUncheckedUpdateManyWithoutOrderDetailInput
+    >;
+  };
+
+  export type CompanyCreateWithoutTransactionLogInput = {
+    name: string;
+    email: string;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    companyUsers?: CompanyUserCreateNestedManyWithoutCompanyInput;
+    customer?: CustomerCreateNestedManyWithoutCompanyInput;
+    category?: CategoryCreateNestedManyWithoutCompanyInput;
+    product?: ProductCreateNestedManyWithoutCompanyInput;
+    order?: OrderCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutCompanyInput;
+  };
+
+  export type CompanyUncheckedCreateWithoutTransactionLogInput = {
+    id?: number;
+    name: string;
+    email: string;
+    status?: boolean;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    companyUsers?: CompanyUserUncheckedCreateNestedManyWithoutCompanyInput;
+    customer?: CustomerUncheckedCreateNestedManyWithoutCompanyInput;
+    category?: CategoryUncheckedCreateNestedManyWithoutCompanyInput;
+    product?: ProductUncheckedCreateNestedManyWithoutCompanyInput;
+    order?: OrderUncheckedCreateNestedManyWithoutCompanyInput;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutCompanyInput;
+  };
+
+  export type CompanyCreateOrConnectWithoutTransactionLogInput = {
+    where: CompanyWhereUniqueInput;
+    create: XOR<
+      CompanyCreateWithoutTransactionLogInput,
+      CompanyUncheckedCreateWithoutTransactionLogInput
+    >;
+  };
+
+  export type CompanyUserCreateWithoutTransactionLogInput = {
+    name: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    status?: boolean;
+    level: $Enums.LevelStatus;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    otp?: string | null;
+    otpExpired?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutCompanyUsersInput;
+  };
+
+  export type CompanyUserUncheckedCreateWithoutTransactionLogInput = {
+    id?: number;
+    name: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    companyId: number;
+    status?: boolean;
+    level: $Enums.LevelStatus;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    otp?: string | null;
+    otpExpired?: Date | string | null;
+  };
+
+  export type CompanyUserCreateOrConnectWithoutTransactionLogInput = {
+    where: CompanyUserWhereUniqueInput;
+    create: XOR<
+      CompanyUserCreateWithoutTransactionLogInput,
+      CompanyUserUncheckedCreateWithoutTransactionLogInput
+    >;
+  };
+
+  export type ProductCreateWithoutTransactionLogInput = {
+    name: string;
+    description: string;
+    price: number;
+    qty: number;
+    qtyBooked?: number;
+    qtySold?: number;
+    image?: string | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    category: CategoryCreateNestedOneWithoutProductInput;
+    company: CompanyCreateNestedOneWithoutProductInput;
+    orderDetail?: OrderDetailCreateNestedManyWithoutProductInput;
+  };
+
+  export type ProductUncheckedCreateWithoutTransactionLogInput = {
+    id?: number;
+    name: string;
+    description: string;
+    price: number;
+    qty: number;
+    qtyBooked?: number;
+    qtySold?: number;
+    image?: string | null;
+    categoryId: number;
+    companyId: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    orderDetail?: OrderDetailUncheckedCreateNestedManyWithoutProductInput;
+  };
+
+  export type ProductCreateOrConnectWithoutTransactionLogInput = {
+    where: ProductWhereUniqueInput;
+    create: XOR<
+      ProductCreateWithoutTransactionLogInput,
+      ProductUncheckedCreateWithoutTransactionLogInput
+    >;
+  };
+
+  export type OrderDetailCreateWithoutTransactionLogInput = {
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+    company: CompanyCreateNestedOneWithoutOrderDetailInput;
+    order: OrderCreateNestedOneWithoutOrderDetailInput;
+    product: ProductCreateNestedOneWithoutOrderDetailInput;
+  };
+
+  export type OrderDetailUncheckedCreateWithoutTransactionLogInput = {
+    id?: number;
+    orderId: number;
+    companyId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type OrderDetailCreateOrConnectWithoutTransactionLogInput = {
+    where: OrderDetailWhereUniqueInput;
+    create: XOR<
+      OrderDetailCreateWithoutTransactionLogInput,
+      OrderDetailUncheckedCreateWithoutTransactionLogInput
+    >;
+  };
+
+  export type CompanyUpsertWithoutTransactionLogInput = {
+    update: XOR<
+      CompanyUpdateWithoutTransactionLogInput,
+      CompanyUncheckedUpdateWithoutTransactionLogInput
+    >;
+    create: XOR<
+      CompanyCreateWithoutTransactionLogInput,
+      CompanyUncheckedCreateWithoutTransactionLogInput
+    >;
+    where?: CompanyWhereInput;
+  };
+
+  export type CompanyUpdateToOneWithWhereWithoutTransactionLogInput = {
+    where?: CompanyWhereInput;
+    data: XOR<
+      CompanyUpdateWithoutTransactionLogInput,
+      CompanyUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type CompanyUpdateWithoutTransactionLogInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    companyUsers?: CompanyUserUpdateManyWithoutCompanyNestedInput;
+    customer?: CustomerUpdateManyWithoutCompanyNestedInput;
+    category?: CategoryUpdateManyWithoutCompanyNestedInput;
+    product?: ProductUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type CompanyUncheckedUpdateWithoutTransactionLogInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    companyUsers?: CompanyUserUncheckedUpdateManyWithoutCompanyNestedInput;
+    customer?: CustomerUncheckedUpdateManyWithoutCompanyNestedInput;
+    category?: CategoryUncheckedUpdateManyWithoutCompanyNestedInput;
+    product?: ProductUncheckedUpdateManyWithoutCompanyNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCompanyNestedInput;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutCompanyNestedInput;
+  };
+
+  export type CompanyUserUpsertWithoutTransactionLogInput = {
+    update: XOR<
+      CompanyUserUpdateWithoutTransactionLogInput,
+      CompanyUserUncheckedUpdateWithoutTransactionLogInput
+    >;
+    create: XOR<
+      CompanyUserCreateWithoutTransactionLogInput,
+      CompanyUserUncheckedCreateWithoutTransactionLogInput
+    >;
+    where?: CompanyUserWhereInput;
+  };
+
+  export type CompanyUserUpdateToOneWithWhereWithoutTransactionLogInput = {
+    where?: CompanyUserWhereInput;
+    data: XOR<
+      CompanyUserUpdateWithoutTransactionLogInput,
+      CompanyUserUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type CompanyUserUpdateWithoutTransactionLogInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    level?: EnumLevelStatusFieldUpdateOperationsInput | $Enums.LevelStatus;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    otp?: NullableStringFieldUpdateOperationsInput | string | null;
+    otpExpired?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    company?: CompanyUpdateOneRequiredWithoutCompanyUsersNestedInput;
+  };
+
+  export type CompanyUserUncheckedUpdateWithoutTransactionLogInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    email?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    status?: BoolFieldUpdateOperationsInput | boolean;
+    level?: EnumLevelStatusFieldUpdateOperationsInput | $Enums.LevelStatus;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    otp?: NullableStringFieldUpdateOperationsInput | string | null;
+    otpExpired?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type ProductUpsertWithoutTransactionLogInput = {
+    update: XOR<
+      ProductUpdateWithoutTransactionLogInput,
+      ProductUncheckedUpdateWithoutTransactionLogInput
+    >;
+    create: XOR<
+      ProductCreateWithoutTransactionLogInput,
+      ProductUncheckedCreateWithoutTransactionLogInput
+    >;
+    where?: ProductWhereInput;
+  };
+
+  export type ProductUpdateToOneWithWhereWithoutTransactionLogInput = {
+    where?: ProductWhereInput;
+    data: XOR<
+      ProductUpdateWithoutTransactionLogInput,
+      ProductUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type ProductUpdateWithoutTransactionLogInput = {
+    name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
+    price?: FloatFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
+    image?: NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    category?: CategoryUpdateOneRequiredWithoutProductNestedInput;
+    company?: CompanyUpdateOneRequiredWithoutProductNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutProductNestedInput;
+  };
+
+  export type ProductUncheckedUpdateWithoutTransactionLogInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
+    price?: FloatFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
+    image?: NullableStringFieldUpdateOperationsInput | string | null;
+    categoryId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutProductNestedInput;
+  };
+
+  export type OrderDetailUpsertWithoutTransactionLogInput = {
+    update: XOR<
+      OrderDetailUpdateWithoutTransactionLogInput,
+      OrderDetailUncheckedUpdateWithoutTransactionLogInput
+    >;
+    create: XOR<
+      OrderDetailCreateWithoutTransactionLogInput,
+      OrderDetailUncheckedCreateWithoutTransactionLogInput
+    >;
+    where?: OrderDetailWhereInput;
+  };
+
+  export type OrderDetailUpdateToOneWithWhereWithoutTransactionLogInput = {
+    where?: OrderDetailWhereInput;
+    data: XOR<
+      OrderDetailUpdateWithoutTransactionLogInput,
+      OrderDetailUncheckedUpdateWithoutTransactionLogInput
+    >;
+  };
+
+  export type OrderDetailUpdateWithoutTransactionLogInput = {
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    company?: CompanyUpdateOneRequiredWithoutOrderDetailNestedInput;
+    order?: OrderUpdateOneRequiredWithoutOrderDetailNestedInput;
+    product?: ProductUpdateOneRequiredWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateWithoutTransactionLogInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    orderId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
   };
 
   export type CompanyUserCreateManyCompanyInput = {
@@ -16285,13 +25661,49 @@ export namespace Prisma {
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     categoryId: number;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
+  };
+
+  export type OrderCreateManyCompanyInput = {
+    id?: number;
+    customerId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type OrderDetailCreateManyCompanyInput = {
+    id?: number;
+    orderId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type TransactionLogCreateManyCompanyInput = {
+    id?: number;
+    companyUserId?: number | null;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
   };
 
   export type CompanyUserUpdateWithoutCompanyInput = {
@@ -16318,6 +25730,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    transactionLog?: TransactionLogUpdateManyWithoutCompanyUserNestedInput;
   };
 
   export type CompanyUserUncheckedUpdateWithoutCompanyInput = {
@@ -16345,6 +25758,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutCompanyUserNestedInput;
   };
 
   export type CompanyUserUncheckedUpdateManyWithoutCompanyInput = {
@@ -16391,6 +25805,7 @@ export namespace Prisma {
       | string
       | null;
     address?: AddressCustomerUpdateManyWithoutCustomerNestedInput;
+    order?: OrderUpdateManyWithoutCustomerNestedInput;
   };
 
   export type CustomerUncheckedUpdateWithoutCompanyInput = {
@@ -16411,6 +25826,7 @@ export namespace Prisma {
       | string
       | null;
     address?: AddressCustomerUncheckedUpdateManyWithoutCustomerNestedInput;
+    order?: OrderUncheckedUpdateManyWithoutCustomerNestedInput;
   };
 
   export type CustomerUncheckedUpdateManyWithoutCompanyInput = {
@@ -16486,8 +25902,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
@@ -16501,6 +25917,8 @@ export namespace Prisma {
       | string
       | null;
     category?: CategoryUpdateOneRequiredWithoutProductNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutProductNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutProductNestedInput;
   };
 
   export type ProductUncheckedUpdateWithoutCompanyInput = {
@@ -16509,8 +25927,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     categoryId?: IntFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16524,6 +25942,8 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutProductNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutProductNestedInput;
   };
 
   export type ProductUncheckedUpdateManyWithoutCompanyInput = {
@@ -16532,8 +25952,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     categoryId?: IntFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16549,12 +25969,282 @@ export namespace Prisma {
       | null;
   };
 
+  export type OrderUpdateWithoutCompanyInput = {
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    customer?: CustomerUpdateOneRequiredWithoutOrderNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutOrderNestedInput;
+  };
+
+  export type OrderUncheckedUpdateWithoutCompanyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    customerId?: IntFieldUpdateOperationsInput | number;
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutOrderNestedInput;
+  };
+
+  export type OrderUncheckedUpdateManyWithoutCompanyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    customerId?: IntFieldUpdateOperationsInput | number;
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type OrderDetailUpdateWithoutCompanyInput = {
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    order?: OrderUpdateOneRequiredWithoutOrderDetailNestedInput;
+    product?: ProductUpdateOneRequiredWithoutOrderDetailNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateWithoutCompanyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    orderId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateManyWithoutCompanyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    orderId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type TransactionLogUpdateWithoutCompanyInput = {
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+    companyUser?: CompanyUserUpdateOneWithoutTransactionLogNestedInput;
+    product?: ProductUpdateOneRequiredWithoutTransactionLogNestedInput;
+    orderDetail?: OrderDetailUpdateOneWithoutTransactionLogNestedInput;
+  };
+
+  export type TransactionLogUncheckedUpdateWithoutCompanyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutCompanyInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type TransactionLogCreateManyCompanyUserInput = {
+    id?: number;
+    companyId: number;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogUpdateWithoutCompanyUserInput = {
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+    company?: CompanyUpdateOneRequiredWithoutTransactionLogNestedInput;
+    product?: ProductUpdateOneRequiredWithoutTransactionLogNestedInput;
+    orderDetail?: OrderDetailUpdateOneWithoutTransactionLogNestedInput;
+  };
+
+  export type TransactionLogUncheckedUpdateWithoutCompanyUserInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutCompanyUserInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
   export type AddressCustomerCreateManyCustomerInput = {
     id?: number;
     phoneNumber: string;
     address: string;
     label: string;
     note: string;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type OrderCreateManyCustomerInput = {
+    id?: number;
+    companyId: number;
+    grandTotal: number;
+    paymentStatus: $Enums.PaymentStatus;
+    shippingStatus?: $Enums.ShippingStatus | null;
     createdAt: Date | string;
     updatedAt?: Date | string | null;
     deletedAt?: Date | string | null;
@@ -16616,14 +26306,87 @@ export namespace Prisma {
       | null;
   };
 
+  export type OrderUpdateWithoutCustomerInput = {
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    company?: CompanyUpdateOneRequiredWithoutOrderNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutOrderNestedInput;
+  };
+
+  export type OrderUncheckedUpdateWithoutCustomerInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutOrderNestedInput;
+  };
+
+  export type OrderUncheckedUpdateManyWithoutCustomerInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    grandTotal?: FloatFieldUpdateOperationsInput | number;
+    paymentStatus?:
+      | EnumPaymentStatusFieldUpdateOperationsInput
+      | $Enums.PaymentStatus;
+    shippingStatus?:
+      | NullableEnumShippingStatusFieldUpdateOperationsInput
+      | $Enums.ShippingStatus
+      | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
   export type ProductCreateManyCategoryInput = {
     id?: number;
     name: string;
     description: string;
     price: number;
     qty: number;
-    qtyBooked?: number | null;
-    qtySold?: number | null;
+    qtyBooked?: number;
+    qtySold?: number;
     image?: string | null;
     companyId: number;
     createdAt: Date | string;
@@ -16636,8 +26399,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
@@ -16651,6 +26414,8 @@ export namespace Prisma {
       | string
       | null;
     company?: CompanyUpdateOneRequiredWithoutProductNestedInput;
+    orderDetail?: OrderDetailUpdateManyWithoutProductNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutProductNestedInput;
   };
 
   export type ProductUncheckedUpdateWithoutCategoryInput = {
@@ -16659,8 +26424,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string;
     price?: FloatFieldUpdateOperationsInput | number;
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
+    image?: NullableStringFieldUpdateOperationsInput | string | null;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    orderDetail?: OrderDetailUncheckedUpdateManyWithoutProductNestedInput;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutProductNestedInput;
+  };
+
+  export type ProductUncheckedUpdateManyWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
+    price?: FloatFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    qtyBooked?: IntFieldUpdateOperationsInput | number;
+    qtySold?: IntFieldUpdateOperationsInput | number;
     image?: NullableStringFieldUpdateOperationsInput | string | null;
     companyId?: IntFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16676,16 +26466,35 @@ export namespace Prisma {
       | null;
   };
 
-  export type ProductUncheckedUpdateManyWithoutCategoryInput = {
-    id?: IntFieldUpdateOperationsInput | number;
-    name?: StringFieldUpdateOperationsInput | string;
-    description?: StringFieldUpdateOperationsInput | string;
-    price?: FloatFieldUpdateOperationsInput | number;
+  export type OrderDetailCreateManyProductInput = {
+    id?: number;
+    orderId: number;
+    companyId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type TransactionLogCreateManyProductInput = {
+    id?: number;
+    companyId: number;
+    companyUserId?: number | null;
+    type: $Enums.TransactionType;
+    quantity: number;
+    orderDetailId?: number | null;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type OrderDetailUpdateWithoutProductInput = {
     qty?: IntFieldUpdateOperationsInput | number;
-    qtyBooked?: NullableIntFieldUpdateOperationsInput | number | null;
-    qtySold?: NullableIntFieldUpdateOperationsInput | number | null;
-    image?: NullableStringFieldUpdateOperationsInput | string | null;
-    companyId?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -16697,6 +26506,248 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    company?: CompanyUpdateOneRequiredWithoutOrderDetailNestedInput;
+    order?: OrderUpdateOneRequiredWithoutOrderDetailNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    orderId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateManyWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    orderId?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type TransactionLogUpdateWithoutProductInput = {
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+    company?: CompanyUpdateOneRequiredWithoutTransactionLogNestedInput;
+    companyUser?: CompanyUserUpdateOneWithoutTransactionLogNestedInput;
+    orderDetail?: OrderDetailUpdateOneWithoutTransactionLogNestedInput;
+  };
+
+  export type TransactionLogUncheckedUpdateWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    orderDetailId?: NullableIntFieldUpdateOperationsInput | number | null;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type OrderDetailCreateManyOrderInput = {
+    id?: number;
+    companyId: number;
+    productId: number;
+    qty: number;
+    price: number;
+    subTotal: number;
+    createdAt: Date | string;
+    updatedAt?: Date | string | null;
+    deletedAt?: Date | string | null;
+  };
+
+  export type OrderDetailUpdateWithoutOrderInput = {
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    company?: CompanyUpdateOneRequiredWithoutOrderDetailNestedInput;
+    product?: ProductUpdateOneRequiredWithoutOrderDetailNestedInput;
+    transactionLog?: TransactionLogUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateWithoutOrderInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    transactionLog?: TransactionLogUncheckedUpdateManyWithoutOrderDetailNestedInput;
+  };
+
+  export type OrderDetailUncheckedUpdateManyWithoutOrderInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    productId?: IntFieldUpdateOperationsInput | number;
+    qty?: IntFieldUpdateOperationsInput | number;
+    price?: FloatFieldUpdateOperationsInput | number;
+    subTotal?: FloatFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+  };
+
+  export type TransactionLogCreateManyOrderDetailInput = {
+    id?: number;
+    companyId: number;
+    companyUserId?: number | null;
+    productId: number;
+    type: $Enums.TransactionType;
+    quantity: number;
+    createdAt?: Date | string;
+    transactionDate: Date | string;
+    deletedAt?: Date | string | null;
+    remarks: string;
+  };
+
+  export type TransactionLogUpdateWithoutOrderDetailInput = {
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+    company?: CompanyUpdateOneRequiredWithoutTransactionLogNestedInput;
+    companyUser?: CompanyUserUpdateOneWithoutTransactionLogNestedInput;
+    product?: ProductUpdateOneRequiredWithoutTransactionLogNestedInput;
+  };
+
+  export type TransactionLogUncheckedUpdateWithoutOrderDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
+  };
+
+  export type TransactionLogUncheckedUpdateManyWithoutOrderDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number;
+    companyId?: IntFieldUpdateOperationsInput | number;
+    companyUserId?: NullableIntFieldUpdateOperationsInput | number | null;
+    productId?: IntFieldUpdateOperationsInput | number;
+    type?:
+      | EnumTransactionTypeFieldUpdateOperationsInput
+      | $Enums.TransactionType;
+    quantity?: IntFieldUpdateOperationsInput | number;
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    transactionDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    deletedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    remarks?: StringFieldUpdateOperationsInput | string;
   };
 
   /**
